@@ -1,0 +1,132 @@
+.admin-header {
+  position: fixed;
+  top: 0;
+  left: 310px;
+
+  width: calc(100% - 310px);
+  height: 85px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e8eeee;
+
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+  padding: 0 35px;
+
+  box-sizing: border-box;
+
+  z-index: 900;
+
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+
+/* Right */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+
+/* Notification */
+
+.notification-btn {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #f3f8f7;
+
+  color: #2d4055;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.notification-btn:hover {
+  background: #e6f7f1;
+}
+
+
+/* Profile */
+
+.admin-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* Profile Circle */
+
+.profile-circle {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #35c79a;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+/* Profile Text */
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.admin-name {
+  color: #2d4055;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-role {
+  color: #8a969f;
+
+  font-size: 11px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .admin-header {
+    position: relative;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 75px;
+
+    padding: 0 20px;
+  }
+
+  .profile-info {
+    display: none;
+  }
+}

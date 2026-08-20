@@ -1,0 +1,39 @@
+{
+  "tbl_admin": [
+    {
+      "admin_id": 1,
+      "email": "pragna@gmail.com",
+      "password": "pragna@1"
+    },
+    {
+      "admin_id": 2,
+      "email": "pooja@gmail.com",
+      "password": "pooja@2"
+    },
+    {
+      "admin_id": 3,
+      "email": "pruthvi@gmail.com",
+      "password": "pruthvi@3"
+    }
+  ],
+  "tbl_faculty": [],
+  "tbl_student": [
+    {
+      "student_id": 1,
+      "student_name": "abc",
+      "email": "abc@gmail.com",
+      "mobile_no":"9913398120",
+      "semester":3,
+      "password":"abc@123",
+      "is_active":true
+    }
+  ],
+  "tbl_subject": [],
+  "tbl_exam": [],
+  "tbl_question": [],
+  "tbl_exam_question": [],
+  "tbl_student_exam": [],
+  "tbl_student_answer": [],
+  "tbl_result": [],
+  "tbl_feedback": []
+}

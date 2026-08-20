@@ -1,0 +1,184 @@
+/* =========================
+   PAGE
+========================= */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+  max-width: 1100px;
+}
+
+/* =========================
+   ROW
+========================= */
+
+.row {
+  min-height: 650px;
+  align-items: center;
+}
+
+/* =========================
+   LEFT IMAGE
+========================= */
+
+.col-6:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.col-6:first-child img {
+  width: 90%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================
+   RIGHT LOGIN SECTION
+========================= */
+
+.col-6:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   LOGIN TITLE
+========================= */
+
+.login-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #303030;
+  margin-bottom: 35px;
+  letter-spacing: -1px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.login-form {
+  width: 310px;
+}
+
+/* =========================
+   FLOATING INPUT
+========================= */
+
+.form-floating {
+  margin-bottom: 15px !important;
+}
+
+.form-floating .form-control {
+  height: 55px;
+  border: none;
+  border-bottom: 1px solid #d2d2d2;
+  border-radius: 0;
+  background: transparent;
+  padding-left: 35px;
+  font-size: 15px;
+  color: #555;
+  box-shadow: none;
+}
+
+/* Remove Bootstrap blue border */
+
+.form-floating .form-control:focus {
+  border: none;
+  border-bottom: 2px solid #3ac69e;
+  box-shadow: none;
+  outline: none;
+}
+
+/* =========================
+   LABEL
+========================= */
+
+.form-floating label {
+  padding-left: 35px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Label icon */
+
+.form-floating label i {
+  color: #d1d1d1;
+  margin-right: 7px;
+  font-size: 14px;
+}
+
+/* Focus label */
+
+.form-floating .form-control:focus ~ label {
+  color: #3ac69e;
+}
+
+/* Focus icon */
+
+.form-floating .form-control:focus ~ label i {
+  color: #3ac69e;
+}
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-form button {
+  width: 100%;
+  height: 48px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 25px;
+  background-color: #3ac69e;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #2fb38f;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   SIGN UP TEXT
+========================= */
+
+.login-form p {
+  text-align: center;
+  margin-top: 15px;
+  color: #888;
+  font-size: 12px;
+}
+
+.login-form p a {
+  margin-left: 4px;
+  color: #888;
+  text-decoration: none;
+}
+
+.login-form p a:hover {
+  color: #3ac69e;
+  text-decoration: underline;
+}
