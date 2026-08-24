@@ -32,22 +32,29 @@ export function AddFaculty() {
       return;
     }
 
-    await axios.post("http://localhost:5000/tbl_faculty", {
-      faculty_name: fname,
-      email: email,
-      mobile_no: mno,
-      subject: subject,
-    });
+    try {
+      await axios.post("http://localhost:5000/tbl_faculty", {
+        faculty_name: fname,
+        email: email,
+        mobile_no: mno,
+        subject: subject,
+        password: password,
+        is_active: true,
+      });
 
-    alert("Faculty added successfully!");
+      alert("Faculty added successfully!");
 
-    setFname("");
-    setEmail("");
-    setMno("");
-    setSubject("");
-    setPassword("");
+      setFname("");
+      setEmail("");
+      setMno("");
+      setSubject("");
+      setPassword("");
 
-    navigate("/ManageFaculty");
+      navigate("/ManageFaculty");
+    } catch (error) {
+      console.error("Error adding faculty:", error);
+      alert("Unable to add faculty. Make sure the JSON server is running.");
+    }
   };
 
   return (
@@ -119,6 +126,18 @@ export function AddFaculty() {
                 placeholder="Enter subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
+              />
+            </div>
+
+            {/* Password */}
+            <div className="form-group">
+              <label>Password</label>
+
+              <input
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 

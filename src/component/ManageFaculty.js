@@ -2,10 +2,26 @@ import "./ManageFaculty.css";
 import AdminSidebar from "./AdminSidebar";
 import AdminFooter from "./AdminFooter";
 import AdminHeader from "./AdminHeader";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ManageFaculty() {
   const navigate = useNavigate();
+  const [faculty, setFaculty] = useState([]);
+
+  const loaddata = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/tbl_faculty");
+      setFaculty(res.data);
+    } catch (error) {
+      console.error("Error fetching faculty data:", error);
+    }
+  };
+
+  useEffect(() => {
+    loaddata();
+  }, []);
 
   return (
     <>
@@ -34,7 +50,7 @@ export default function ManageFaculty() {
           <div className="table-toolbar">
             <div>
               <h2>All Faculty</h2>
-              <p> faculty members registered</p>
+              <p>{faculty.length} faculty members registered</p>
             </div>
 
             <div className="toolbar-actions">
@@ -58,75 +74,103 @@ export default function ManageFaculty() {
               <thead>
                 <tr>
                   <th>FACULTY</th>
-                  <th>ID</th>
-                  <th>DEPARTMENT</th>
-                  <th>SUBJECTS</th>
+                  <th>EMAIL</th>
+                  <th>MOBILE</th>
+                  <th>SUBJECT</th>
                   <th>STATUS</th>
                   <th>ACTION</th>
                 </tr>
               </thead>
 
-              {/* <tbody>
-                {faculty.map((member) => (
-                  <tr key={member.id}>
-                    <td>
-                      <div className="faculty-info">
-                        <div
-                          className="faculty-avatar"
-                          style={{ background: member.color }}
+              <tbody>
+                {faculty.length > 0 ? (
+                  faculty.map((f) => (
+                    <tr key={f.id}>
+                      {/* Faculty Name */}
+                      <td>
+                        <div className="faculty-info">
+                          <div
+                            className="student-avatar"
+                            style={{
+                              background: f.color || "#6c63ff",
+                            }}
+                          >
+                            {f.faculty_name
+                              ? f.faculty_name.charAt(0).toUpperCase()
+                              : "?"}
+                          </div>
+
+                          <div>
+                            <strong>
+                              {f.faculty_name || "Unknown Faculty"}
+                            </strong>
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* Email */}
+                      <td>
+                        <span>{f.email || "No email"}</span>
+                      </td>
+
+                      {/* Mobile Number */}
+                      <td>
+                        <span>{f.mobile_no || "No mobile"}</span>
+                      </td>
+
+                      {/* Subject */}
+                      <td>
+                        <span className="course-badge">
+                          {f.subject || "N/A"}
+                        </span>
+                      </td>
+
+                      {/* Status */}
+                      <td>
+                        <span
+                          className={`status ${
+                            f.is_active === true || f.is_active === 1
+                              ? "active"
+                              : "inactive"
+                          }`}
                         >
-                          {member.name.charAt(0)}
+                          <i></i>
+
+                          {f.is_active === true || f.is_active === 1
+                            ? "Active"
+                            : "Inactive"}
+                        </span>
+                      </td>
+
+                      {/* Actions */}
+                      <td>
+                        <div className="action-buttons">
+                          <button className="icon-btn edit me-4" title="Edit">
+                            ✎
+                          </button>
+
+                          <button className="icon-btn delete" title="Delete">
+                            🗑
+                          </button>
                         </div>
-
-                        <div>
-                          <strong>{member.name}</strong>
-                          <span>{member.email}</span>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <span className="faculty-id">{member.id}</span>
-                    </td>
-
-                    <td>
-                      <span className="department-badge">
-                        {member.department}
-                      </span>
-                    </td>
-
-                    <td>
-                      <div className="subject-count">
-                        <strong>{member.subjects}</strong>
-                        <span>subjects</span>
-                      </div>
-                    </td>
-
-                    <td>
-                      <span
-                        className={`status ${
-                          member.status === "Active" ? "active" : "inactive"
-                        }`}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6">
+                      <div
+                        style={{
+                          textAlign: "center",
+                          padding: "30px",
+                        }}
                       >
-                        <i></i>
-                        {member.status}
-                      </span>
-                    </td>
-
-                    <td>
-                      <div className="action-buttons">
-                        <button className="icon-btn edit me-4" title="Edit">
-                          ✎
-                        </button>
-
-                        <button className="icon-btn delete" title="Delete">
-                          🗑
-                        </button>
+                        No faculty found.
                       </div>
                     </td>
                   </tr>
-                ))}
-              </tbody> */}
+                )}
+              </tbody>
             </table>
           </div>
         </section>

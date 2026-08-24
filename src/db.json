@@ -36,6 +36,24 @@
       "subject": "aec",
       "password": "123456789",
       "id": "9PDylcIJsA8"
+    },
+    {
+      "faculty_name": "pruthvi",
+      "email": "pruthvi@gmail.com",
+      "mobile_no": "7896545877",
+      "subject": "java",
+      "password": "abc123",
+      "is_active": true,
+      "id": "Jhhm8OMUM3o"
+    },
+    {
+      "faculty_name": "pooja",
+      "email": "pooja@gmail.com",
+      "mobile_no": "7589632577",
+      "subject": "cpp",
+      "password": "pooja12234",
+      "is_active": true,
+      "id": "w_KuY_it_G4"
     }
   ],
   "tbl_student": [
@@ -91,6 +109,13 @@
       "mobile_no": "7284607422",
       "semester": 3,
       "id": "2E-EJH0OvPA"
+    },
+    {
+      "student_name": "pooja",
+      "email": "pooja@gmail.com",
+      "mobile_no": "2358963577",
+      "semester": 3,
+      "id": "kqoaJ6oi0K0"
     }
   ],
   "tbl_subject": [],
