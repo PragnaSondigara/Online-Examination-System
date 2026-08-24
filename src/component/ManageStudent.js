@@ -26,13 +26,11 @@ export default function ManageStudent() {
 
   // Count active students
   const activeStudent = student.filter(
-    (s) => s.is_active === true || s.is_active === 1
+    (s) => s.is_active === true || s.is_active === 1,
   ).length;
 
   // Count different semesters
-  const totalSemesters = new Set(
-    student.map((s) => s.semester)
-  ).size;
+  const totalSemesters = new Set(student.map((s) => s.semester)).size;
 
   return (
     <>
@@ -58,7 +56,6 @@ export default function ManageStudent() {
 
         {/* Stats */}
         <div className="student-stats">
-
           {/* Total Students */}
           <div className="stat-card purple">
             <div className="stat-icon">👥</div>
@@ -98,30 +95,23 @@ export default function ManageStudent() {
               <strong>{student.length - activeStudent}</strong>
             </div>
           </div>
-
         </div>
 
         {/* Table Card */}
         <section className="student-card">
-
           {/* Toolbar */}
           <div className="table-toolbar">
-
             <div>
               <h2>All Students</h2>
               <p>{student.length} students registered</p>
             </div>
 
             <div className="toolbar-actions">
-
               {/* Search */}
               <div className="search-box">
                 <span>⌕</span>
 
-                <input
-                  type="text"
-                  placeholder="Search student..."
-                />
+                <input type="text" placeholder="Search student..." />
               </div>
 
               {/* Semester Filter */}
@@ -133,17 +123,13 @@ export default function ManageStudent() {
                 <option value="4">Semester 4</option>
                 <option value="5">Semester 5</option>
                 <option value="6">Semester 6</option>
-
               </select>
-
             </div>
           </div>
 
           {/* Student Table */}
           <div className="student-table-wrapper">
-
             <table className="student-table">
-
               <thead>
                 <tr>
                   <th>STUDENT</th>
@@ -156,17 +142,12 @@ export default function ManageStudent() {
               </thead>
 
               <tbody>
-
                 {student.length > 0 ? (
-
                   student.map((s) => (
-
                     <tr key={s.id}>
-
                       {/* Student Name */}
                       <td>
                         <div className="student-info">
-
                           <div
                             className="student-avatar"
                             style={{
@@ -183,22 +164,17 @@ export default function ManageStudent() {
                               {s.student_name || "Unknown Student"}
                             </strong>
                           </div>
-
                         </div>
                       </td>
 
                       {/* Email */}
                       <td>
-                        <span>
-                          {s.email || "No email"}
-                        </span>
+                        <span>{s.email || "No email"}</span>
                       </td>
 
                       {/* Mobile Number */}
                       <td>
-                        <span>
-                          {s.mobile_no || "No mobile"}
-                        </span>
+                        <span>{s.mobile_no || "No mobile"}</span>
                       </td>
 
                       {/* Semester */}
@@ -210,62 +186,36 @@ export default function ManageStudent() {
 
                       {/* Status */}
                       <td>
-
                         <span
-                          className={`status ${s.is_active === true ||
-                            s.is_active === 1
-                            ? "active"
-                            : "inactive"
-                            }`}
+                          className={`status ${
+                            s.is_active === true || s.is_active === 1
+                              ? "active"
+                              : "inactive"
+                          }`}
                         >
-
                           <i></i>
 
-                          {s.is_active === true ||
-                            s.is_active === 1
+                          {s.is_active === true || s.is_active === 1
                             ? "Active"
                             : "Inactive"}
-
                         </span>
-
                       </td>
 
                       {/* Actions */}
                       <td>
-
                         <div className="action-buttons">
-
-                          <button
-                            className="icon-btn edit"
-                            title="Edit"
-                          >
+                          <button className="icon-btn edit me-4" title="Edit">
                             ✎
                           </button>
 
-                          <button
-                            className="icon-btn delete"
-                            title="Delete"
-                          >
+                          <button className="icon-btn delete" title="Delete">
                             🗑
                           </button>
-
-                          <button
-                            className="icon-btn view"
-                            title="View"
-                          >
-                            →
-                          </button>
-
                         </div>
-
                       </td>
-
                     </tr>
-
                   ))
-
                 ) : (
-
                   <tr>
                     <td colSpan="6">
                       <div
@@ -278,51 +228,11 @@ export default function ManageStudent() {
                       </div>
                     </td>
                   </tr>
-
                 )}
-
               </tbody>
-
             </table>
-
           </div>
-
-          {/* Pagination */}
-          <div className="table-footer">
-
-            <span>
-              Showing 1–{student.length} of{" "}
-              {student.length} students
-            </span>
-
-            <div className="pagination">
-
-              <button disabled>
-                ‹
-              </button>
-
-              <button className="current-page">
-                1
-              </button>
-
-              <button>
-                2
-              </button>
-
-              <button>
-                3
-              </button>
-
-              <button>
-                ›
-              </button>
-
-            </div>
-
-          </div>
-
         </section>
-
       </main>
 
       <AdminFooter />

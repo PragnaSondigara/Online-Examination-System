@@ -8,7 +8,6 @@ export default function GuestHome() {
       {/* Header */}
       <header className="header">
         <div className="nav-container">
-
           {/* Logo */}
           <Link to="/" className="logo">
             <span>exambly</span>
@@ -22,10 +21,7 @@ export default function GuestHome() {
 
           {/* Search */}
           <div className="search-box">
-            <input
-              type="text"
-              placeholder="Search eg. Online Exam 2026"
-            />
+            <input type="text" placeholder="Search eg. Online Exam 2026" />
             <span className="search-icon">⌕</span>
           </div>
 
@@ -34,10 +30,6 @@ export default function GuestHome() {
             <Link className="login-btn" to="/LoginPage">
               Login
             </Link>
-
-            <button className="account-btn">
-              Create Free Account
-            </button>
           </div>
         </div>
       </header>
@@ -45,10 +37,8 @@ export default function GuestHome() {
       {/* Hero */}
       <main className="home">
         <div className="home-container">
-
           {/* Left Content */}
           <div className="home-content">
-
             <div className="hero-badge">
               <span className="badge-dot"></span>
               Learn • Practice • Succeed
@@ -60,21 +50,17 @@ export default function GuestHome() {
             </h1>
 
             <p>
-              Take online exams, practice tests and assessments easily.
-              Prepare, perform and track your progress from anywhere.
+              Take online exams, practice tests and assessments easily. Prepare,
+              perform and track your progress from anywhere.
             </p>
 
             <div className="hero-actions">
               <button className="get-started-btn">
-                <span className="play-circle">
-                  ▶︎
-                </span>
+                <span className="play-circle">▶︎</span>
                 Get Started
               </button>
 
-              <button className="explore-btn">
-                Explore Exams
-              </button>
+              <button className="explore-btn">Explore Exams</button>
             </div>
 
             <div className="hero-stats">
@@ -119,19 +105,14 @@ export default function GuestHome() {
               </div>
             </div>
 
-            <img
-              src={guestimg}
-              alt="Online examination"
-            />
+            <img src={guestimg} alt="Online examination" />
           </div>
         </div>
       </main>
 
       {/* Footer */}
       <footer className="gfooter">
-        <p>
-          © 2026 Online Examination System. All Rights Reserved.
-        </p>
+        <p>© 2026 Online Examination System. All Rights Reserved.</p>
       </footer>
     </div>
   );

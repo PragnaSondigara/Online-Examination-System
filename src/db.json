@@ -3,48 +3,94 @@
     {
       "admin_id": 1,
       "email": "pragna@gmail.com",
-      "password": "pragna@1"
+      "password": "pragna@1",
+      "id": "Pe-eZODzGEk"
     },
     {
-      
       "admin_id": 2,
       "email": "pooja@gmail.com",
-      "password": "pooja@2"
+      "password": "pooja@2",
+      "id": "0HDhkseYbwo"
     },
     {
       "admin_id": 3,
       "email": "pruthvi@gmail.com",
-      "password": "pruthvi@3"
+      "password": "pruthvi@3",
+      "id": "5lYcAq-lJSg"
     }
   ],
-  "tbl_faculty": [],
+  "tbl_faculty": [
+    {
+      "faculty_id": 1,
+      "faculty_name": "abc",
+      "email": "abc@gmail.com",
+      "mobile_no": "7284907422",
+      "subject": "vac",
+      "password": "abc@123",
+      "id": "nIIazLtsl1Q"
+    },
+    {
+      "faculty_name": "abc",
+      "email": "abc@gmail.com",
+      "mobile_no": "2358627455",
+      "subject": "aec",
+      "password": "123456789",
+      "id": "9PDylcIJsA8"
+    }
+  ],
   "tbl_student": [
     {
       "student_id": 1,
       "student_name": "abc",
       "email": "abc@gmail.com",
-      "mobile_no":"9913398120",
-      "semester":3,
-      "password":"abc@123",
-      "is_active":true
+      "mobile_no": "9913398120",
+      "semester": 3,
+      "password": "abc@123",
+      "is_active": true,
+      "id": "ymUQp8hxeXM"
     },
     {
       "student_id": 1,
       "student_name": "abc",
       "email": "abc@gmail.com",
-      "mobile_no":"9913398120",
-      "semester":3,
-      "password":"abc@123",
-      "is_active":true
+      "mobile_no": "9913398120",
+      "semester": 3,
+      "password": "abc@123",
+      "is_active": true,
+      "id": "ax-SEilw7Kc"
     },
     {
       "student_id": 1,
       "student_name": "xbc",
       "email": "abc@gmail.com",
-      "mobile_no":"9913398120",
-      "semester":3,
-      "password":"abc@123",
-      "is_active":false
+      "mobile_no": "9913398120",
+      "semester": 3,
+      "password": "abc@123",
+      "is_active": false,
+      "id": "GKfRzQ8GiSU"
+    },
+    {
+      "student_name": "sqr",
+      "email": "sqr@gmail.com",
+      "mobile_no": "7234902488",
+      "semester": 4,
+      "is_active": true,
+      "id": "DS67T68hL7g"
+    },
+    {
+      "student_name": "a",
+      "email": "a@gmail.com",
+      "mobile_no": "255465878455545",
+      "semester": 3,
+      "is_active": true,
+      "id": "8P_-rUWlQpQ"
+    },
+    {
+      "student_name": "abc",
+      "email": "abc@gmail.com",
+      "mobile_no": "7284607422",
+      "semester": 3,
+      "id": "2E-EJH0OvPA"
     }
   ],
   "tbl_subject": [],
@@ -54,5 +100,6 @@
   "tbl_student_exam": [],
   "tbl_student_answer": [],
   "tbl_result": [],
-  "tbl_feedback": []
+  "tbl_feedback": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }

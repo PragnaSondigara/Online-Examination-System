@@ -4,6 +4,7 @@ import Home from "./component/Home";
 import ManageStudent from "./component/ManageStudent";
 import ManageFaculty from "./component/ManageFaculty";
 import { AddStudent } from "./component/AddStudent";
+import { AddFaculty } from "./component/AddFaculty";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ManageFaculty" element={<ManageFaculty />} />
+        <Route path="/AddFaculty" element={<AddFaculty />} />
       </Routes>
     </div>
   );

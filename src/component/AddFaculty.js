@@ -1,45 +1,53 @@
 import { useNavigate } from "react-router-dom";
-import "./AddStudent.css";
+import "./AddFaculty.css";
 import AdminHeader from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
 import { useState } from "react";
 import axios from "axios";
 
-export function AddStudent() {
+export function AddFaculty() {
   const navigate = useNavigate();
 
-  const [sname, setName] = useState("");
+  const [fname, setFname] = useState("");
   const [email, setEmail] = useState("");
   const [mno, setMno] = useState("");
-  const [sem, setSem] = useState("");
+  const [subject, setSubject] = useState("");
+  const [password, setPassword] = useState("");
 
-  // Add student
-  const addStudent = async (e) => {
+  // Add faculty
+  const addFaculty = async (e) => {
     e.preventDefault();
 
-    if (!sname.trim() || !email.trim() || !mno.trim() || !sem) {
+    if (
+      !fname.trim() ||
+      !email.trim() ||
+      !mno.trim() ||
+      !subject.trim() ||
+      !password.trim()
+    ) {
       return;
     }
 
-    if (!window.confirm("Do you want to add this student?")) {
+    if (!window.confirm("Do you want to add this faculty?")) {
       return;
     }
 
-    await axios.post("http://localhost:5000/tbl_student", {
-      student_name: sname,
+    await axios.post("http://localhost:5000/tbl_faculty", {
+      faculty_name: fname,
       email: email,
       mobile_no: mno,
-      semester: Number(sem),
+      subject: subject,
     });
 
-    alert("Student added successfully!");
+    alert("Faculty added successfully!");
 
-    setName("");
+    setFname("");
     setEmail("");
     setMno("");
-    setSem("");
+    setSubject("");
+    setPassword("");
 
-    navigate("/ManageStudent");
+    navigate("/ManageFaculty");
   };
 
   return (
@@ -52,29 +60,29 @@ export function AddStudent() {
           {/* Header */}
           <div className="student-form-header">
             <div>
-              <h2>Add Student</h2>
-              <p>Enter student details below</p>
+              <h2>Add Faculty</h2>
+              <p>Enter faculty details below</p>
             </div>
 
             <button
               className="student-form-close"
-              onClick={() => navigate("/ManageStudent")}
+              onClick={() => navigate("/ManageFaculty")}
             >
               ×
             </button>
           </div>
 
           {/* Form */}
-          <form className="student-form" onSubmit={addStudent}>
-            {/* Student Name */}
+          <form className="student-form" onSubmit={addFaculty}>
+            {/* Faculty Name */}
             <div className="form-group">
-              <label>Student Name</label>
+              <label>Faculty Name</label>
 
               <input
                 type="text"
-                placeholder="Enter student name"
-                value={sname}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter faculty name"
+                value={fname}
+                onChange={(e) => setFname(e.target.value)}
               />
             </div>
 
@@ -102,19 +110,16 @@ export function AddStudent() {
               />
             </div>
 
-            {/* Semester */}
+            {/* Subject */}
             <div className="form-group">
-              <label>Semester</label>
+              <label>Subject</label>
 
-              <select value={sem} onChange={(e) => setSem(e.target.value)}>
-                <option value="">Select Semester</option>
-                <option value="1">Semester 1</option>
-                <option value="2">Semester 2</option>
-                <option value="3">Semester 3</option>
-                <option value="4">Semester 4</option>
-                <option value="5">Semester 5</option>
-                <option value="6">Semester 6</option>
-              </select>
+              <input
+                type="text"
+                placeholder="Enter subject"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
             </div>
 
             {/* Buttons */}
@@ -122,13 +127,13 @@ export function AddStudent() {
               <button
                 type="button"
                 className="student-cancel-btn"
-                onClick={() => navigate("/ManageStudent")}
+                onClick={() => navigate("/ManageFaculty")}
               >
                 Cancel
               </button>
 
               <button type="submit" className="student-submit-btn">
-                Add Student
+                Add Faculty
               </button>
             </div>
           </form>
