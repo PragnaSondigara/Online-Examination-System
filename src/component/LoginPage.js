@@ -7,27 +7,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPasswordd] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try{
-
-      const res = await axios.get(
-        `http://localhost:3000/tbl_admin?username=${username}&password=${password}`
-      );
-      if(res.data.length > 0){
-        localStorage.setItem("auth", "true");
-        Navigate("/ManageStudent");
-        window.location.reload();
-      }else{
-        alert("Invalid")
-      }
-
-    }catch(err){
-        console.log(err);
-        alert("Srerver Error");
-    }
-  };
-
   return (
     <>
       <div className="login-page">
@@ -65,7 +44,7 @@ export default function LoginPage() {
 
                   <label htmlFor="studentId">Password</label>
                 </div>
-                <button type="submit" onClick={handlesubmit}>
+                <button type="submit" >
                   LOGIN
                 </button>
                 <p>

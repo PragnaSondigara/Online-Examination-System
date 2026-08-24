@@ -6,6 +6,7 @@
       "password": "pragna@1"
     },
     {
+      
       "admin_id": 2,
       "email": "pooja@gmail.com",
       "password": "pooja@2"
@@ -26,6 +27,24 @@
       "semester":3,
       "password":"abc@123",
       "is_active":true
+    },
+    {
+      "student_id": 1,
+      "student_name": "abc",
+      "email": "abc@gmail.com",
+      "mobile_no":"9913398120",
+      "semester":3,
+      "password":"abc@123",
+      "is_active":true
+    },
+    {
+      "student_id": 1,
+      "student_name": "xbc",
+      "email": "abc@gmail.com",
+      "mobile_no":"9913398120",
+      "semester":3,
+      "password":"abc@123",
+      "is_active":false
     }
   ],
   "tbl_subject": [],
