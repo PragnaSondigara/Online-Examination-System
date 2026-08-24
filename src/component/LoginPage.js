@@ -2,10 +2,30 @@ import { useState } from "react";
 import "./LoginPage.css";
 import logo from "./image/login.png";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPasswordd] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/tbl_admin?email=${email}&password=${password}`,
+      );
+      if (res.data.length == 1) {
+        localStorage.setItem("auth", "true");
+        navigate("/ManageStudent");
+        window.location.reload();
+      } else {
+        alert("Enavlid Data");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server Error");
+    }
+  };
 
   return (
     <>
@@ -25,6 +45,7 @@ export default function LoginPage() {
                     type="email"
                     className="form-control"
                     id="userEmail"
+                    onChange={(e) => setEmail(e.target.value)}
                     name="userEmail"
                     placeholder="User Name"
                   />
@@ -38,13 +59,14 @@ export default function LoginPage() {
                     type="password"
                     className="form-control"
                     id="password"
+                    onChange={(e) => setPasswordd(e.target.value)}
                     name="password"
                     placeholder="Password"
                   />
 
                   <label htmlFor="studentId">Password</label>
                 </div>
-                <button type="submit" >
+                <button type="submit" onClick={handleLogin}>
                   LOGIN
                 </button>
                 <p>
