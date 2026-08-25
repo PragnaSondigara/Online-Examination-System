@@ -28,11 +28,6 @@ export default function AdminSidebar() {
         </Link>
 
         <Link to="#" className="nav-item">
-          <span className="nav-icon">📝</span>
-          <span>Manage Schedule</span>
-        </Link>
-
-        <Link to="#" className="nav-item">
           <span className="nav-icon">📋</span>
           <span>Feedback</span>
         </Link>
