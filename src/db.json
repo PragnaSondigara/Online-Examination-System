@@ -25,7 +25,7 @@
       "faculty_name": "abc",
       "email": "abc@gmail.com",
       "mobile_no": "7284907422",
-      "subject": "vac",
+      "subject_id": "vac",
       "password": "abc@123",
       "id": "nIIazLtsl1Q"
     },
@@ -33,7 +33,7 @@
       "faculty_name": "abc",
       "email": "abc@gmail.com",
       "mobile_no": "2358627455",
-      "subject": "aec",
+      "subject_id": "aec",
       "password": "123456789",
       "id": "9PDylcIJsA8"
     },
@@ -41,7 +41,7 @@
       "faculty_name": "pruthvi",
       "email": "pruthvi@gmail.com",
       "mobile_no": "7896545877",
-      "subject": "java",
+      "subject_id": "java",
       "password": "abc123",
       "is_active": true,
       "id": "Jhhm8OMUM3o"
@@ -50,7 +50,7 @@
       "faculty_name": "pooja",
       "email": "pooja@gmail.com",
       "mobile_no": "7589632577",
-      "subject": "cpp",
+      "subject_id": "cpp",
       "password": "pooja12234",
       "is_active": true,
       "id": "w_KuY_it_G4"
@@ -125,6 +125,5 @@
   "tbl_student_exam": [],
   "tbl_student_answer": [],
   "tbl_result": [],
-  "tbl_feedback": [],
-  "$schema": "./node_modules/json-server/schema.json"
+  "tbl_feedback": []
 }
