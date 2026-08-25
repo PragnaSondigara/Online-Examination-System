@@ -6,6 +6,7 @@ import ManageFaculty from "./component/ManageFaculty";
 import { AddStudent } from "./component/AddStudent";
 import { AddFaculty } from "./component/AddFaculty";
 import AdminDashboard from "./component/AdminDashboard";
+import { ViewFeedback } from "./component/ViewFeedback";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/ManageStudent" element={<ManageStudent />} />
         <Route path="/AddStudent" element={<AddStudent />} />
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        <Route path="/Feedback" element={<ViewFeedback />} />
 
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ManageFaculty" element={<ManageFaculty />} />

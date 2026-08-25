@@ -22,20 +22,14 @@
   "tbl_faculty": [
     {
       "faculty_id": 1,
-      "faculty_name": "abc",
+      "faculty_name": "prof. Pruthvi",
       "email": "abc@gmail.com",
       "mobile_no": "7284907422",
       "subject_id": "vac",
       "password": "abc@123",
-      "id": "nIIazLtsl1Q"
-    },
-    {
-      "faculty_name": "abc",
-      "email": "abc@gmail.com",
-      "mobile_no": "2358627455",
-      "subject_id": "aec",
-      "password": "123456789",
-      "id": "9PDylcIJsA8"
+      "id": "nIIazLtsl1Q",
+      "subject": "web",
+      "is_active": true
     },
     {
       "faculty_name": "pruthvi",
