@@ -2,46 +2,26 @@ import "./ManageFaculty.css";
 import AdminSidebar from "./AdminSidebar";
 import AdminFooter from "./AdminFooter";
 import AdminHeader from "./AdminHeader";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ManageFaculty() {
-  const faculty = [
-    {
-      id: "FAC001",
-      name: "Dr. Rahul Sharma",
-      email: "rahul.sharma@example.com",
-      department: "Computer Science",
-      subjects: 4,
-      status: "Active",
-      color: "#35c79a",
-    },
-    {
-      id: "FAC002",
-      name: "Prof. Priya Patel",
-      email: "priya.patel@example.com",
-      department: "Information Technology",
-      subjects: 3,
-      status: "Active",
-      color: "#5ed9b3",
-    },
-    {
-      id: "FAC003",
-      name: "Dr. Amit Shah",
-      email: "amit.shah@example.com",
-      department: "Management",
-      subjects: 5,
-      status: "Active",
-      color: "#2aa982",
-    },
-    {
-      id: "FAC004",
-      name: "Prof. Neha Mehta",
-      email: "neha.mehta@example.com",
-      department: "Computer Applications",
-      subjects: 2,
-      status: "Inactive",
-      color: "#45d4a8",
-    },
-  ];
+  const navigate = useNavigate();
+  const [faculty, setFaculty] = useState([]);
+
+  const loaddata = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/tbl_faculty");
+      setFaculty(res.data);
+    } catch (error) {
+      console.error("Error fetching faculty data:", error);
+    }
+  };
+
+  useEffect(() => {
+    loaddata();
+  }, []);
 
   return (
     <>
@@ -56,7 +36,10 @@ export default function ManageFaculty() {
             <p>View, manage and monitor all registered faculty members.</p>
           </div>
 
-          <button className="add-faculty-btn">
+          <button
+            className="add-faculty-btn"
+            onClick={() => navigate("/AddFaculty")}
+          >
             <span>+</span>
             Add Faculty
           </button>
@@ -73,10 +56,7 @@ export default function ManageFaculty() {
             <div className="toolbar-actions">
               <div className="search-box">
                 <span>⌕</span>
-                <input
-                  type="text"
-                  placeholder="Search faculty..."
-                />
+                <input type="text" placeholder="Search faculty..." />
               </div>
 
               <select className="department-filter">
@@ -94,108 +74,104 @@ export default function ManageFaculty() {
               <thead>
                 <tr>
                   <th>FACULTY</th>
-                  <th>ID</th>
-                  <th>DEPARTMENT</th>
-                  <th>SUBJECTS</th>
+                  <th>EMAIL</th>
+                  <th>MOBILE</th>
+                  <th>SUBJECT</th>
                   <th>STATUS</th>
                   <th>ACTION</th>
                 </tr>
               </thead>
 
               <tbody>
-                {faculty.map((member) => (
-                  <tr key={member.id}>
-                    <td>
-                      <div className="faculty-info">
-                        <div
-                          className="faculty-avatar"
-                          style={{ background: member.color }}
+                {faculty.length > 0 ? (
+                  faculty.map((f) => (
+                    <tr key={f.id}>
+                      {/* Faculty Name */}
+                      <td>
+                        <div className="faculty-info">
+                          <div
+                            className="student-avatar"
+                            style={{
+                              background: f.color || "#6c63ff",
+                            }}
+                          >
+                            {f.faculty_name
+                              ? f.faculty_name.charAt(0).toUpperCase()
+                              : "?"}
+                          </div>
+
+                          <div>
+                            <strong>
+                              {f.faculty_name || "Unknown Faculty"}
+                            </strong>
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* Email */}
+                      <td>
+                        <span>{f.email || "No email"}</span>
+                      </td>
+
+                      {/* Mobile Number */}
+                      <td>
+                        <span>{f.mobile_no || "No mobile"}</span>
+                      </td>
+
+                      {/* Subject */}
+                      <td>
+                        <span className="course-badge">
+                          {f.subject || "N/A"}
+                        </span>
+                      </td>
+
+                      {/* Status */}
+                      <td>
+                        <span
+                          className={`status ${
+                            f.is_active === true || f.is_active === 1
+                              ? "active"
+                              : "inactive"
+                          }`}
                         >
-                          {member.name.charAt(0)}
+                          <i></i>
+
+                          {f.is_active === true || f.is_active === 1
+                            ? "Active"
+                            : "Inactive"}
+                        </span>
+                      </td>
+
+                      {/* Actions */}
+                      <td>
+                        <div className="action-buttons">
+                          <button className="icon-btn edit me-4" title="Edit">
+                            ✎
+                          </button>
+
+                          <button className="icon-btn delete" title="Delete">
+                            🗑
+                          </button>
                         </div>
-
-                        <div>
-                          <strong>{member.name}</strong>
-                          <span>{member.email}</span>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <span className="faculty-id">
-                        {member.id}
-                      </span>
-                    </td>
-
-                    <td>
-                      <span className="department-badge">
-                        {member.department}
-                      </span>
-                    </td>
-
-                    <td>
-                      <div className="subject-count">
-                        <strong>{member.subjects}</strong>
-                        <span>subjects</span>
-                      </div>
-                    </td>
-
-                    <td>
-                      <span
-                        className={`status ${
-                          member.status === "Active"
-                            ? "active"
-                            : "inactive"
-                        }`}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6">
+                      <div
+                        style={{
+                          textAlign: "center",
+                          padding: "30px",
+                        }}
                       >
-                        <i></i>
-                        {member.status}
-                      </span>
-                    </td>
-
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          className="icon-btn edit"
-                          title="Edit"
-                        >
-                          ✎
-                        </button>
-
-                        <button
-                          className="icon-btn delete"
-                          title="Delete"
-                        >
-                          🗑
-                        </button>
-
-                        <button
-                          className="icon-btn view"
-                          title="View"
-                        >
-                          →
-                        </button>
+                        No faculty found.
                       </div>
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
-          </div>
-
-          {/* Pagination */}
-          <div className="table-footer">
-            <span>
-              Showing 1–{faculty.length} of {faculty.length} faculty
-            </span>
-
-            <div className="pagination">
-              <button disabled>‹</button>
-              <button className="current-page">1</button>
-              <button>2</button>
-              <button>3</button>
-              <button>›</button>
-            </div>
           </div>
         </section>
       </main>
