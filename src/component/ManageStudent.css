@@ -1069,3 +1069,160 @@
     justify-content: flex-end;
   }
 }
+/* =========================================
+   EDIT STUDENT INPUT BOXES
+   Add only - do not remove existing CSS
+========================================= */
+
+.edit-input {
+  width: 100%;
+  height: 36px;
+
+  box-sizing: border-box;
+
+  padding: 0 10px;
+
+  border: 1px solid #dfe4ea;
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #33445a;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* Placeholder */
+
+.edit-input::placeholder {
+  color: #a4adba;
+}
+
+
+/* Hover */
+
+.edit-input:hover {
+  border-color: #c5ccd6;
+}
+
+
+/* Focus */
+
+.edit-input:focus {
+  border-color: #35c79a;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(53, 199, 154, 0.10);
+}
+
+
+/* Name */
+
+.student-name-input {
+  min-width: 0;
+}
+
+
+/* Email */
+
+.email-input {
+  min-width: 0;
+}
+
+
+/* Mobile */
+
+.mobile-input {
+  min-width: 0;
+}
+
+
+/* Semester Select */
+
+.semester-input {
+  min-width: 0;
+
+  cursor: pointer;
+}
+
+
+/* Status Select */
+
+.status-input {
+  min-width: 0;
+
+  cursor: pointer;
+}
+
+
+/* Select focus */
+
+select.edit-input:focus {
+  border-color: #35c79a;
+
+  box-shadow:
+    0 0 0 3px rgba(53, 199, 154, 0.10);
+}
+
+
+/* =========================================
+   EDITING ROW
+========================================= */
+
+.student-table tbody tr.editing-row {
+  background: #fbfffd;
+}
+
+
+/* =========================================
+   SAVE BUTTON
+========================================= */
+
+.icon-btn.save {
+  background: #e8faf3;
+
+  color: #20a879;
+
+  border: 1px solid #d0f3e5;
+}
+
+.icon-btn.save:hover {
+  background: #20a879;
+
+  color: white;
+
+  border-color: #20a879;
+}
+
+
+/* =========================================
+   CANCEL BUTTON
+========================================= */
+
+.icon-btn.cancel {
+  background: #fff1f1;
+
+  color: #e05a5a;
+
+  border: 1px solid #ffe0e0;
+}
+
+.icon-btn.cancel:hover {
+  background: #e05a5a;
+
+  color: white;
+
+  border-color: #e05a5a;
+}
