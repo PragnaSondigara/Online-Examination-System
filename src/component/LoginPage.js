@@ -16,7 +16,7 @@ export default function LoginPage() {
       );
       if (res.data.length == 1) {
         localStorage.setItem("auth", "true");
-        navigate("/ManageStudent");
+        navigate("/AdminDashboard");
         window.location.reload();
       } else {
         alert("Enavlid Data");
