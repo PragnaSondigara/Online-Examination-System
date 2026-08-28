@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./LoginPage.css";
-import logo from "./image/login.png";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 export default function LoginPage() {
@@ -26,12 +25,12 @@ export default function LoginPage() {
       );
       if (res.data.length == 1) {
         localStorage.setItem("auth", "true");
-        if (role == "admin") {
-          navigate("/ManageStudent");
-        } else if (role == "faculty") {
-          navigate("/ManageFaculty");
-        } else if (role == "student") {
-          navigate("/AdminStudent");
+        if (role === "admin") {
+          navigate("/AdminDashboard");
+        } else if (role === "faculty") {
+          navigate("/FacultyDashboard");
+        } else if (role === "student") {
+          navigate("/StudentDashboard");
         }
         window.location.reload();
       } else {
@@ -49,7 +48,7 @@ export default function LoginPage() {
         <div className="container">
           <div className="row">
             <div className="col-6">
-              <img src={logo} alt="Student Login" />
+              <img src="/image/login.png" alt="Student Login" />
             </div>
             <div className="col-6">
               <h1 className="login-title">LOGIN</h1>

@@ -21,27 +21,19 @@
   ],
   "tbl_faculty": [
     {
-      "faculty_id": 1,
-      "faculty_name": "abc",
+      "faculty_name": "prof. Pruthvi",
       "email": "abc@gmail.com",
       "mobile_no": "7284907422",
-      "subject_id": "vac",
+      "subject": "vac",
       "password": "abc@123",
+      "is_active": true,
       "id": "nIIazLtsl1Q"
-    },
-    {
-      "faculty_name": "abc",
-      "email": "abc@gmail.com",
-      "mobile_no": "2358627455",
-      "subject_id": "aec",
-      "password": "123456789",
-      "id": "9PDylcIJsA8"
     },
     {
       "faculty_name": "pruthvi",
       "email": "pruthvi@gmail.com",
       "mobile_no": "7896545877",
-      "subject_id": "java",
+      "subject": "java",
       "password": "abc123",
       "is_active": true,
       "id": "Jhhm8OMUM3o"
@@ -50,7 +42,7 @@
       "faculty_name": "pooja",
       "email": "pooja@gmail.com",
       "mobile_no": "7589632577",
-      "subject_id": "cpp",
+      "subject": "cpp",
       "password": "pooja12234",
       "is_active": true,
       "id": "w_KuY_it_G4"
@@ -59,23 +51,13 @@
   "tbl_student": [
     {
       "student_id": 1,
-      "student_name": "abc",
+      "student_name": "Prof. pruthvi",
       "email": "abc@gmail.com",
       "mobile_no": "9913398120",
-      "semester": 3,
+      "semester": "4",
       "password": "abc@123",
-      "is_active": true,
+      "is_active": false,
       "id": "ymUQp8hxeXM"
-    },
-    {
-      "student_id": 1,
-      "student_name": "abc",
-      "email": "abc@gmail.com",
-      "mobile_no": "9913398120",
-      "semester": 3,
-      "password": "abc@123",
-      "is_active": true,
-      "id": "ax-SEilw7Kc"
     },
     {
       "student_id": 1,
@@ -125,5 +107,30 @@
   "tbl_student_exam": [],
   "tbl_student_answer": [],
   "tbl_result": [],
-  "tbl_feedback": []
+  "tbl_feedback": [
+    {
+      "id": 1,
+      "name": "pooja",
+      "feedback": "The online examination system is very easy to use.",
+      "date": "2026-08-28"
+    },
+    {
+      "id": 2,
+      "name": "pruthvi",
+      "feedback": "The online examination system is very easy to use.",
+      "date": "2026-08-28"
+    },
+    {
+      "id": 3,
+      "name": "nisha",
+      "feedback": "The online examination system is very easy to use.",
+      "date": "2026-08-28"
+    },
+    {
+      "id": 4,
+      "name": "abc",
+      "feedback": "The online examination system is very easy to use.",
+      "date": "2026-08-28"
+    }
+  ]
 }

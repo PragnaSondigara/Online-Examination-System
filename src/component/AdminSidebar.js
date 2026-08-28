@@ -12,7 +12,7 @@ export default function AdminSidebar() {
 
       {/* Navigation */}
       <nav className="sidebar-nav">
-        <Link to="#" className="nav-item active">
+        <Link to="/AdminDashboard" className="nav-item active">
           <span className="nav-icon">⌂</span>
           <span>Dashboard</span>
         </Link>
@@ -27,7 +27,7 @@ export default function AdminSidebar() {
           <span>Manage Faculty</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/Feedback" className="nav-item">
           <span className="nav-icon">📋</span>
           <span>Feedback</span>
         </Link>

@@ -1,11 +1,12 @@
-import guestimg from "./image/guest.svg";
 import "./Home.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function GuestHome() {
+  const navigate = useNavigate();
+
   return (
     <div className="guest-page">
-      {/* Header */}
+      {/* ================= HEADER ================= */}
       <header className="header">
         <div className="nav-container">
           {/* Logo */}
@@ -14,18 +15,7 @@ export default function GuestHome() {
             <small>Play to Pass</small>
           </Link>
 
-          {/* Exams */}
-          <div className="exam-menu">
-            <span>Exams</span>
-          </div>
-
-          {/* Search */}
-          <div className="search-box">
-            <input type="text" placeholder="Search eg. Online Exam 2026" />
-            <span className="search-icon">⌕</span>
-          </div>
-
-          {/* Buttons */}
+          {/* Right Side */}
           <div className="nav-buttons">
             <div className="role-dropdown">
               <button className="account-btn">
@@ -34,7 +24,9 @@ export default function GuestHome() {
 
               <div className="role-menu">
                 <Link to="/LoginPage?role=admin">Admin</Link>
+
                 <Link to="/LoginPage?role=faculty">Faculty</Link>
+
                 <Link to="/LoginPage?role=student">Student</Link>
               </div>
             </div>
@@ -42,14 +34,14 @@ export default function GuestHome() {
         </div>
       </header>
 
-      {/* Hero */}
+      {/* ================= HERO ================= */}
       <main className="home">
         <div className="home-container">
           {/* Left Content */}
           <div className="home-content">
             <div className="hero-badge">
               <span className="badge-dot"></span>
-              Learn • Practice • Succeed
+              Smart • Secure • Simple
             </div>
 
             <h1>
@@ -58,19 +50,28 @@ export default function GuestHome() {
             </h1>
 
             <p>
-              Take online exams, practice tests and assessments easily. Prepare,
-              perform and track your progress from anywhere.
+              A simple and secure platform for conducting online examinations,
+              managing assessments and tracking student performance.
             </p>
 
             <div className="hero-actions">
-              <button className="get-started-btn">
+              <button
+                className="get-started-btn"
+                onClick={() => navigate("/LoginPage?role=student")}
+              >
                 <span className="play-circle">▶︎</span>
                 Get Started
               </button>
 
-              <button className="explore-btn">Explore Exams</button>
+              <button
+                className="explore-btn"
+                onClick={() => navigate("/LoginPage?role=student")}
+              >
+                Start Exam
+              </button>
             </div>
 
+            {/* Stats */}
             <div className="hero-stats">
               <div className="stat">
                 <strong>100+</strong>
@@ -80,8 +81,8 @@ export default function GuestHome() {
               <div className="stat-divider"></div>
 
               <div className="stat">
-                <strong>24/7</strong>
-                <span>Learn Anywhere</span>
+                <strong>Secure</strong>
+                <span>Online Exams</span>
               </div>
 
               <div className="stat-divider"></div>
@@ -93,12 +94,13 @@ export default function GuestHome() {
             </div>
           </div>
 
-          {/* Right Image */}
+          {/* ================= RIGHT IMAGE ================= */}
           <div className="home-image">
             <div className="image-bg"></div>
 
             <div className="floating-card card-one">
               <span>✓</span>
+
               <div>
                 <strong>Easy Exams</strong>
                 <small>Simple &amp; Fast</small>
@@ -107,18 +109,19 @@ export default function GuestHome() {
 
             <div className="floating-card card-two">
               <span>★</span>
+
               <div>
                 <strong>Track Progress</strong>
                 <small>Improve your score</small>
               </div>
             </div>
 
-            <img src={guestimg} alt="Online examination" />
+            <img src="/image/guest.svg" alt="Online examination" />
           </div>
         </div>
       </main>
 
-      {/* Footer */}
+      {/* ================= FOOTER ================= */}
       <footer className="gfooter">
         <p>© 2026 Online Examination System. All Rights Reserved.</p>
       </footer>
