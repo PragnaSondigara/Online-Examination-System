@@ -22,20 +22,14 @@
   "tbl_faculty": [
     {
       "faculty_id": 1,
-      "faculty_name": "abc",
+      "faculty_name": "prof. Pruthvi",
       "email": "abc@gmail.com",
       "mobile_no": "7284907422",
       "subject_id": "vac",
       "password": "abc@123",
-      "id": "nIIazLtsl1Q"
-    },
-    {
-      "faculty_name": "abc",
-      "email": "abc@gmail.com",
-      "mobile_no": "2358627455",
-      "subject_id": "aec",
-      "password": "123456789",
-      "id": "9PDylcIJsA8"
+      "id": "nIIazLtsl1Q",
+      "subject": "web",
+      "is_active": true
     },
     {
       "faculty_name": "pruthvi",
@@ -59,23 +53,13 @@
   "tbl_student": [
     {
       "student_id": 1,
-      "student_name": "abc",
+      "student_name": "Prof. pruthvi",
       "email": "abc@gmail.com",
       "mobile_no": "9913398120",
-      "semester": 3,
+      "semester": "4",
       "password": "abc@123",
-      "is_active": true,
+      "is_active": false,
       "id": "ymUQp8hxeXM"
-    },
-    {
-      "student_id": 1,
-      "student_name": "abc",
-      "email": "abc@gmail.com",
-      "mobile_no": "9913398120",
-      "semester": 3,
-      "password": "abc@123",
-      "is_active": true,
-      "id": "ax-SEilw7Kc"
     },
     {
       "student_id": 1,
@@ -125,5 +109,6 @@
   "tbl_student_exam": [],
   "tbl_student_answer": [],
   "tbl_result": [],
-  "tbl_feedback": []
+  "tbl_feedback": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }
