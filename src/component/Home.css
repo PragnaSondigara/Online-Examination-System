@@ -171,9 +171,8 @@ body {
   margin-left: 10px;
 }
 
-
 /* =========================
-   NAV BUTTONS
+   ROLE DROPDOWN
 ========================= */
 
 .nav-buttons {
@@ -184,53 +183,102 @@ body {
   gap: 14px;
 }
 
-.login-btn,
+.role-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
 .account-btn {
+  width: 145px;
   height: 44px;
+  border: none;
   border-radius: 11px;
+
+  background: #2d4055;
+  color: #ffffff;
 
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
 
   cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.login-btn {
-  width: 88px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 
-  background: #2d4055;
-  color: #ffffff;
-
-  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
-.login-btn:hover {
+.account-btn span {
+  font-size: 16px;
+  transition: transform 0.25s ease;
+}
+
+.role-dropdown:hover .account-btn {
   background: #223447;
   transform: translateY(-1px);
 }
 
-.account-btn {
-  width: 190px;
+.role-dropdown:hover .account-btn span {
+  transform: rotate(180deg);
+}
 
-  border: none;
-  background: #2fb596;
+/* Dropdown menu */
+
+.role-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 145px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e9eb;
+  border-radius: 11px;
+
+  box-shadow: 0 12px 30px rgba(45, 64, 85, 0.15);
+
+  padding: 6px;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+
+  transition: all 0.25s ease;
+
+  z-index: 100;
+}
+
+/* Show dropdown */
+
+.role-dropdown:hover .role-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown links */
+
+.role-menu a {
+  display: block;
+  padding: 11px 13px;
+
+  color: #2d4055;
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.role-menu a:hover {
+  background: #2d4055;
   color: #ffffff;
-}
-
-.account-btn:hover {
-  background: #269f83;
-  transform: translateY(-1px);
-}
-
-.login-btn:active,
-.account-btn:active {
-  transform: scale(0.98);
 }
 
 
@@ -794,11 +842,14 @@ body {
   }
 
   .account-btn {
-    width: 145px;
-    height: 40px;
+  width: 145px;
+  height: 40px;
+  font-size: 11px;
+}
 
-    font-size: 11px;
-  }
+.role-menu {
+  width: 145px;
+}
 
   .search-box {
     height: 44px;
