@@ -2,21 +2,37 @@ import { useState } from "react";
 import "./LoginPage.css";
 import logo from "./image/login.png";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPasswordd] = useState("");
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const role = searchParams.get("role");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      let tbl_name;
+      if (role === "admin") {
+        tbl_name = "tbl_admin";
+      } else if (role === "faculty") {
+        tbl_name = "tbl_faculty";
+      } else if (role === "student") {
+        tbl_name = "tbl_student";
+      }
       const res = await axios.get(
-        `http://localhost:5000/tbl_admin?email=${email}&password=${password}`,
+        `http://localhost:5000/${tbl_name}?email=${email}&password=${password}`,
       );
       if (res.data.length == 1) {
         localStorage.setItem("auth", "true");
-        navigate("/ManageStudent");
+        if (role == "admin") {
+          navigate("/ManageStudent");
+        } else if (role == "faculty") {
+          navigate("/ManageFaculty");
+        } else if (role == "student") {
+          navigate("/AdminStudent");
+        }
         window.location.reload();
       } else {
         alert("Enavlid Data");

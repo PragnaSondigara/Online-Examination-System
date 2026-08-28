@@ -27,9 +27,17 @@ export default function GuestHome() {
 
           {/* Buttons */}
           <div className="nav-buttons">
-            <Link className="login-btn" to="/LoginPage">
-              Login
-            </Link>
+            <div className="role-dropdown">
+              <button className="account-btn">
+                Login As <span>▾</span>
+              </button>
+
+              <div className="role-menu">
+                <Link to="/LoginPage?role=admin">Admin</Link>
+                <Link to="/LoginPage?role=faculty">Faculty</Link>
+                <Link to="/LoginPage?role=student">Student</Link>
+              </div>
+            </div>
           </div>
         </div>
       </header>
