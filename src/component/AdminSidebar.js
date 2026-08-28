@@ -27,12 +27,7 @@ export default function AdminSidebar() {
           <span>Manage Faculty</span>
         </Link>
 
-        <Link to="#" className="nav-item">
-          <span className="nav-icon">📝</span>
-          <span>Manage Schedule</span>
-        </Link>
-
-        <Link to="#" className="nav-item">
+        <Link to="/Feedback" className="nav-item">
           <span className="nav-icon">📋</span>
           <span>Feedback</span>
         </Link>
