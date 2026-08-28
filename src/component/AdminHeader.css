@@ -23,7 +23,6 @@
   font-family: "Montserrat", Arial, sans-serif;
 }
 
-
 /* Right */
 
 .header-right {
@@ -31,7 +30,6 @@
   align-items: center;
   gap: 25px;
 }
-
 
 /* Notification */
 
@@ -57,7 +55,6 @@
   background: #e6f7f1;
 }
 
-
 /* Profile */
 
 .admin-profile {
@@ -65,7 +62,6 @@
   align-items: center;
   gap: 12px;
 }
-
 
 /* Profile Circle */
 
@@ -86,7 +82,6 @@
   font-size: 16px;
   font-weight: 600;
 }
-
 
 /* Profile Text */
 
@@ -109,7 +104,6 @@
 
   font-size: 11px;
 }
-
 
 /* Responsive */
 

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import "./AdminSidebar.css";
+import "./FacultySider.css";
 
-export default function AdminSidebar() {
+export default function FacultySider() {
   return (
-    <aside className="admin-sidebar">
+    <aside className="faculty-sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="logo-circle">S</div>
-        <span>Admin Portal</span>
+        <span>Faculty Portal</span>
       </div>
 
       {/* Navigation */}
@@ -17,24 +17,24 @@ export default function AdminSidebar() {
           <span>Dashboard</span>
         </Link>
 
-        <Link to="/ManageStudent" className="nav-item">
-          <span className="nav-icon">👨‍🎓</span>
-          <span>Manage Student</span>
-        </Link>
-
-        <Link to="/ManageFaculty" className="nav-item">
-          <span className="nav-icon">🧑‍🏫</span>
-          <span>Manage Faculty</span>
-        </Link>
-
-        <Link to="/Feedback" className="nav-item">
-          <span className="nav-icon">📋</span>
-          <span>Feedback</span>
+        <Link to="#" className="nav-item">
+          <span className="nav-icon">🗓️</span>
+          <span>Schedul Exam</span>
         </Link>
 
         <Link to="#" className="nav-item">
-          <span className="nav-icon">📊</span>
-          <span>Report</span>
+          <span className="nav-icon">❓</span>
+          <span>Manage Question</span>
+        </Link>
+
+        <Link to="#" className="nav-item">
+          <span className="nav-icon">📋</span>
+          <span>View Result</span>
+        </Link>
+
+        <Link to="#" className="nav-item">
+          <span className="nav-icon">💬</span>
+          <span>View Feedback</span>
         </Link>
       </nav>
 

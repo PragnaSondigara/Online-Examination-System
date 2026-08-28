@@ -4,12 +4,11 @@ import Home from "./component/Home";
 import ManageStudent from "./component/ManageStudent";
 import ManageFaculty from "./component/ManageFaculty";
 import { AddStudent } from "./component/AddStudent";
-<<<<<<< HEAD
-=======
-import { AddFaculty } from "./component/AddFaculty";
+//import { AddFaculty } from "./component/AddFaculty";
 import AdminDashboard from "./component/AdminDashboard";
 import { ViewFeedback } from "./component/ViewFeedback";
->>>>>>> origin/pruthvi
+import FacultySider from "./component/FacultySider";
+import FacultyDashboard from "./component/FacultyDashboard";
 
 function App() {
   return (
@@ -23,6 +22,8 @@ function App() {
 
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ManageFaculty" element={<ManageFaculty />} />
+        <Route path="/FacultySider" element={<FacultySider />} />
+        <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
       </Routes>
     </div>
   );

@@ -26,7 +26,6 @@ export default function LoginPage() {
       );
       if (res.data.length == 1) {
         localStorage.setItem("auth", "true");
-<<<<<<< HEAD
         if (role == "admin") {
           navigate("/ManageStudent");
         } else if (role == "faculty") {
@@ -34,9 +33,7 @@ export default function LoginPage() {
         } else if (role == "student") {
           navigate("/AdminStudent");
         }
-=======
         navigate("/AdminDashboard");
->>>>>>> origin/pruthvi
         window.location.reload();
       } else {
         alert("Enavlid Data");
