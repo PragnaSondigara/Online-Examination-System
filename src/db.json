@@ -2,135 +2,475 @@
   "tbl_admin": [
     {
       "admin_id": 1,
-      "email": "pragna@gmail.com",
-      "password": "pragna@1",
-      "id": "Pe-eZODzGEk"
+      "admin_name": "Pragna Sondigara",
+      "email": "pragna@examhub.com",
+      "password": "Pragna1",
+      "is_active": true,
+      "id": "XTCioZmCVxI"
     },
     {
       "admin_id": 2,
-      "email": "pooja@gmail.com",
-      "password": "pooja@2",
-      "id": "0HDhkseYbwo"
+      "admin_name": "Pooja Variya",
+      "email": "pooja@examhub.com",
+      "password": "Pooja2",
+      "is_active": true,
+      "id": "P2I3ihF5f9E"
     },
     {
       "admin_id": 3,
-      "email": "pruthvi@gmail.com",
-      "password": "pruthvi@3",
-      "id": "5lYcAq-lJSg"
+      "admin_name": "Pruthvi Variya",
+      "email": "pruthvi@examhub.com",
+      "password": "pruthvi3",
+      "is_active": true,
+      "id": "SLiH-eK8Rak"
     }
   ],
   "tbl_faculty": [
     {
-      "faculty_name": "prof. Pruthvi",
-      "email": "abc@gmail.com",
-      "mobile_no": "7284907422",
-      "subject": "vac",
-      "password": "abc@123",
+      "faculty_id": 1,
+      "faculty_name": "Pruthvi Shah",
+      "email": "pruthvi@examhub.com",
+      "mobile_no": "9876543210",
+      "subject_id": "Java",
+      "password": "Pruthvi1",
       "is_active": true,
-      "id": "nIIazLtsl1Q"
+      "id": "oIveipxloTU"
     },
     {
-      "faculty_name": "pruthvi",
-      "email": "pruthvi@gmail.com",
-      "mobile_no": "7896545877",
-      "subject": "java",
-      "password": "abc123",
+      "faculty_id": 2,
+      "faculty_name": "Pooja Patel",
+      "email": "pooja@examhub.com",
+      "mobile_no": "9876543211",
+      "subject": "C++",
+      "password": "Pooja2",
       "is_active": true,
-      "id": "Jhhm8OMUM3o"
+      "id": "vKDs0UXnC48"
     },
     {
-      "faculty_name": "pooja",
-      "email": "pooja@gmail.com",
-      "mobile_no": "7589632577",
-      "subject": "cpp",
-      "password": "pooja12234",
+      "faculty_id": 3,
+      "faculty_name": "Nisha Mehta",
+      "email": "nisha@examhub.com",
+      "mobile_no": "9876543212",
+      "subject": "Python",
+      "password": "Nisha3",
       "is_active": true,
-      "id": "w_KuY_it_G4"
+      "id": "1E0F6sijxiU"
+    },
+    {
+      "faculty_id": 4,
+      "faculty_name": "Rahul Sharma",
+      "email": "rahul@examhub.com",
+      "mobile_no": "9876543213",
+      "subject": "Database Management",
+      "password": "Rahul4",
+      "is_active": true,
+      "id": "8eCeJytGd2o"
+    },
+    {
+      "faculty_id": 5,
+      "faculty_name": "Pragna Patel",
+      "email": "pragna@examhub.com",
+      "mobile_no": "9876543214",
+      "subject": "Web Development",
+      "password": "Pragna5",
+      "is_active": true,
+      "id": "e2YQi2tViaY"
+    },
+    {
+      "faculty_id": 6,
+      "faculty_name": "Amit Shah",
+      "email": "amit@examhub.com",
+      "mobile_no": "9876543215",
+      "subject": "Computer Networks",
+      "password": "Amit6",
+      "is_active": false,
+      "id": "PLyrDD8VXmE"
     }
   ],
   "tbl_student": [
     {
       "student_id": 1,
-      "student_name": "Prof. pruthvi",
-      "email": "abc@gmail.com",
-      "mobile_no": "9913398120",
-      "semester": "4",
-      "password": "abc@123",
-      "is_active": false,
-      "id": "ymUQp8hxeXM"
+      "student_name": "Aarav Gupta",
+      "email": "aarav@examhub.com",
+      "mobile_no": "9876500001",
+      "semester": 1,
+      "password": "Aarav1",
+      "is_active": true,
+      "id": "o3__orVi2V8"
     },
     {
-      "student_id": 1,
-      "student_name": "xbc",
-      "email": "abc@gmail.com",
-      "mobile_no": "9913398120",
+      "student_id": 2,
+      "student_name": "Pooja Mishra",
+      "email": "pooja@examhub.com",
+      "mobile_no": "9876500002",
+      "semester": 2,
+      "password": "Pooja2",
+      "is_active": true,
+      "id": "osBuQ2gbuN4"
+    },
+    {
+      "student_id": 3,
+      "student_name": "Pruthvi Obroi",
+      "email": "pruthvi@examhub.com",
+      "mobile_no": "9876500003",
       "semester": 3,
-      "password": "abc@123",
-      "is_active": false,
-      "id": "GKfRzQ8GiSU"
+      "password": "Pruthvi3",
+      "is_active": true,
+      "id": "KhC4qFLJq3w"
     },
     {
-      "student_name": "sqr",
-      "email": "sqr@gmail.com",
-      "mobile_no": "7234902488",
+      "student_id": 4,
+      "student_name": "Nisha Mittal",
+      "email": "nisha@examhub.com",
+      "mobile_no": "9876500004",
       "semester": 4,
+      "password": "Nisha4",
       "is_active": true,
-      "id": "DS67T68hL7g"
+      "id": "Ts_3CEgiivM"
     },
     {
-      "student_name": "a",
-      "email": "a@gmail.com",
-      "mobile_no": "255465878455545",
-      "semester": 3,
+      "student_id": 5,
+      "student_name": "Pragna Patel",
+      "email": "pragna@examhub.com",
+      "mobile_no": "9876500005",
+      "semester": 5,
+      "password": "Pragna5",
+      "is_active": false,
+      "id": "K2rqgH-Z5iU"
+    },
+    {
+      "student_id": 6,
+      "student_name": "Neha Kapoor",
+      "email": "neha@examhub.com",
+      "mobile_no": "9876500006",
+      "semester": 6,
+      "password": "Neha6",
       "is_active": true,
-      "id": "8P_-rUWlQpQ"
+      "id": "hegBy7-Tjlc"
     },
     {
-      "student_name": "abc",
-      "email": "abc@gmail.com",
-      "mobile_no": "7284607422",
+      "student_id": 7,
+      "student_name": "Amit Rajput",
+      "email": "amit@examhub.com",
+      "mobile_no": "9876500007",
       "semester": 3,
-      "id": "2E-EJH0OvPA"
+      "password": "Amit7",
+      "is_active": true,
+      "id": "tf0OCLmKX8Q"
     },
     {
-      "student_name": "pooja",
-      "email": "pooja@gmail.com",
-      "mobile_no": "2358963577",
-      "semester": 3,
-      "id": "kqoaJ6oi0K0"
+      "student_id": 8,
+      "student_name": "Riya Desai",
+      "email": "riya@examhub.com",
+      "mobile_no": "9876500008",
+      "semester": 4,
+      "password": "Riya8",
+      "is_active": false,
+      "id": "pBUacxrUJCg"
     }
   ],
-  "tbl_subject": [],
-  "tbl_exam": [],
-  "tbl_question": [],
-  "tbl_exam_question": [],
-  "tbl_student_exam": [],
-  "tbl_student_answer": [],
-  "tbl_result": [],
+  "tbl_subject": [
+    {
+      "subject_id": 1,
+      "faculty_id": 1,
+      "subject_name": "Java",
+      "is_active": true,
+      "id": "PS7FhgzUvTA"
+    },
+    {
+      "subject_id": 2,
+      "faculty_id": 2,
+      "subject_name": "C++",
+      "is_active": true,
+      "id": "GgtI6_3ZxZ0"
+    },
+    {
+      "subject_id": 3,
+      "faculty_id": 3,
+      "subject_name": "Python",
+      "is_active": true,
+      "id": "e1zgA40H0cM"
+    },
+    {
+      "subject_id": 4,
+      "faculty_id": 4,
+      "subject_name": "Database Management",
+      "is_active": true,
+      "id": "F1ZJ-tlWTmU"
+    },
+    {
+      "subject_id": 5,
+      "faculty_id": 5,
+      "subject_name": "Web Development",
+      "is_active": true,
+      "id": "4FwpciDJBvU"
+    },
+    {
+      "subject_id": 6,
+      "faculty_id": 6,
+      "subject_name": "Computer Networks",
+      "is_active": true,
+      "id": "IgktzMM937g"
+    }
+  ],
+  "tbl_exam": [
+    {
+      "id": "1",
+      "faculty_id": 1,
+      "subject_id": 1,
+      "duration": 2,
+      "date": "2026-09-04",
+      "start_time": "07:30",
+      "end_time": "09:30",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": false
+    },
+    {
+      "id": "2",
+      "faculty_id": 2,
+      "subject_id": 2,
+      "duration": 2,
+      "date": "2026-09-06",
+      "start_time": "10:00",
+      "end_time": "12:00",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true
+    },
+    {
+      "id": "3",
+      "faculty_id": 3,
+      "subject_id": 3,
+      "duration": 2,
+      "date": "2026-09-08",
+      "start_time": "07:30",
+      "end_time": "09:30",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true
+    },
+    {
+      "id": "4",
+      "faculty_id": 4,
+      "subject_id": 4,
+      "duration": 2,
+      "date": "2026-09-10",
+      "start_time": "10:00",
+      "end_time": "12:00",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true
+    },
+    {
+      "id": "5",
+      "faculty_id": 5,
+      "subject_id": 5,
+      "duration": 2,
+      "date": "2026-09-12",
+      "start_time": "07:30",
+      "end_time": "09:30",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true
+    },
+    {
+      "id": "6",
+      "faculty_id": 6,
+      "subject_id": 6,
+      "duration": 2,
+      "date": "2026-09-15",
+      "start_time": "10:00",
+      "end_time": "12:00",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": false
+    },
+    {
+      "faculty_id": 5,
+      "subject_id": 5,
+      "duration": 2,
+      "date": "2026-08-25",
+      "start_time": "11:00",
+      "end_time": "13:00",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true,
+      "id": "hvqYPDc4Q3c"
+    },
+    {
+      "faculty_id": 5,
+      "subject_id": 3,
+      "duration": 2,
+      "date": "2026-07-13",
+      "start_time": "15:00",
+      "end_time": "17:00",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true,
+      "id": "tuI8QKlRyKM"
+    }
+  ],
+  "tbl_question": [
+    {
+      "question_id": 1,
+      "exam_id": 1,
+      "question": "Which keyword is used to create a class in Java?",
+      "option_a": "class",
+      "option_b": "struct",
+      "option_c": "define",
+      "option_d": "object",
+      "correct_answer": "A",
+      "marks": 2,
+      "question_type": "MCQ",
+      "id": "DC9HVvcaPoM"
+    },
+    {
+      "question_id": 2,
+      "exam_id": 1,
+      "question": "Which method is the entry point of a Java program?",
+      "option_a": "start()",
+      "option_b": "main()",
+      "option_c": "run()",
+      "option_d": "execute()",
+      "correct_answer": "B",
+      "marks": 2,
+      "question_type": "MCQ",
+      "id": "4alveop0wjo"
+    },
+    {
+      "question_id": 3,
+      "exam_id": 2,
+      "question": "Which of the following is used to define a class in C++?",
+      "option_a": "class",
+      "option_b": "define",
+      "option_c": "structclass",
+      "option_d": "object",
+      "correct_answer": "A",
+      "marks": 2,
+      "question_type": "MCQ",
+      "id": "1DlDvGUOem8"
+    },
+    {
+      "question_id": 4,
+      "exam_id": 2,
+      "question": "Which symbol is used to access a class member through an object?",
+      "option_a": "->",
+      "option_b": ".",
+      "option_c": "::",
+      "option_d": "#",
+      "correct_answer": "B",
+      "marks": 2,
+      "question_type": "MCQ",
+      "id": "0tzDzoxtYiw"
+    },
+    {
+      "question_id": 5,
+      "exam_id": 3,
+      "question": "print(\"Hello world\")\nWhich one is right answer?",
+      "option_a": "hello world",
+      "option_b": "HelloWorld",
+      "option_c": "Hello World",
+      "option_d": "helloworld",
+      "correct_answer": "C",
+      "marks": 4,
+      "question_type": "MCQ",
+      "id": "n_XB6Rb1XR4"
+    }
+  ],
+  "tbl_student_exam": [
+    {
+      "student_exam_id": 1,
+      "student_id": 1,
+      "exam_id": 1,
+      "started_at": "2026-09-04T07:30:00",
+      "submitted_at": "2026-09-04T09:00:00",
+      "status": "Completed",
+      "id": "A6b8iHzp_U0"
+    },
+    {
+      "student_exam_id": 2,
+      "student_id": 2,
+      "exam_id": 1,
+      "started_at": "2026-09-04T07:30:00",
+      "submitted_at": "2026-09-04T09:10:00",
+      "status": "Completed",
+      "id": "a9psyGOSpUk"
+    }
+  ],
+  "tbl_student_answer": [
+    {
+      "answer_id": 1,
+      "student_exam_id": 1,
+      "question_id": 1,
+      "student_answer": "A",
+      "is_correct": true,
+      "marks_obtained": 2,
+      "id": "JKP9bz3vkyM"
+    },
+    {
+      "answer_id": 2,
+      "student_exam_id": 2,
+      "question_id": 2,
+      "student_answer": "B",
+      "is_correct": true,
+      "marks_obtained": 2,
+      "id": "YOU08qnGOqY"
+    }
+  ],
+  "tbl_result": [
+    {
+      "result_id": 1,
+      "student_id": 1,
+      "exam_id": 1,
+      "total_marks": 100,
+      "obtained_marks": 90,
+      "passing_marks": 40,
+      "percentage": 90,
+      "status": "Pass",
+      "id": "YSxt8k32Wmg"
+    },
+    {
+      "result_id": 2,
+      "student_id": 2,
+      "exam_id": 1,
+      "total_marks": 100,
+      "obtained_marks": 75,
+      "passing_marks": 40,
+      "percentage": 75,
+      "status": "Pass",
+      "id": "8fI_q_bd-_c"
+    }
+  ],
   "tbl_feedback": [
     {
-      "id": 1,
-      "name": "pooja",
+      "id": "1",
+      "student_id": 2,
+      "name": "Pooja",
       "feedback": "The online examination system is very easy to use.",
       "date": "2026-08-28"
     },
     {
-      "id": 2,
-      "name": "pruthvi",
-      "feedback": "The online examination system is very easy to use.",
+      "id": "2",
+      "student_id": 3,
+      "name": "Pruthvi",
+      "feedback": "The examination process is simple and well organized.",
       "date": "2026-08-28"
     },
     {
-      "id": 3,
-      "name": "nisha",
-      "feedback": "The online examination system is very easy to use.",
-      "date": "2026-08-28"
+      "id": "3",
+      "student_id": 4,
+      "name": "Nisha",
+      "feedback": "The interface is user-friendly and the exam submission process is smooth.",
+      "date": "2026-08-29"
     },
     {
-      "id": 4,
-      "name": "abc",
-      "feedback": "The online examination system is very easy to use.",
-      "date": "2026-08-28"
+      "id": "4",
+      "student_id": 5,
+      "name": "Rahul",
+      "feedback": "The online exam system works well and provides a good examination experience.",
+      "date": "2026-08-29"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

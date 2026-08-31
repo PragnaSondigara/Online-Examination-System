@@ -2,13 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ViewFeedback.css";
 import AdminSidebar from "./AdminSidebar";
-import AdminHeader from "./AdminHeader";
+import Header from "./Header";
+import Footer from "./Footer";
+import { useLocation } from "react-router-dom";
+import FacultySider from "./FacultySider";
 
 export function ViewFeedback() {
+  const location = useLocation();
   const [feedback, setFeedback] = useState([]);
 
   const [search, setSearch] = useState("");
   const [type, setType] = useState("All");
+
+  const isFaculty = location.pathname.includes("/faculty");
+  console.log("isFaculty:", isFaculty);
 
   // =====================================================
   // LOAD FEEDBACK DATA FROM db.json
@@ -56,9 +63,9 @@ export function ViewFeedback() {
 
   return (
     <>
-      <AdminSidebar />
+      {isFaculty ? <FacultySider /> : <AdminSidebar />}
 
-      <AdminHeader />
+      <Header />
 
       <main className="view-feedback">
         {/* PAGE HEADER */}
@@ -93,13 +100,6 @@ export function ViewFeedback() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-
-              {/* TYPE FILTER */}
-              <select value={type} onChange={(e) => setType(e.target.value)}>
-                <option value="All">All Types</option>
-                <option value="Student">Student</option>
-                <option value="Faculty">Faculty</option>
-              </select>
             </div>
           </div>
 
@@ -155,6 +155,8 @@ export function ViewFeedback() {
           </div>
         </section>
       </main>
+
+      <Footer />
     </>
   );
 }

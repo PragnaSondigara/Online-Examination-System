@@ -1,7 +1,7 @@
 import "./ManageStudent.css";
 import AdminSidebar from "./AdminSidebar";
-import AdminFooter from "./AdminFooter";
-import AdminHeader from "./AdminHeader";
+import Header from "./Header";
+import Footer from "./Footer";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -237,7 +237,7 @@ export default function ManageStudent() {
           HEADER
       ===================================================== */}
 
-      <AdminHeader />
+      <Header />
 
       {/* =====================================================
           MAIN
@@ -620,7 +620,7 @@ export default function ManageStudent() {
           FOOTER
       ===================================================== */}
 
-      <AdminFooter />
+      <Footer />
     </>
   );
 }

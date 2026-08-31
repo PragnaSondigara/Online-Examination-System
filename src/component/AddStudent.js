@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import "./AddStudent.css";
-import AdminHeader from "./AdminHeader";
-import AdminSidebar from "./AdminSidebar";
 import { useState } from "react";
 import axios from "axios";
+import Header from "./Header";
+import AdminSidebar from "./AdminSidebar";
 
 export function AddStudent() {
   const navigate = useNavigate();
@@ -44,9 +44,8 @@ export function AddStudent() {
 
   return (
     <>
+      <Header />
       <AdminSidebar />
-      <AdminHeader />
-
       <div className="student-form-overlay">
         <div className="student-form-modal">
           {/* Header */}

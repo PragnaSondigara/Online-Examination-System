@@ -1,7 +1,6 @@
-import "./ManageFaculty.css";
 import AdminSidebar from "./AdminSidebar";
-import AdminFooter from "./AdminFooter";
-import AdminHeader from "./AdminHeader";
+import Header from "./Header";
+import Footer from "./Footer";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -55,6 +54,22 @@ export default function ManageFaculty() {
         .filter((subject) => subject && subject.trim() !== ""),
     ),
   ];
+
+  // =====================================================
+  // FACULTY STATISTICS
+  // =====================================================
+
+  const activeFaculty = faculty.filter(
+    (f) => f.is_active === true || f.is_active === 1,
+  ).length;
+
+  const inactiveFaculty = faculty.length - activeFaculty;
+
+  const totalSubjects = new Set(
+    faculty
+      .map((f) => f.subject)
+      .filter((subject) => subject && subject.trim() !== ""),
+  ).size;
 
   // =====================================================
   // FILTER FACULTY
@@ -228,9 +243,9 @@ export default function ManageFaculty() {
   return (
     <>
       <AdminSidebar />
-      <AdminHeader />
+      <Header />
 
-      <main className="manage-faculty">
+      <main className="manage-student">
         {/* =====================================================
             TOP HEADING
         ===================================================== */}
@@ -243,7 +258,7 @@ export default function ManageFaculty() {
           </div>
 
           <button
-            className="add-faculty-btn"
+            className="add-student-btn"
             onClick={() => navigate("/AddFaculty")}
           >
             <span>+</span>
@@ -252,10 +267,64 @@ export default function ManageFaculty() {
         </div>
 
         {/* =====================================================
+    FACULTY STATISTICS
+===================================================== */}
+
+        <div className="student-stats">
+          {/* TOTAL FACULTY */}
+
+          <div className="stat-card purple">
+            <div className="stat-icon">👥</div>
+
+            <div>
+              <span>Total Faculty</span>
+
+              <strong>{faculty.length}</strong>
+            </div>
+          </div>
+
+          {/* ACTIVE FACULTY */}
+
+          <div className="stat-card green">
+            <div className="stat-icon">✓</div>
+
+            <div>
+              <span>Active Faculty</span>
+
+              <strong>{activeFaculty}</strong>
+            </div>
+          </div>
+
+          {/* SUBJECTS */}
+
+          <div className="stat-card orange">
+            <div className="stat-icon">🎓</div>
+
+            <div>
+              <span>Subjects</span>
+
+              <strong>{totalSubjects}</strong>
+            </div>
+          </div>
+
+          {/* INACTIVE FACULTY */}
+
+          <div className="stat-card blue">
+            <div className="stat-icon">⚠</div>
+
+            <div>
+              <span>Inactive Faculty</span>
+
+              <strong>{inactiveFaculty}</strong>
+            </div>
+          </div>
+        </div>
+
+        {/* =====================================================
             TABLE CARD
         ===================================================== */}
 
-        <section className="faculty-card">
+        <section className="student-card">
           {/* Toolbar */}
 
           <div className="table-toolbar">
@@ -282,7 +351,7 @@ export default function ManageFaculty() {
               {/* SUBJECT FILTER */}
 
               <select
-                className="subject-filter"
+                className="course-filter"
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
               >
@@ -301,8 +370,8 @@ export default function ManageFaculty() {
               FACULTY TABLE
           ===================================================== */}
 
-          <div className="faculty-table-wrapper">
-            <table className="faculty-table">
+          <div className="student-table-wrapper">
+            <table className="student-table">
               <thead>
                 <tr>
                   <th>FACULTY</th>
@@ -321,18 +390,11 @@ export default function ManageFaculty() {
                       key={f.id}
                       className={editId === f.id ? "editing-row" : ""}
                     >
-                      {/* =================================================
-                          FACULTY NAME
-                      ================================================= */}
+                      {/* FACULTY NAME */}
 
                       <td>
-                        <div className="faculty-info">
-                          <div
-                            className="student-avatar"
-                            style={{
-                              background: "#6c63ff",
-                            }}
-                          >
+                        <div className="student-info">
+                          <div className="student-avatar">
                             {f.faculty_name
                               ? f.faculty_name.charAt(0).toUpperCase()
                               : "?"}
@@ -357,9 +419,7 @@ export default function ManageFaculty() {
                         </div>
                       </td>
 
-                      {/* =================================================
-                          EMAIL
-                      ================================================= */}
+                      {/* EMAIL */}
 
                       <td>
                         {editId === f.id ? (
@@ -376,9 +436,7 @@ export default function ManageFaculty() {
                         )}
                       </td>
 
-                      {/* =================================================
-                          MOBILE
-                      ================================================= */}
+                      {/* MOBILE */}
 
                       <td>
                         {editId === f.id ? (
@@ -395,9 +453,7 @@ export default function ManageFaculty() {
                         )}
                       </td>
 
-                      {/* =================================================
-                          SUBJECT
-                      ================================================= */}
+                      {/* SUBJECT */}
 
                       <td>
                         {editId === f.id ? (
@@ -416,9 +472,7 @@ export default function ManageFaculty() {
                         )}
                       </td>
 
-                      {/* =================================================
-                          STATUS
-                      ================================================= */}
+                      {/* STATUS */}
 
                       <td>
                         {editId === f.id ? (
@@ -455,9 +509,7 @@ export default function ManageFaculty() {
                         )}
                       </td>
 
-                      {/* =================================================
-                          ACTIONS
-                      ================================================= */}
+                      {/* ACTIONS */}
 
                       <td>
                         <div className="action-buttons">
@@ -530,7 +582,7 @@ export default function ManageFaculty() {
         </section>
       </main>
 
-      <AdminFooter />
+      <Footer />
     </>
   );
 }

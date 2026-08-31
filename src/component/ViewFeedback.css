@@ -17,7 +17,7 @@
   background: #ffffff;
   border: 1px solid #e8edf2;
   border-radius: 14px;
-  padding: 20px;
+  /* padding: 20px; */
 
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 
@@ -330,7 +330,7 @@
 ===================================================== */
 
 .view-feedback {
-  margin-left: 280px;
+  margin-left: 310px;
   padding: 110px 35px 40px;
 
   min-height: 100vh;
@@ -571,27 +571,16 @@
 }
 
 .feedback-user .user-avatar {
+  display: grid;
   width: 42px;
-
   height: 42px;
-
   flex-shrink: 0;
-
-  background: linear-gradient(135deg, #4f46c8, #7472e8);
-
-  color: white;
-
-  border-radius: 11px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
+  place-items: center;
+  border-radius: 50%;
+  background: #e4f8f0;
+  color: #20a878;
   font-size: 15px;
-
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* =====================================================

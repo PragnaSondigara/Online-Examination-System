@@ -1,7 +1,7 @@
 import "./AdminDashboard.css";
 import AdminSidebar from "./AdminSidebar";
-import AdminHeader from "./AdminHeader";
-import AdminFooter from "./AdminFooter";
+import Header from "./Header";
+import Footer from "./Footer";
 import { Link } from "react-router-dom";
 
 export default function AdminDashboard() {
@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   return (
     <>
       <AdminSidebar />
-      <AdminHeader />
+      <Header />
 
       <main className="manage-student">
         {/* Top Heading */}
@@ -21,11 +21,6 @@ export default function AdminDashboard() {
               reports.
             </p>
           </div>
-        </div>
-
-        {/* Welcome Tagline */}
-        <div className="dashboard-tagline" style={{ marginBottom: "24px" }}>
-          <span className="dashboard-tag">✦ Smart • Secure • Online</span>
         </div>
 
         {/* Stats Section */}
@@ -136,7 +131,7 @@ export default function AdminDashboard() {
         </section>
       </main>
 
-      <AdminFooter />
+      <Footer />
     </>
   );
 }

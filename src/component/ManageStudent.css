@@ -149,24 +149,6 @@
   transition: 0.25s ease;
 }
 
-.stat-card::after {
-  content: "";
-
-  position: absolute;
-
-  right: -25px;
-  bottom: -35px;
-
-  width: 90px;
-  height: 90px;
-
-  border-radius: 50%;
-
-  background: currentColor;
-
-  opacity: 0.05;
-}
-
 .stat-card:hover {
   transform: translateY(-3px);
 
@@ -209,42 +191,6 @@
 
   font-size: 24px;
   font-weight: 750;
-}
-
-/* =========================================
-   STAT CARD COLORS
-========================================= */
-
-.stat-card.purple {
-  color: #6c63ff;
-}
-
-.stat-card.purple .stat-icon {
-  background: #efedff;
-}
-
-.stat-card.green {
-  color: #20bf8a;
-}
-
-.stat-card.green .stat-icon {
-  background: #e7faf3;
-}
-
-.stat-card.orange {
-  color: #ff9f43;
-}
-
-.stat-card.orange .stat-icon {
-  background: #fff3e5;
-}
-
-.stat-card.blue {
-  color: #4c8bf5;
-}
-
-.stat-card.blue .stat-icon {
-  background: #eaf2ff;
 }
 
 /* =========================================
@@ -560,26 +506,17 @@
 }
 
 .student-avatar {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
-  height: 40px;
-
-  min-width: 40px;
-
+  display: grid;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
   flex-shrink: 0;
-
-  border-radius: 12px;
-
-  color: white;
-
+  place-items: center;
+  border-radius: 50%;
+  background: #e4f8f0 !important;
+  color: #20a878;
   font-size: 14px;
-  font-weight: 750;
-
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+  font-weight: 700;
 }
 
 .student-info strong {
@@ -777,76 +714,6 @@
 
 .icon-btn.view:hover {
   background: #25a984;
-
-  color: white;
-}
-
-/* =========================================
-   TABLE FOOTER
-========================================= */
-
-.table-footer {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 15px;
-
-  padding: 17px 23px;
-
-  border-top: 1px solid #edf0f4;
-
-  color: #98a2b1;
-
-  font-size: 11px;
-
-  box-sizing: border-box;
-}
-
-.pagination {
-  display: flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  flex-shrink: 0;
-}
-
-.pagination button {
-  width: 29px;
-  height: 29px;
-
-  border: 1px solid #e7eaf0;
-
-  border-radius: 7px;
-
-  background: white;
-
-  color: #778396;
-
-  cursor: pointer;
-
-  font-size: 11px;
-}
-
-.pagination button:hover:not(:disabled) {
-  border-color: #2aa982;
-
-  color: #2aa982;
-}
-
-.pagination button:disabled {
-  opacity: 0.4;
-
-  cursor: not-allowed;
-}
-
-.pagination .current-page {
-  border-color: #35c79a;
-
-  background: #35c79a;
 
   color: white;
 }
