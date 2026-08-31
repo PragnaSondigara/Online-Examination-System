@@ -3,7 +3,6 @@ export default function Header() {
   return (
     <header className="admin-header">
       <div className="header-right">
-        <button className="notification-btn">🔔</button>
 
         <div className="admin-profile">
           <div className="profile-circle">S</div>

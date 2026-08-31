@@ -85,6 +85,23 @@
       "password": "Amit6",
       "is_active": false,
       "id": "PLyrDD8VXmE"
+    },
+    {
+      "faculty_name": "Dr. Bhuatika Patel",
+      "email": "dr..bhuatika.patel@examhub.com",
+      "mobile_no": "8989876767",
+      "subject": "React",
+      "password": "Dr.BhuatikaPatel@123",
+      "is_active": true,
+      "id": "JPPhp4L3zek"
+    },
+    {
+      "faculty_name": "Pankaj Mishra",
+      "email": "pankaj.mishra@examhub.com",
+      "mobile_no": "989898989",
+      "password": "PankajMishra@123",
+      "is_active": true,
+      "id": "nTJWE0Ym_8Y"
     }
   ],
   "tbl_student": [
@@ -159,7 +176,6 @@
       "id": "tf0OCLmKX8Q"
     },
     {
-<<<<<<< HEAD
       "student_id": 8,
       "student_name": "Riya Desai",
       "email": "riya@examhub.com",
@@ -168,6 +184,14 @@
       "password": "Riya8",
       "is_active": false,
       "id": "pBUacxrUJCg"
+    },
+    {
+      "student_name": "Pankaj Mishra",
+      "email": "pankaj.mishra@examhub.com",
+      "mobile_no": "9913398120",
+      "password": "PankajMishra@123",
+      "semester": 6,
+      "id": "K6zRJDtzIHE"
     }
   ],
   "tbl_subject": [
@@ -208,10 +232,24 @@
     },
     {
       "subject_id": 6,
-      "faculty_id": 6,
+      "faculty_id": "2",
       "subject_name": "Computer Networks",
       "is_active": true,
       "id": "IgktzMM937g"
+    },
+    {
+      "subject_id": 1788169463085,
+      "faculty_id": "JPPhp4L3zek",
+      "subject_name": "React",
+      "is_active": true,
+      "id": "NwpdOAN5_UU"
+    },
+    {
+      "subject_id": 1788169914576,
+      "faculty_id": "nTJWE0Ym_8Y",
+      "subject_name": "LOS",
+      "is_active": true,
+      "id": "Ss73m3BaPos"
     }
   ],
   "tbl_exam": [
