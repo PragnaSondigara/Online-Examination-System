@@ -26,7 +26,6 @@ function App() {
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/Feedback" element={<ViewFeedback />} />
         <Route path="/admin/view-feedback" element={<ViewFeedback />} />
-
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />

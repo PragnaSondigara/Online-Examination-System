@@ -7,17 +7,36 @@ import AdminSidebar from "./AdminSidebar";
 
 export function AddStudent() {
   const navigate = useNavigate();
+  const [password, setPassword] = useState("");
 
   const [sname, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mno, setMno] = useState("");
   const [sem, setSem] = useState("");
 
+    function handleNameChange(e) {
+        const value = e.target.value;
+        setName(value);
+
+        const cleanName = value
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, ".");
+
+        if (cleanName) {
+            setEmail(cleanName + "@examhub.com");
+            setPassword(value.replace(/\s+/g, "") + "@123");
+        } else {
+            setEmail("");
+            setPassword("");
+        }
+    }
+
   // Add student
   const addStudent = async (e) => {
     e.preventDefault();
 
-    if (!sname.trim() || !email.trim() || !mno.trim() || !sem) {
+    if (!sname.trim() || !email.trim() || !mno.trim() || !sem || !password.trim()) {
       return;
     }
 
@@ -29,6 +48,7 @@ export function AddStudent() {
       student_name: sname,
       email: email,
       mobile_no: mno,
+      password:password,
       semester: Number(sem),
     });
 
@@ -38,7 +58,7 @@ export function AddStudent() {
     setEmail("");
     setMno("");
     setSem("");
-
+    setPassword("");
     navigate("/ManageStudent");
   };
 
@@ -73,7 +93,7 @@ export function AddStudent() {
                 type="text"
                 placeholder="Enter student name"
                 value={sname}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleNameChange}
               />
             </div>
 
@@ -84,8 +104,7 @@ export function AddStudent() {
               <input
                 type="email"
                 placeholder="Enter email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={email} readOnly
               />
             </div>
 
@@ -98,6 +117,15 @@ export function AddStudent() {
                 placeholder="Enter mobile number"
                 value={mno}
                 onChange={(e) => setMno(e.target.value)}
+              />
+            </div>
+                <div className="form-group">
+              <label>Password</label>
+
+              <input
+                type="password"
+                placeholder="Enter password"
+                value={password} readOnly
               />
             </div>
 
