@@ -100,6 +100,14 @@
       "mobile_no": "2358963577",
       "semester": 3,
       "id": "kqoaJ6oi0K0"
+    },
+    {
+      "student_name": "het",
+      "email": "het@github.com",
+      "mobile_no": "9878787876",
+      "password": "het@123",
+      "semester": 4,
+      "id": "W8or5Ddmtcg"
     }
   ],
   "tbl_subject": [],

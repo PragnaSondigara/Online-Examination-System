@@ -34,6 +34,7 @@ export default function LoginPage() {
         } else if (role == "student") {
           navigate("/AdminStudent");
         }
+        navigate("/AdminDashboard");
         window.location.reload();
       } else {
         alert("Enavlid Data");
