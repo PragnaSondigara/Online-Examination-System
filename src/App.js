@@ -9,6 +9,7 @@ import AdminDashboard from "./component/AdminDashboard";
 import { ViewFeedback } from "./component/ViewFeedback";
 import FacultySider from "./component/FacultySider";
 import FacultyDashboard from "./component/FacultyDashboard";
+import StudentSider from "./component/StudentSider";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/ManageFaculty" element={<ManageFaculty />} />
         <Route path="/FacultySider" element={<FacultySider />} />
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
+        <Route path="/StudentSider" element={<StudentSider />} />
       </Routes>
     </div>
   );
