@@ -159,7 +159,6 @@
       "id": "tf0OCLmKX8Q"
     },
     {
-<<<<<<< HEAD
       "student_id": 8,
       "student_name": "Riya Desai",
       "email": "riya@examhub.com",
@@ -472,6 +471,5 @@
       "feedback": "The online exam system works well and provides a good examination experience.",
       "date": "2026-08-29"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

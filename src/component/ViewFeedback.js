@@ -15,7 +15,6 @@ export function ViewFeedback() {
   const [type, setType] = useState("All");
 
   const isFaculty = location.pathname.includes("/faculty");
-  console.log("isFaculty:", isFaculty);
 
   // =====================================================
   // LOAD FEEDBACK DATA FROM db.json
