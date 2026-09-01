@@ -1,7 +1,6 @@
-import "./ManageFaculty.css";
 import AdminSidebar from "./AdminSidebar";
-import AdminFooter from "./AdminFooter";
-import AdminHeader from "./AdminHeader";
+import Header from "./Header";
+import Footer from "./Footer";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,10 @@ export default function ManageFaculty() {
   const navigate = useNavigate();
 
   const [faculty, setFaculty] = useState([]);
+
+  // Search and Subject Filter
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("All Subjects");
 
   // Edit state
   const [editId, setEditId] = useState(null);
@@ -28,22 +31,64 @@ export default function ManageFaculty() {
 
   const loaddata = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/tbl_faculty"
-      );
+      const res = await axios.get("http://localhost:5000/tbl_faculty");
 
       setFaculty(res.data);
     } catch (error) {
-      console.error(
-        "Error fetching faculty data:",
-        error
-      );
+      console.error("Error fetching faculty data:", error);
     }
   };
 
   useEffect(() => {
     loaddata();
   }, []);
+
+  // =====================================================
+  // GET UNIQUE SUBJECTS
+  // =====================================================
+
+  const subjects = [
+    ...new Set(
+      faculty
+        .map((f) => f.subject)
+        .filter((subject) => subject && subject.trim() !== ""),
+    ),
+  ];
+
+  // =====================================================
+  // FACULTY STATISTICS
+  // =====================================================
+
+  const activeFaculty = faculty.filter(
+    (f) => f.is_active === true || f.is_active === 1,
+  ).length;
+
+  const inactiveFaculty = faculty.length - activeFaculty;
+
+  const totalSubjects = new Set(
+    faculty
+      .map((f) => f.subject)
+      .filter((subject) => subject && subject.trim() !== ""),
+  ).size;
+
+  // =====================================================
+  // FILTER FACULTY
+  // =====================================================
+
+  const filteredFaculty = faculty.filter((f) => {
+    const search = searchTerm.toLowerCase();
+
+    const matchesSearch =
+      (f.faculty_name || "").toLowerCase().includes(search) ||
+      (f.email || "").toLowerCase().includes(search) ||
+      (f.mobile_no || "").toLowerCase().includes(search) ||
+      (f.subject || "").toLowerCase().includes(search);
+
+    const matchesSubject =
+      selectedSubject === "All Subjects" || f.subject === selectedSubject;
+
+    return matchesSearch && matchesSubject;
+  });
 
   // =====================================================
   // START EDIT
@@ -57,9 +102,7 @@ export default function ManageFaculty() {
       email: facultyData.email || "",
       mobile_no: facultyData.mobile_no || "",
       subject: facultyData.subject || "",
-      is_active:
-        facultyData.is_active === true ||
-        facultyData.is_active === 1,
+      is_active: facultyData.is_active === true || facultyData.is_active === 1,
     });
   };
 
@@ -104,9 +147,7 @@ export default function ManageFaculty() {
       }
 
       // Find existing faculty
-      const existingFaculty = faculty.find(
-        (f) => f.id === id
-      );
+      const existingFaculty = faculty.find((f) => f.id === id);
 
       if (!existingFaculty) {
         alert("Faculty not found.");
@@ -117,26 +158,21 @@ export default function ManageFaculty() {
       const updatedFaculty = {
         ...existingFaculty,
 
-        faculty_name:
-          editFaculty.faculty_name.trim(),
+        faculty_name: editFaculty.faculty_name.trim(),
 
-        email:
-          editFaculty.email.trim(),
+        email: editFaculty.email.trim(),
 
-        mobile_no:
-          editFaculty.mobile_no.trim(),
+        mobile_no: editFaculty.mobile_no.trim(),
 
-        subject:
-          editFaculty.subject.trim(),
+        subject: editFaculty.subject.trim(),
 
-        is_active:
-          editFaculty.is_active,
+        is_active: editFaculty.is_active,
       };
 
       // PUT request to JSON Server
       await axios.put(
         `http://localhost:5000/tbl_faculty/${id}`,
-        updatedFaculty
+        updatedFaculty,
       );
 
       // Exit edit mode
@@ -156,10 +192,7 @@ export default function ManageFaculty() {
 
       alert("Faculty updated successfully!");
     } catch (error) {
-      console.error(
-        "Error updating faculty:",
-        error
-      );
+      console.error("Error updating faculty:", error);
 
       alert("Failed to update faculty.");
     }
@@ -187,7 +220,7 @@ export default function ManageFaculty() {
 
   const deleteFaculty = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this faculty member?"
+      "Are you sure you want to delete this faculty member?",
     );
 
     if (!confirmDelete) {
@@ -195,18 +228,13 @@ export default function ManageFaculty() {
     }
 
     try {
-      await axios.delete(
-        `http://localhost:5000/tbl_faculty/${id}`
-      );
+      await axios.delete(`http://localhost:5000/tbl_faculty/${id}`);
 
       await loaddata();
 
       alert("Faculty deleted successfully!");
     } catch (error) {
-      console.error(
-        "Error deleting faculty:",
-        error
-      );
+      console.error("Error deleting faculty:", error);
 
       alert("Failed to delete faculty.");
     }
@@ -215,10 +243,9 @@ export default function ManageFaculty() {
   return (
     <>
       <AdminSidebar />
-      <AdminHeader />
+      <Header />
 
-      <main className="manage-faculty">
-
+      <main className="manage-student">
         {/* =====================================================
             TOP HEADING
         ===================================================== */}
@@ -227,17 +254,12 @@ export default function ManageFaculty() {
           <div>
             <h1>Manage Faculty</h1>
 
-            <p>
-              View, manage and monitor all registered
-              faculty members.
-            </p>
+            <p>View, manage and monitor all registered faculty members.</p>
           </div>
 
           <button
-            className="add-faculty-btn"
-            onClick={() =>
-              navigate("/AddFaculty")
-            }
+            className="add-student-btn"
+            onClick={() => navigate("/AddFaculty")}
           >
             <span>+</span>
             Add Faculty
@@ -245,355 +267,260 @@ export default function ManageFaculty() {
         </div>
 
         {/* =====================================================
+    FACULTY STATISTICS
+===================================================== */}
+
+        <div className="student-stats">
+          {/* TOTAL FACULTY */}
+
+          <div className="stat-card purple">
+            <div className="stat-icon">👥</div>
+
+            <div>
+              <span>Total Faculty</span>
+
+              <strong>{faculty.length}</strong>
+            </div>
+          </div>
+
+          {/* ACTIVE FACULTY */}
+
+          <div className="stat-card green">
+            <div className="stat-icon">✓</div>
+
+            <div>
+              <span>Active Faculty</span>
+
+              <strong>{activeFaculty}</strong>
+            </div>
+          </div>
+
+          {/* SUBJECTS */}
+
+          <div className="stat-card orange">
+            <div className="stat-icon">🎓</div>
+
+            <div>
+              <span>Subjects</span>
+
+              <strong>{totalSubjects}</strong>
+            </div>
+          </div>
+
+          {/* INACTIVE FACULTY */}
+
+          <div className="stat-card blue">
+            <div className="stat-icon">⚠</div>
+
+            <div>
+              <span>Inactive Faculty</span>
+
+              <strong>{inactiveFaculty}</strong>
+            </div>
+          </div>
+        </div>
+
+        {/* =====================================================
             TABLE CARD
         ===================================================== */}
 
-        <section className="faculty-card">
-
+        <section className="student-card">
           {/* Toolbar */}
 
           <div className="table-toolbar">
-
             <div>
-              <h2>
-                All Faculty
-              </h2>
+              <h2>All Faculty</h2>
 
-              <p>
-                {faculty.length} faculty members
-                registered
-              </p>
+              <p>{filteredFaculty.length} faculty members registered</p>
             </div>
 
             <div className="toolbar-actions">
+              {/* SEARCH */}
 
               <div className="search-box">
-
                 <span>⌕</span>
 
                 <input
                   type="text"
                   placeholder="Search faculty..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-
               </div>
 
-              <select className="department-filter">
+              {/* SUBJECT FILTER */}
 
-                <option>
-                  All Departments
-                </option>
+              <select
+                className="course-filter"
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+              >
+                <option value="All Subjects">All Subjects</option>
 
-                <option>
-                  Computer Science
-                </option>
-
-                <option>
-                  Information Technology
-                </option>
-
-                <option>
-                  Management
-                </option>
-
-                <option>
-                  Computer Applications
-                </option>
-
+                {subjects.map((subject, index) => (
+                  <option key={index} value={subject}>
+                    {subject}
+                  </option>
+                ))}
               </select>
-
             </div>
-
           </div>
 
           {/* =====================================================
               FACULTY TABLE
           ===================================================== */}
 
-          <div className="faculty-table-wrapper">
-
-            <table className="faculty-table">
-
+          <div className="student-table-wrapper">
+            <table className="student-table">
               <thead>
-
                 <tr>
-
-                  <th>
-                    FACULTY
-                  </th>
-
-                  <th>
-                    EMAIL
-                  </th>
-
-                  <th>
-                    MOBILE
-                  </th>
-
-                  <th>
-                    SUBJECT
-                  </th>
-
-                  <th>
-                    STATUS
-                  </th>
-
-                  <th>
-                    ACTION
-                  </th>
-
+                  <th>FACULTY</th>
+                  <th>EMAIL</th>
+                  <th>MOBILE</th>
+                  <th>SUBJECT</th>
+                  <th>STATUS</th>
+                  <th>ACTION</th>
                 </tr>
-
               </thead>
 
               <tbody>
-
-                {faculty.length > 0 ? (
-
-                  faculty.map((f) => (
-
+                {filteredFaculty.length > 0 ? (
+                  filteredFaculty.map((f) => (
                     <tr
                       key={f.id}
-                      className={
-                        editId === f.id
-                          ? "editing-row"
-                          : ""
-                      }
+                      className={editId === f.id ? "editing-row" : ""}
                     >
-
-                      {/* =================================================
-                          FACULTY NAME
-                      ================================================= */}
+                      {/* FACULTY NAME */}
 
                       <td>
-
-                        <div className="faculty-info">
-
-                          <div
-                            className="student-avatar"
-                            style={{
-                              background:
-                                f.color ||
-                                "#6c63ff",
-                            }}
-                          >
+                        <div className="student-info">
+                          <div className="student-avatar">
                             {f.faculty_name
-                              ? f.faculty_name
-                                  .charAt(0)
-                                  .toUpperCase()
+                              ? f.faculty_name.charAt(0).toUpperCase()
                               : "?"}
                           </div>
 
                           <div>
-
                             {editId === f.id ? (
-
                               <input
                                 type="text"
                                 name="faculty_name"
                                 className="edit-input"
                                 placeholder="Faculty name"
-                                value={
-                                  editFaculty.faculty_name
-                                }
-                                onChange={
-                                  handleEditChange
-                                }
+                                value={editFaculty.faculty_name}
+                                onChange={handleEditChange}
                               />
-
                             ) : (
-
                               <strong>
-                                {f.faculty_name ||
-                                  "Unknown Faculty"}
+                                {f.faculty_name || "Unknown Faculty"}
                               </strong>
-
                             )}
-
                           </div>
-
                         </div>
-
                       </td>
 
-                      {/* =================================================
-                          EMAIL
-                      ================================================= */}
+                      {/* EMAIL */}
 
                       <td>
-
                         {editId === f.id ? (
-
                           <input
                             type="email"
                             name="email"
                             className="edit-input"
                             placeholder="Email"
-                            value={
-                              editFaculty.email
-                            }
-                            onChange={
-                              handleEditChange
-                            }
+                            value={editFaculty.email}
+                            onChange={handleEditChange}
                           />
-
                         ) : (
-
-                          <span>
-                            {f.email ||
-                              "No email"}
-                          </span>
-
+                          <span>{f.email || "No email"}</span>
                         )}
-
                       </td>
 
-                      {/* =================================================
-                          MOBILE
-                      ================================================= */}
+                      {/* MOBILE */}
 
                       <td>
-
                         {editId === f.id ? (
-
                           <input
                             type="text"
                             name="mobile_no"
                             className="edit-input"
                             placeholder="Mobile number"
-                            value={
-                              editFaculty.mobile_no
-                            }
-                            onChange={
-                              handleEditChange
-                            }
+                            value={editFaculty.mobile_no}
+                            onChange={handleEditChange}
                           />
-
                         ) : (
-
-                          <span>
-                            {f.mobile_no ||
-                              "No mobile"}
-                          </span>
-
+                          <span>{f.mobile_no || "No mobile"}</span>
                         )}
-
                       </td>
 
-                      {/* =================================================
-                          SUBJECT
-                      ================================================= */}
+                      {/* SUBJECT */}
 
                       <td>
-
                         {editId === f.id ? (
-
                           <input
                             type="text"
                             name="subject"
                             className="edit-input"
                             placeholder="Subject"
-                            value={
-                              editFaculty.subject
-                            }
-                            onChange={
-                              handleEditChange
-                            }
+                            value={editFaculty.subject}
+                            onChange={handleEditChange}
                           />
-
                         ) : (
-
                           <span className="course-badge">
-                            {f.subject ||
-                              "N/A"}
+                            {f.subject || "N/A"}
                           </span>
-
                         )}
-
                       </td>
 
-                      {/* =================================================
-                          STATUS
-                      ================================================= */}
+                      {/* STATUS */}
 
                       <td>
-
                         {editId === f.id ? (
-
                           <select
                             name="is_active"
                             className="edit-input"
                             value={
-                              editFaculty.is_active
-                                ? "active"
-                                : "inactive"
+                              editFaculty.is_active ? "active" : "inactive"
                             }
                             onChange={(e) =>
-                              setEditFaculty(
-                                (prev) => ({
-                                  ...prev,
-                                  is_active:
-                                    e.target.value ===
-                                    "active",
-                                })
-                              )
+                              setEditFaculty((prev) => ({
+                                ...prev,
+                                is_active: e.target.value === "active",
+                              }))
                             }
                           >
-
-                            <option value="active">
-                              Active
-                            </option>
-
-                            <option value="inactive">
-                              Inactive
-                            </option>
-
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
                           </select>
-
                         ) : (
-
                           <span
                             className={`status ${
-                              f.is_active === true ||
-                              f.is_active === 1
+                              f.is_active === true || f.is_active === 1
                                 ? "active"
                                 : "inactive"
                             }`}
                           >
-
                             <i></i>
 
-                            {f.is_active === true ||
-                            f.is_active === 1
+                            {f.is_active === true || f.is_active === 1
                               ? "Active"
                               : "Inactive"}
-
                           </span>
-
                         )}
-
                       </td>
 
-                      {/* =================================================
-                          ACTIONS
-                      ================================================= */}
+                      {/* ACTIONS */}
 
                       <td>
-
                         <div className="action-buttons">
-
                           {editId === f.id ? (
-
                             <>
-
                               {/* SAVE */}
 
                               <button
                                 className="icon-btn save"
                                 title="Save"
-                                onClick={() =>
-                                  saveEdit(f.id)
-                                }
+                                onClick={() => saveEdit(f.id)}
                               >
                                 ✓
                               </button>
@@ -603,27 +530,19 @@ export default function ManageFaculty() {
                               <button
                                 className="icon-btn cancel"
                                 title="Cancel"
-                                onClick={
-                                  cancelEdit
-                                }
+                                onClick={cancelEdit}
                               >
                                 ✕
                               </button>
-
                             </>
-
                           ) : (
-
                             <>
-
                               {/* EDIT */}
 
                               <button
                                 className="icon-btn edit"
                                 title="Edit"
-                                onClick={() =>
-                                  startEdit(f)
-                                }
+                                onClick={() => startEdit(f)}
                               >
                                 ✎
                               </button>
@@ -633,33 +552,19 @@ export default function ManageFaculty() {
                               <button
                                 className="icon-btn delete"
                                 title="Delete"
-                                onClick={() =>
-                                  deleteFaculty(
-                                    f.id
-                                  )
-                                }
+                                onClick={() => deleteFaculty(f.id)}
                               >
                                 🗑
                               </button>
-
                             </>
-
                           )}
-
                         </div>
-
                       </td>
-
                     </tr>
-
                   ))
-
                 ) : (
-
                   <tr>
-
                     <td colSpan="6">
-
                       <div
                         style={{
                           textAlign: "center",
@@ -668,24 +573,16 @@ export default function ManageFaculty() {
                       >
                         No faculty found.
                       </div>
-
                     </td>
-
                   </tr>
-
                 )}
-
               </tbody>
-
             </table>
-
           </div>
-
         </section>
-
       </main>
 
-      <AdminFooter />
+      <Footer />
     </>
   );
 }

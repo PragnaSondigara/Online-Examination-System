@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import "./AddFaculty.css";
-import AdminHeader from "./AdminHeader";
+import "./AddStudent.css";
 import AdminSidebar from "./AdminSidebar";
+import Header from "./Header";
 import { useState } from "react";
 import axios from "axios";
 
@@ -13,6 +13,23 @@ export function AddFaculty() {
   const [mno, setMno] = useState("");
   const [subject, setSubject] = useState("");
   const [password, setPassword] = useState("");
+  function handleNameChange(e) {
+        const value = e.target.value;
+        setFname(value);
+
+        const cleanName = value
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, ".");
+
+        if (cleanName) {
+            setEmail(cleanName + "@examhub.com");
+            setPassword(value.replace(/\s+/g, "") + "@123");
+        } else {
+            setEmail("");
+            setPassword("");
+        }
+    }
 
   // Add faculty
   const addFaculty = async (e) => {
@@ -59,9 +76,8 @@ export function AddFaculty() {
 
   return (
     <>
+      <Header />
       <AdminSidebar />
-      <AdminHeader />
-
       <div className="student-form-overlay">
         <div className="student-form-modal">
           {/* Header */}
@@ -89,7 +105,7 @@ export function AddFaculty() {
                 type="text"
                 placeholder="Enter faculty name"
                 value={fname}
-                onChange={(e) => setFname(e.target.value)}
+                onChange={handleNameChange}
               />
             </div>
 
@@ -100,8 +116,7 @@ export function AddFaculty() {
               <input
                 type="email"
                 placeholder="Enter email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={email} readOnly
               />
             </div>
 
@@ -136,8 +151,7 @@ export function AddFaculty() {
               <input
                 type="password"
                 placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={password} readOnly
               />
             </div>
 

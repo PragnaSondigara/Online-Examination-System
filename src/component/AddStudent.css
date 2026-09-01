@@ -21,7 +21,6 @@
   backdrop-filter: blur(4px);
 }
 
-
 /* =========================================
    FORM MODAL
 ========================================= */
@@ -36,10 +35,8 @@
 
   overflow: hidden;
 
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
 }
-
 
 /* =========================================
    HEADER
@@ -72,7 +69,6 @@
 
   font-size: 12px;
 }
-
 
 /* =========================================
    CLOSE BUTTON
@@ -108,7 +104,6 @@
   color: #e05a5a;
 }
 
-
 /* =========================================
    FORM
 ========================================= */
@@ -116,7 +111,6 @@
 .student-form {
   padding: 25px;
 }
-
 
 /* =========================================
    FORM GROUP
@@ -137,7 +131,6 @@
 
   font-weight: 700;
 }
-
 
 /* =========================================
    INPUT & SELECT
@@ -178,10 +171,8 @@
 
   background: #ffffff;
 
-  box-shadow:
-    0 0 0 3px rgba(53, 199, 154, 0.1);
+  box-shadow: 0 0 0 3px rgba(53, 199, 154, 0.1);
 }
-
 
 /* =========================================
    BUTTONS
@@ -196,7 +187,6 @@
 
   margin-top: 24px;
 }
-
 
 /* CANCEL */
 
@@ -226,7 +216,6 @@
   background: #f5f6f8;
 }
 
-
 /* ADD */
 
 .student-submit-btn {
@@ -238,11 +227,7 @@
 
   border-radius: 9px;
 
-  background: linear-gradient(
-    135deg,
-    #35c79a,
-    #5ed9b3
-  );
+  background: linear-gradient(135deg, #35c79a, #5ed9b3);
 
   color: #ffffff;
 
@@ -252,8 +237,7 @@
 
   cursor: pointer;
 
-  box-shadow:
-    0 6px 15px rgba(53, 199, 154, 0.22);
+  box-shadow: 0 6px 15px rgba(53, 199, 154, 0.22);
 
   transition: 0.2s ease;
 }
@@ -261,17 +245,14 @@
 .student-submit-btn:hover {
   transform: translateY(-1px);
 
-  box-shadow:
-    0 8px 20px rgba(53, 199, 154, 0.3);
+  box-shadow: 0 8px 20px rgba(53, 199, 154, 0.3);
 }
-
 
 /* =========================================
    MOBILE
 ========================================= */
 
 @media (max-width: 600px) {
-
   .student-form-overlay {
     padding: 12px;
   }
@@ -295,5 +276,568 @@
   .student-cancel-btn,
   .student-submit-btn {
     width: 100%;
+  }
+}
+/* =========================================================
+   ADD EXAM SCHEDULE - OVERLAY
+========================================================= */
+
+.student-form-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(25, 35, 50, 0.58);
+  backdrop-filter: blur(5px);
+
+  overflow-y: auto;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.student-form-modal {
+  width: 100%;
+  max-width: 720px;
+
+  max-height: 92vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+
+  animation: modalOpen 0.25s ease;
+}
+
+/* =========================================================
+   MODAL ANIMATION
+========================================================= */
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.student-form-header {
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 26px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #edf0f4;
+
+  flex-shrink: 0;
+}
+
+.student-form-header h2 {
+  margin: 0;
+
+  color: #26364c;
+
+  font-size: 21px;
+  font-weight: 750;
+
+  line-height: 1.3;
+}
+
+.student-form-header p {
+  margin: 5px 0 0;
+
+  color: #98a2b1;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.student-form-close {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #f4f6f8;
+
+  color: #667386;
+
+  font-size: 23px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.student-form-close:hover {
+  background: #fff0f0;
+  color: #e05252;
+
+  transform: rotate(3deg);
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.student-form {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 18px;
+  row-gap: 0;
+
+  padding: 24px 26px 26px;
+
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #d7dde5 transparent;
+}
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+  min-width: 0;
+
+  margin-bottom: 17px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #46566b;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   INPUT + SELECT
+========================================================= */
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  height: 44px;
+
+  box-sizing: border-box;
+
+  padding: 0 13px;
+
+  border: 1px solid #dfe4eb;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #fafbfc;
+
+  color: #33445a;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.form-group input::placeholder {
+  color: #a4adba;
+  font-weight: 400;
+}
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.form-group select {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #35c79a;
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(53, 199, 154, 0.1);
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: #cbd3dd;
+}
+
+/* =========================================================
+   DATE / TIME
+========================================================= */
+
+.form-group input[type="date"],
+.form-group input[type="time"] {
+  cursor: pointer;
+}
+
+/* =========================================================
+   NUMBER INPUT
+========================================================= */
+
+.form-group input[type="number"] {
+  appearance: textfield;
+}
+
+.form-group input[type="number"]::-webkit-inner-spin-button,
+.form-group input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+/* =========================================================
+   STATUS FIELD
+========================================================= */
+
+.form-group select {
+  color: #33445a;
+}
+
+/* =========================================================
+   FORM BUTTON AREA
+========================================================= */
+
+.student-form-buttons {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 6px;
+  padding-top: 19px;
+
+  border-top: 1px solid #edf0f4;
+}
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.student-cancel-btn {
+  height: 41px;
+
+  min-width: 90px;
+
+  padding: 0 19px;
+
+  border: 1px solid #dfe4eb;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #657286;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.student-cancel-btn:hover {
+  background: #f5f6f8;
+
+  border-color: #d3d9e1;
+
+  color: #46566b;
+}
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.student-submit-btn {
+  height: 41px;
+
+  min-width: 125px;
+
+  padding: 0 21px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: linear-gradient(135deg, #35c79a, #5ed9b3);
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 15px rgba(53, 199, 154, 0.22);
+
+  transition: all 0.2s ease;
+}
+
+.student-submit-btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 20px rgba(53, 199, 154, 0.3);
+}
+
+.student-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   DISABLED BUTTON
+========================================================= */
+
+.student-submit-btn:disabled,
+.student-cancel-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.student-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.student-form::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.student-form::-webkit-scrollbar-thumb {
+  background: #d7dde5;
+
+  border-radius: 10px;
+}
+
+.student-form::-webkit-scrollbar-thumb:hover {
+  background: #bdc6d1;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+  .student-form-overlay {
+    padding: 15px;
+  }
+
+  .student-form-modal {
+    max-width: 100%;
+    max-height: 94vh;
+
+    border-radius: 15px;
+  }
+
+  .student-form-header {
+    padding: 18px 20px;
+  }
+
+  .student-form {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+  .student-form-overlay {
+    align-items: flex-start;
+
+    padding: 10px;
+  }
+
+  .student-form-modal {
+    width: 100%;
+
+    max-height: calc(100vh - 20px);
+
+    border-radius: 14px;
+  }
+
+  .student-form-header {
+    min-height: 68px;
+
+    padding: 16px 17px;
+  }
+
+  .student-form-header h2 {
+    font-size: 18px;
+  }
+
+  .student-form-header p {
+    font-size: 11px;
+  }
+
+  .student-form-close {
+    width: 33px;
+    height: 33px;
+
+    font-size: 21px;
+  }
+
+  /* One column on mobile */
+
+  .student-form {
+    grid-template-columns: 1fr;
+
+    padding: 18px 17px 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 43px;
+
+    font-size: 13px;
+  }
+
+  /* Buttons */
+
+  .student-form-buttons {
+    grid-column: 1;
+
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    gap: 9px;
+
+    margin-top: 5px;
+    padding-top: 17px;
+  }
+
+  .student-cancel-btn,
+  .student-submit-btn {
+    width: 100%;
+
+    height: 42px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+  .student-form-overlay {
+    padding: 6px;
+  }
+
+  .student-form-modal {
+    max-height: calc(100vh - 12px);
+  }
+
+  .student-form-header {
+    padding: 14px;
+  }
+
+  .student-form {
+    padding: 16px 14px 18px;
+  }
+
+  .student-form-header h2 {
+    font-size: 17px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 41px;
+
+    padding: 0 11px;
+
+    font-size: 12px;
   }
 }

@@ -1,39 +1,26 @@
 import "./FacultyDashboard.css";
-import AdminSidebar from "./FacultySider";
-import AdminHeader from "./AdminHeader";
-import AdminFooter from "./AdminFooter";
+import Header from "./Header";
+import Footer from "./Footer";
 import { Link } from "react-router-dom";
+import FacultySider from "./FacultySider";
 
 export default function FacultyDashboard() {
   return (
     <>
-      <AdminSidebar />
-      <AdminHeader />
+      <FacultySider />
+      <Header />
 
       <main className="manage-student">
         {/* Top Heading */}
         <div className="page-top">
           <div>
             <h1>Faculty Dashboard</h1>
-            <p>
-              Manage exams, questions, results, and student feedback.
-            </p>
+            <p>Manage exams, questions, results, and student feedback.</p>
           </div>
-        </div>
-
-        {/* Welcome Tagline */}
-        <div
-          className="dashboard-tagline"
-          style={{ marginBottom: "24px" }}
-        >
-          <span className="dashboard-tag">
-            ✦ Smart • Secure • Online
-          </span>
         </div>
 
         {/* Statistics Section */}
         <div className="student-stats">
-
           {/* Schedule Exams */}
           <div className="stat-card purple">
             <div className="stat-icon">📅</div>
@@ -80,16 +67,9 @@ export default function FacultyDashboard() {
             </div>
           </div>
 
-          <div
-            className="dashboard-cards"
-            style={{ padding: "20px" }}
-          >
-
+          <div className="dashboard-cards" style={{ padding: "20px" }}>
             {/* Schedule Exam */}
-            <Link
-              to="/ScheduleExam"
-              className="dashboard-card dashboard-exam"
-            >
+            <Link to="/ScheduleExam" className="dashboard-card dashboard-exam">
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">📅</div>
                 <div className="dashboard-card-arrow">→</div>
@@ -97,9 +77,7 @@ export default function FacultyDashboard() {
 
               <h3>Schedule Exam</h3>
 
-              <p>
-                Create and schedule online examinations for students.
-              </p>
+              <p>Create and schedule online examinations for students.</p>
             </Link>
 
             {/* Manage Question */}
@@ -114,16 +92,11 @@ export default function FacultyDashboard() {
 
               <h3>Manage Question</h3>
 
-              <p>
-                Add, edit, view and manage examination questions.
-              </p>
+              <p>Add, edit, view and manage examination questions.</p>
             </Link>
 
             {/* View Result */}
-            <Link
-              to="/ViewResult"
-              className="dashboard-card dashboard-result"
-            >
+            <Link to="/ViewResult" className="dashboard-card dashboard-result">
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">📋</div>
                 <div className="dashboard-card-arrow">→</div>
@@ -131,9 +104,7 @@ export default function FacultyDashboard() {
 
               <h3>View Result</h3>
 
-              <p>
-                View student examination results and performance.
-              </p>
+              <p>View student examination results and performance.</p>
             </Link>
 
             {/* View Feedback */}
@@ -148,16 +119,13 @@ export default function FacultyDashboard() {
 
               <h3>View Feedback</h3>
 
-              <p>
-                Review feedback and suggestions submitted by students.
-              </p>
+              <p>Review feedback and suggestions submitted by students.</p>
             </Link>
-
           </div>
         </section>
       </main>
 
-      <AdminFooter />
+      <Footer />
     </>
   );
 }

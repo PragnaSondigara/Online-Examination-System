@@ -7,7 +7,7 @@ export default function StudentSider() {
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="logo-circle">S</div>
-        <span>Faculty Portal</span>
+        <span>Student Portal</span>
       </div>
 
       {/* Navigation */}
@@ -18,23 +18,13 @@ export default function StudentSider() {
         </Link>
 
         <Link to="#" className="nav-item">
-          <span className="nav-icon">🗓️</span>
-          <span>Schedul Exam</span>
+          <span className="nav-icon">📅</span>
+          <span>View Exam Schedul</span>
         </Link>
 
         <Link to="#" className="nav-item">
-          <span className="nav-icon">❓</span>
-          <span>Manage Question</span>
-        </Link>
-
-        <Link to="#" className="nav-item">
-          <span className="nav-icon">📋</span>
+          <span className="nav-icon">📝</span>
           <span>View Result</span>
-        </Link>
-
-        <Link to="#" className="nav-item">
-          <span className="nav-icon">💬</span>
-          <span>View Feedback</span>
         </Link>
       </nav>
 

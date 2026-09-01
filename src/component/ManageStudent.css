@@ -25,7 +25,6 @@
   overflow-x: hidden;
 }
 
-
 /* =========================================
    TOP SECTION
 ========================================= */
@@ -60,7 +59,6 @@
   font-size: 14px;
 }
 
-
 /* =========================================
    ADD STUDENT BUTTON
 ========================================= */
@@ -81,11 +79,7 @@
 
   padding: 13px 19px;
 
-  background: linear-gradient(
-    135deg,
-    #35c79a,
-    #5ed9b3
-  );
+  background: linear-gradient(135deg, #35c79a, #5ed9b3);
 
   color: white;
 
@@ -94,8 +88,7 @@
 
   cursor: pointer;
 
-  box-shadow:
-    0 8px 20px rgba(53, 199, 154, 0.25);
+  box-shadow: 0 8px 20px rgba(53, 199, 154, 0.25);
 
   transition: 0.25s ease;
 }
@@ -109,10 +102,8 @@
 .add-student-btn:hover {
   transform: translateY(-2px);
 
-  box-shadow:
-    0 10px 25px rgba(53, 199, 154, 0.3);
+  box-shadow: 0 10px 25px rgba(53, 199, 154, 0.3);
 }
-
 
 /* =========================================
    STAT CARDS
@@ -121,8 +112,7 @@
 .student-stats {
   display: grid;
 
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 
   gap: 18px;
 
@@ -154,35 +144,15 @@
 
   background: rgba(255, 255, 255, 0.9);
 
-  box-shadow:
-    0 8px 25px rgba(39, 54, 75, 0.055);
+  box-shadow: 0 8px 25px rgba(39, 54, 75, 0.055);
 
   transition: 0.25s ease;
-}
-
-.stat-card::after {
-  content: "";
-
-  position: absolute;
-
-  right: -25px;
-  bottom: -35px;
-
-  width: 90px;
-  height: 90px;
-
-  border-radius: 50%;
-
-  background: currentColor;
-
-  opacity: 0.05;
 }
 
 .stat-card:hover {
   transform: translateY(-3px);
 
-  box-shadow:
-    0 12px 30px rgba(39, 54, 75, 0.09);
+  box-shadow: 0 12px 30px rgba(39, 54, 75, 0.09);
 }
 
 .stat-icon {
@@ -223,44 +193,6 @@
   font-weight: 750;
 }
 
-
-/* =========================================
-   STAT CARD COLORS
-========================================= */
-
-.stat-card.purple {
-  color: #6c63ff;
-}
-
-.stat-card.purple .stat-icon {
-  background: #efedff;
-}
-
-.stat-card.green {
-  color: #20bf8a;
-}
-
-.stat-card.green .stat-icon {
-  background: #e7faf3;
-}
-
-.stat-card.orange {
-  color: #ff9f43;
-}
-
-.stat-card.orange .stat-icon {
-  background: #fff3e5;
-}
-
-.stat-card.blue {
-  color: #4c8bf5;
-}
-
-.stat-card.blue .stat-icon {
-  background: #eaf2ff;
-}
-
-
 /* =========================================
    MAIN STUDENT CARD
 ========================================= */
@@ -278,10 +210,8 @@
 
   background: #ffffff;
 
-  box-shadow:
-    0 10px 35px rgba(39, 54, 75, 0.065);
+  box-shadow: 0 10px 35px rgba(39, 54, 75, 0.065);
 }
-
 
 /* =========================================
    TABLE TOOLBAR
@@ -333,7 +263,6 @@
   flex-shrink: 0;
 }
 
-
 /* =========================================
    SEARCH BOX
 ========================================= */
@@ -364,8 +293,7 @@
 
   background: #ffffff;
 
-  box-shadow:
-    0 0 0 3px rgba(53, 199, 154, 0.08);
+  box-shadow: 0 0 0 3px rgba(53, 199, 154, 0.08);
 }
 
 .search-box span {
@@ -398,7 +326,6 @@
   color: #a4adba;
 }
 
-
 /* =========================================
    SEMESTER FILTER
 ========================================= */
@@ -427,7 +354,6 @@
   cursor: pointer;
 }
 
-
 /* =========================================
    TABLE WRAPPER
 ========================================= */
@@ -444,7 +370,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-
 /* =========================================
    TABLE
 ========================================= */
@@ -458,7 +383,6 @@
 
   table-layout: fixed;
 }
-
 
 /* =========================================
    TABLE COLUMN WIDTHS
@@ -500,7 +424,6 @@
   width: 14%;
 }
 
-
 /* =========================================
    TABLE HEADER
 ========================================= */
@@ -525,7 +448,6 @@
 
   white-space: nowrap;
 }
-
 
 /* =========================================
    TABLE BODY
@@ -563,7 +485,6 @@
   border-bottom: none;
 }
 
-
 /* =========================================
    STUDENT INFORMATION
 ========================================= */
@@ -585,27 +506,17 @@
 }
 
 .student-avatar {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
-  height: 40px;
-
-  min-width: 40px;
-
+  display: grid;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
   flex-shrink: 0;
-
-  border-radius: 12px;
-
-  color: white;
-
+  place-items: center;
+  border-radius: 50%;
+  background: #e4f8f0 !important;
+  color: #20a878;
   font-size: 14px;
-  font-weight: 750;
-
-  box-shadow:
-    0 5px 12px rgba(0, 0, 0, 0.08);
+  font-weight: 700;
 }
 
 .student-info strong {
@@ -632,7 +543,6 @@
   font-size: 11px;
 }
 
-
 /* =========================================
    EMAIL
 ========================================= */
@@ -653,7 +563,6 @@
   white-space: nowrap;
 }
 
-
 /* =========================================
    MOBILE NUMBER
 ========================================= */
@@ -661,7 +570,6 @@
 .student-table td:nth-child(3) {
   white-space: nowrap;
 }
-
 
 /* =========================================
    SEMESTER BADGE
@@ -684,7 +592,6 @@
 
   white-space: nowrap;
 }
-
 
 /* =========================================
    STATUS
@@ -726,8 +633,7 @@
 .status.active i {
   background: #20bf8a;
 
-  box-shadow:
-    0 0 0 3px rgba(32, 191, 138, 0.12);
+  box-shadow: 0 0 0 3px rgba(32, 191, 138, 0.12);
 }
 
 .status.inactive {
@@ -739,7 +645,6 @@
 .status.inactive i {
   background: #9aa1aa;
 }
-
 
 /* =========================================
    ACTION BUTTONS
@@ -813,78 +718,6 @@
   color: white;
 }
 
-
-/* =========================================
-   TABLE FOOTER
-========================================= */
-
-.table-footer {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 15px;
-
-  padding: 17px 23px;
-
-  border-top: 1px solid #edf0f4;
-
-  color: #98a2b1;
-
-  font-size: 11px;
-
-  box-sizing: border-box;
-}
-
-.pagination {
-  display: flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  flex-shrink: 0;
-}
-
-.pagination button {
-  width: 29px;
-  height: 29px;
-
-  border: 1px solid #e7eaf0;
-
-  border-radius: 7px;
-
-  background: white;
-
-  color: #778396;
-
-  cursor: pointer;
-
-  font-size: 11px;
-}
-
-.pagination button:hover:not(:disabled) {
-  border-color: #2aa982;
-
-  color: #2aa982;
-}
-
-.pagination button:disabled {
-  opacity: 0.4;
-
-  cursor: not-allowed;
-}
-
-.pagination .current-page {
-  border-color: #35c79a;
-
-  background: #35c79a;
-
-  color: white;
-}
-
-
 /* =========================================
    LARGE SCREEN
 ========================================= */
@@ -913,7 +746,6 @@
   }
 }
 
-
 /* =========================================
    TABLET
 ========================================= */
@@ -924,15 +756,11 @@
 
     margin-left: 250px;
 
-    padding:
-      105px
-      20px
-      40px;
+    padding: 105px 20px 40px;
   }
 
   .student-stats {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .table-toolbar {
@@ -948,7 +776,6 @@
   }
 }
 
-
 /* =========================================
    MOBILE
 ========================================= */
@@ -959,10 +786,7 @@
 
     margin-left: 0;
 
-    padding:
-      90px
-      16px
-      40px;
+    padding: 90px 16px 40px;
   }
 
   .page-top {
@@ -982,8 +806,7 @@
   }
 
   .student-stats {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 10px;
   }
@@ -1034,17 +857,13 @@
   }
 }
 
-
 /* =========================================
    SMALL MOBILE
 ========================================= */
 
 @media (max-width: 480px) {
   .manage-student {
-    padding:
-      85px
-      12px
-      30px;
+    padding: 85px 12px 30px;
   }
 
   .student-stats {
@@ -1101,20 +920,17 @@
     background 0.2s ease;
 }
 
-
 /* Placeholder */
 
 .edit-input::placeholder {
   color: #a4adba;
 }
 
-
 /* Hover */
 
 .edit-input:hover {
   border-color: #c5ccd6;
 }
-
 
 /* Focus */
 
@@ -1123,10 +939,8 @@
 
   background: #ffffff;
 
-  box-shadow:
-    0 0 0 3px rgba(53, 199, 154, 0.10);
+  box-shadow: 0 0 0 3px rgba(53, 199, 154, 0.1);
 }
-
 
 /* Name */
 
@@ -1134,20 +948,17 @@
   min-width: 0;
 }
 
-
 /* Email */
 
 .email-input {
   min-width: 0;
 }
 
-
 /* Mobile */
 
 .mobile-input {
   min-width: 0;
 }
-
 
 /* Semester Select */
 
@@ -1157,7 +968,6 @@
   cursor: pointer;
 }
 
-
 /* Status Select */
 
 .status-input {
@@ -1166,16 +976,13 @@
   cursor: pointer;
 }
 
-
 /* Select focus */
 
 select.edit-input:focus {
   border-color: #35c79a;
 
-  box-shadow:
-    0 0 0 3px rgba(53, 199, 154, 0.10);
+  box-shadow: 0 0 0 3px rgba(53, 199, 154, 0.1);
 }
-
 
 /* =========================================
    EDITING ROW
@@ -1184,7 +991,6 @@ select.edit-input:focus {
 .student-table tbody tr.editing-row {
   background: #fbfffd;
 }
-
 
 /* =========================================
    SAVE BUTTON
@@ -1205,7 +1011,6 @@ select.edit-input:focus {
 
   border-color: #20a879;
 }
-
 
 /* =========================================
    CANCEL BUTTON

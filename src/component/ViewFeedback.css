@@ -9,7 +9,6 @@
   padding: 25px;
 }
 
-
 /* =====================================================
    FEEDBACK CARD
 ===================================================== */
@@ -18,7 +17,7 @@
   background: #ffffff;
   border: 1px solid #e8edf2;
   border-radius: 14px;
-  padding: 20px;
+  /* padding: 20px; */
 
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 
@@ -36,7 +35,6 @@
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
 }
 
-
 /* =====================================================
    CARD HEADER
 ===================================================== */
@@ -52,7 +50,6 @@
 
   border-bottom: 1px solid #edf1f5;
 }
-
 
 /* =====================================================
    USER INFORMATION
@@ -73,7 +70,6 @@
   color: #334155;
 }
 
-
 /* =====================================================
    USER AVATAR
 ===================================================== */
@@ -84,11 +80,7 @@
 
   flex-shrink: 0;
 
-  background: linear-gradient(
-    135deg,
-    #4f46c8,
-    #7472e8
-  );
+  background: linear-gradient(135deg, #4f46c8, #7472e8);
 
   color: white;
 
@@ -101,7 +93,6 @@
   font-size: 15px;
   font-weight: bold;
 }
-
 
 /* =====================================================
    ROLE BADGE
@@ -118,7 +109,6 @@
   font-weight: 600;
 }
 
-
 /* Student */
 
 .feedback-user .student-role {
@@ -126,14 +116,12 @@
   color: #23806d;
 }
 
-
 /* Faculty */
 
 .feedback-user .faculty-role {
   background: #fff4df;
   color: #a06a12;
 }
-
 
 /* =====================================================
    STATUS
@@ -153,14 +141,12 @@
   font-weight: 600;
 }
 
-
 /* New */
 
 .feedback-card-header .new-status {
   background: #e4f8f3;
   color: #23806d;
 }
-
 
 /* Reviewed */
 
@@ -169,7 +155,6 @@
   color: #64748b;
 }
 
-
 /* =====================================================
    FEEDBACK MESSAGE
 ===================================================== */
@@ -177,7 +162,6 @@
 .feedback-card-message {
   padding: 18px 0;
 }
-
 
 /* Feedback Label */
 
@@ -196,7 +180,6 @@
   text-transform: uppercase;
 }
 
-
 /* Feedback Text */
 
 .feedback-card-message p {
@@ -208,7 +191,6 @@
 
   line-height: 1.7;
 }
-
 
 /* =====================================================
    CARD FOOTER
@@ -226,7 +208,6 @@
   border-top: 1px solid #edf1f5;
 }
 
-
 /* =====================================================
    DATE
 ===================================================== */
@@ -236,7 +217,6 @@
 
   font-size: 12px;
 }
-
 
 /* =====================================================
    VIEW BUTTON
@@ -269,7 +249,6 @@
 
   border-color: #cce8e1;
 }
-
 
 /* =====================================================
    NO FEEDBACK
@@ -315,22 +294,17 @@
   font-size: 13px;
 }
 
-
 /* =====================================================
    RESPONSIVE
 ===================================================== */
 
 @media (max-width: 1100px) {
-
   .feedback-card-grid {
     grid-template-columns: 1fr;
   }
-
 }
 
-
 @media (max-width: 768px) {
-
   .feedback-card-grid {
     grid-template-columns: 1fr;
 
@@ -350,14 +324,13 @@
 
     gap: 12px;
   }
-
 }
 /* =====================================================
    VIEW FEEDBACK MAIN CONTENT
 ===================================================== */
 
 .view-feedback {
-  margin-left: 280px;
+  margin-left: 310px;
   padding: 110px 35px 40px;
 
   min-height: 100vh;
@@ -366,7 +339,6 @@
 
   box-sizing: border-box;
 }
-
 
 /* =====================================================
    PAGE TITLE
@@ -397,7 +369,6 @@
   font-size: 14px;
 }
 
-
 /* =====================================================
    FEEDBACK CONTAINER
 ===================================================== */
@@ -413,7 +384,6 @@
 
   overflow: hidden;
 }
-
 
 /* =====================================================
    TOP SECTION
@@ -448,7 +418,6 @@
 
   color: #64748b;
 }
-
 
 /* =====================================================
    SEARCH + FILTER
@@ -518,7 +487,6 @@
   cursor: pointer;
 }
 
-
 /* =====================================================
    CARD GRID
 ===================================================== */
@@ -532,7 +500,6 @@
 
   padding: 25px;
 }
-
 
 /* =====================================================
    FEEDBACK CARD
@@ -563,7 +530,6 @@
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
 }
 
-
 /* =====================================================
    CARD HEADER
 ===================================================== */
@@ -581,7 +547,6 @@
 
   border-bottom: 1px solid #edf1f5;
 }
-
 
 /* =====================================================
    USER
@@ -606,33 +571,17 @@
 }
 
 .feedback-user .user-avatar {
+  display: grid;
   width: 42px;
-
   height: 42px;
-
   flex-shrink: 0;
-
-  background: linear-gradient(
-    135deg,
-    #4f46c8,
-    #7472e8
-  );
-
-  color: white;
-
-  border-radius: 11px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
+  place-items: center;
+  border-radius: 50%;
+  background: #e4f8f0;
+  color: #20a878;
   font-size: 15px;
-
-  font-weight: bold;
+  font-weight: 700;
 }
-
 
 /* =====================================================
    ROLE
@@ -661,7 +610,6 @@
 
   color: #a06a12;
 }
-
 
 /* =====================================================
    STATUS
@@ -694,7 +642,6 @@
 
   color: #64748b;
 }
-
 
 /* =====================================================
    FEEDBACK MESSAGE
@@ -730,7 +677,6 @@
   line-height: 1.7;
 }
 
-
 /* =====================================================
    FOOTER
 ===================================================== */
@@ -752,7 +698,6 @@
 
   font-size: 12px;
 }
-
 
 /* =====================================================
    VIEW BUTTON
@@ -783,7 +728,6 @@
 
   border-color: #cce8e1;
 }
-
 
 /* =====================================================
    NO DATA
@@ -829,13 +773,11 @@
   font-size: 13px;
 }
 
-
 /* =====================================================
    RESPONSIVE
 ===================================================== */
 
 @media (max-width: 1100px) {
-
   .view-feedback {
     margin-left: 230px;
 
@@ -847,9 +789,7 @@
   }
 }
 
-
 @media (max-width: 768px) {
-
   .view-feedback {
     margin-left: 0;
 

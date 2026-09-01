@@ -1,5 +1,4 @@
-import React from "react";
-import "./AdminFooter.css";
+import "./Footer.css";
 
 export default function Footer() {
   return (

@@ -1,16 +1,13 @@
 import "./ChangePassword.css";
-import changePasswordImage from "./image/p3.png";
 
 function ChangePassword() {
   return (
     <div className="change-password-page">
-
       <div className="change-password-container">
-
         {/* Left Side Image */}
         <div className="change-password-left">
           <img
-            src={changePasswordImage}
+            src="/image/p3.png"
             alt="Change Password"
             className="change-password-image"
           />
@@ -29,10 +26,7 @@ function ChangePassword() {
 
             <div className="password-input">
               <span>🔒</span>
-              <input
-                type="password"
-                placeholder="Enter current password"
-              />
+              <input type="password" placeholder="Enter current password" />
               <span>👁</span>
             </div>
           </div>
@@ -42,10 +36,7 @@ function ChangePassword() {
 
             <div className="password-input">
               <span>🔒</span>
-              <input
-                type="password"
-                placeholder="Enter new password"
-              />
+              <input type="password" placeholder="Enter new password" />
               <span>👁</span>
             </div>
           </div>
@@ -55,19 +46,13 @@ function ChangePassword() {
 
             <div className="password-input">
               <span>🔒</span>
-              <input
-                type="password"
-                placeholder="Confirm new password"
-              />
+              <input type="password" placeholder="Confirm new password" />
               <span>👁</span>
             </div>
           </div>
 
-          <button className="update-password-btn">
-            Update Password
-          </button>
+          <button className="update-password-btn">Update Password</button>
         </div>
-
       </div>
     </div>
   );

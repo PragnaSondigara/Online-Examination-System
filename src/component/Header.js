@@ -1,19 +1,12 @@
-import "./AdminHeader.css";
-
-export default function AdminHeader() {
+import "./Header.css";
+export default function Header() {
   return (
     <header className="admin-header">
-      
-
       <div className="header-right">
-        <button className="notification-btn">
-          🔔
-        </button>
+        <button className="notification-btn">🔔</button>
 
         <div className="admin-profile">
-          <div className="profile-circle">
-            S
-          </div>
+          <div className="profile-circle">S</div>
 
           <div className="profile-info">
             <span className="admin-name">Admin</span>

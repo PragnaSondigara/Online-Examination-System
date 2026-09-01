@@ -12,17 +12,17 @@ export default function FacultySider() {
 
       {/* Navigation */}
       <nav className="sidebar-nav">
-        <Link to="/AdminDashboard" className="nav-item active">
+        <Link to="/FacultyDashboard" className="nav-item active">
           <span className="nav-icon">⌂</span>
           <span>Dashboard</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/ScheduleManagement" className="nav-item">
           <span className="nav-icon">🗓️</span>
-          <span>Schedul Exam</span>
+          <span>Schedule Exam</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/ManageQuestion" className="nav-item">
           <span className="nav-icon">❓</span>
           <span>Manage Question</span>
         </Link>
@@ -32,7 +32,7 @@ export default function FacultySider() {
           <span>View Result</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/faculty/view-feedback" className="nav-item">
           <span className="nav-icon">💬</span>
           <span>View Feedback</span>
         </Link>

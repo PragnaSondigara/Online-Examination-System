@@ -1,0 +1,513 @@
+/* ==========================================
+   VIEW EXAM SCHEDULE PAGE
+========================================== */
+
+.exam-schedule-page {
+  margin-left: 273px;
+  padding: 110px 35px 50px;
+  background: #f5f9fb;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #12345b;
+}
+
+/* ==========================================
+   PAGE TOP
+========================================== */
+
+.exam-schedule-page .page-top {
+  margin-bottom: 25px;
+}
+
+.exam-schedule-page .page-top h1 {
+  margin: 0 0 7px;
+  font-size: 28px;
+  color: #12345b;
+}
+
+.exam-schedule-page .page-top p {
+  margin: 0;
+  font-size: 13px;
+  color: #81969f;
+}
+
+/* ==========================================
+   BANNER
+========================================== */
+
+.schedule-banner {
+  background: linear-gradient(110deg, #ffffff, #eefafa);
+
+  border: 1px solid #e3edef;
+  border-radius: 18px;
+
+  padding: 22px 25px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+
+  box-shadow: 0 5px 18px rgba(20, 70, 90, 0.04);
+}
+
+.banner-icon {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 15px;
+
+  background: #eee9ff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 25px;
+}
+
+.banner-content h2 {
+  margin: 0 0 6px;
+
+  font-size: 18px;
+
+  color: #12345b;
+}
+
+.banner-content p {
+  margin: 0;
+
+  font-size: 12px;
+
+  color: #81969f;
+}
+
+.exam-count {
+  margin-left: auto;
+
+  min-width: 80px;
+
+  border-left: 1px solid #dfe9eb;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding-left: 20px;
+}
+
+.exam-count strong {
+  font-size: 24px;
+
+  color: #087c91;
+}
+
+.exam-count span {
+  font-size: 10px;
+
+  color: #81969f;
+}
+
+/* ==========================================
+   EXAM GRID
+========================================== */
+
+.exam-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+/* ==========================================
+   EXAM CARD
+========================================== */
+
+.exam-card {
+  background: #ffffff;
+
+  border: 1px solid #e3edef;
+
+  border-radius: 18px;
+
+  padding: 22px;
+
+  box-shadow: 0 5px 18px rgba(20, 70, 90, 0.04);
+
+  transition: 0.3s;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.exam-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #b7dfe3;
+
+  box-shadow: 0 12px 30px rgba(20, 70, 90, 0.1);
+}
+
+/* ==========================================
+   CARD HEADER
+========================================== */
+
+.exam-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.exam-icon {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+}
+
+.icon-1 {
+  background: #eee9ff;
+}
+
+.icon-2 {
+  background: #e5f8ee;
+}
+
+.icon-3 {
+  background: #fff3db;
+}
+
+.icon-4 {
+  background: #e5f5ff;
+}
+
+.icon-5 {
+  background: #ffe9ef;
+}
+
+/* ==========================================
+   EXAM ID
+========================================== */
+
+.exam-id {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.exam-id span {
+  font-size: 9px;
+
+  color: #8a9da5;
+}
+
+.exam-id strong {
+  font-size: 14px;
+
+  color: #12345b;
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.status {
+  margin-left: auto;
+
+  padding: 7px 11px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+.status.active {
+  background: #e7f8ee;
+
+  color: #20844b;
+}
+
+.status.inactive {
+  background: #f1f3f4;
+
+  color: #7b878c;
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.exam-title {
+  border-bottom: 1px solid #edf2f3;
+
+  padding-bottom: 16px;
+
+  margin-bottom: 16px;
+}
+
+.exam-title h3 {
+  margin: 0 0 6px;
+
+  font-size: 17px;
+
+  color: #12345b;
+}
+
+.exam-title p {
+  margin: 0;
+
+  font-size: 12px;
+
+  color: #087c91;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   INFORMATION GRID
+========================================== */
+
+.exam-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 10px;
+}
+
+.exam-info-box {
+  background: #f8fbfc;
+
+  border: 1px solid #edf2f3;
+
+  border-radius: 10px;
+
+  padding: 11px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+.info-icon {
+  width: 30px;
+  height: 30px;
+
+  background: #ffffff;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+}
+
+.exam-info-box div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.exam-info-box span {
+  font-size: 9px;
+
+  color: #8a9da5;
+}
+
+.exam-info-box strong {
+  font-size: 11px;
+
+  color: #12345b;
+}
+
+/* ==========================================
+   MARKS SECTION
+========================================== */
+
+.marks-section {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 15px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #edf2f3;
+}
+
+.marks-section div {
+  flex: 1;
+
+  background: #f7fafb;
+
+  border-radius: 9px;
+
+  padding: 10px 12px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.marks-section span {
+  font-size: 10px;
+
+  color: #81969f;
+}
+
+.marks-section strong {
+  font-size: 13px;
+
+  color: #087c91;
+}
+
+/* ==========================================
+   CARD FOOTER
+========================================== */
+
+.exam-card-footer {
+  margin-top: 15px;
+
+  padding-top: 13px;
+
+  border-top: 1px solid #edf2f3;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.exam-card-footer span:first-child {
+  font-size: 10px;
+
+  color: #8a9da5;
+}
+
+.card-arrow {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  background: #eff8f9;
+
+  color: #087c91;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
+}
+
+.exam-card:hover .card-arrow {
+  background: #087c91;
+
+  color: white;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1050px) {
+  .exam-schedule-page {
+    margin-left: 99px;
+
+    padding: 100px 25px 40px;
+  }
+
+  .exam-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+  .exam-schedule-page {
+    margin-left: 99px;
+
+    padding: 90px 15px 35px;
+  }
+
+  .exam-schedule-page .page-top h1 {
+    font-size: 24px;
+  }
+
+  .schedule-banner {
+    padding: 18px;
+  }
+
+  .exam-count {
+    display: none;
+  }
+
+  .exam-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .marks-section {
+    flex-direction: column;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 450px) {
+  .exam-schedule-page {
+    margin-left: 99px;
+
+    padding: 85px 12px 30px;
+  }
+
+  .exam-card {
+    padding: 18px;
+  }
+
+  .exam-card-header {
+    flex-wrap: wrap;
+  }
+
+  .status {
+    margin-left: 0;
+  }
+}
