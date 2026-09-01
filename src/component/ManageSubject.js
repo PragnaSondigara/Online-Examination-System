@@ -1,4 +1,3 @@
-import "./ManageStudent.css";
 import AdminSidebar from "./AdminSidebar";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -6,56 +5,95 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function ManageStudent() {
-  const [student, setStudent] = useState([]);
+export default function ManageSubject() {
+  const [subjects, setSubjects] = useState([]);
+  const [faculty, setFaculty] = useState([]);
 
   const [search, setSearch] = useState("");
-  const [semesterFilter, setSemesterFilter] = useState("All Semesters");
+  const [facultyFilter, setFacultyFilter] = useState("All Faculties");
 
   // Edit states
   const [editId, setEditId] = useState(null);
 
-  const [editStudent, setEditStudent] = useState({
-    student_name: "",
-    email: "",
-    mobile_no: "",
-    semester: "",
+  const [editSubject, setEditSubject] = useState({
+    subject_name: "",
+    faculty_id: "",
     is_active: true,
   });
 
   const navigate = useNavigate();
 
   // =====================================================
-  // LOAD STUDENT DATA
+  // LOAD SUBJECT DATA
   // =====================================================
 
-  const loaddata = async () => {
+  const loadSubjects = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/tbl_student");
+      const res = await axios.get("http://localhost:5000/tbl_subject");
 
-      setStudent(res.data);
+      setSubjects(res.data);
     } catch (error) {
-      console.error("Error loading students:", error);
+      console.error("Error loading subjects:", error);
     }
   };
 
+  // =====================================================
+  // LOAD FACULTY DATA
+  // =====================================================
+
+  const loadFaculty = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/tbl_faculty");
+
+      setFaculty(res.data);
+    } catch (error) {
+      console.error("Error loading faculty:", error);
+    }
+  };
+
+  // =====================================================
+  // LOAD DATA
+  // =====================================================
+
   useEffect(() => {
-    loaddata();
+    loadSubjects();
+    loadFaculty();
   }, []);
+
+  // =====================================================
+  // GET FACULTY NAME
+  // =====================================================
+
+  const getFacultyName = (facultyId) => {
+    const foundFaculty = faculty.find(
+      (f) =>
+        String(f.faculty_id) === String(facultyId) ||
+        String(f.id) === String(facultyId),
+    );
+
+    if (!foundFaculty) {
+      return `Faculty ${facultyId || "N/A"}`;
+    }
+
+    return (
+      foundFaculty.faculty_name ||
+      foundFaculty.name ||
+      foundFaculty.faculty_username ||
+      `Faculty ${facultyId}`
+    );
+  };
 
   // =====================================================
   // START EDIT
   // =====================================================
 
-  const startEdit = (studentData) => {
-    setEditId(studentData.id);
+  const startEdit = (subjectData) => {
+    setEditId(subjectData.id);
 
-    setEditStudent({
-      student_name: studentData.student_name || "",
-      email: studentData.email || "",
-      mobile_no: studentData.mobile_no || "",
-      semester: studentData.semester || "",
-      is_active: studentData.is_active === true || studentData.is_active === 1,
+    setEditSubject({
+      subject_name: subjectData.subject_name || "",
+      faculty_id: subjectData.faculty_id || "",
+      is_active: subjectData.is_active === true || subjectData.is_active === 1,
     });
   };
 
@@ -66,7 +104,7 @@ export default function ManageStudent() {
   const handleEditChange = (e) => {
     const { name, value } = e.target;
 
-    setEditStudent((prev) => ({
+    setEditSubject((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -78,75 +116,50 @@ export default function ManageStudent() {
 
   const saveEdit = async (id) => {
     try {
-      if (!editStudent.student_name.trim()) {
-        alert("Student name is required.");
+      if (!editSubject.subject_name.trim()) {
+        alert("Subject name is required.");
         return;
       }
 
-      if (!editStudent.email.trim()) {
-        alert("Email is required.");
+      if (!editSubject.faculty_id) {
+        alert("Please select a faculty.");
         return;
       }
 
-      if (!editStudent.mobile_no.trim()) {
-        alert("Mobile number is required.");
+      const existingSubject = subjects.find((s) => s.id === id);
+
+      if (!existingSubject) {
+        alert("Subject not found.");
         return;
       }
 
-      if (!editStudent.semester) {
-        alert("Please select a semester.");
-        return;
-      }
-
-      // Find existing student
-      const existingStudent = student.find((s) => s.id === id);
-
-      if (!existingStudent) {
-        alert("Student not found.");
-        return;
-      }
-
-      // Keep existing fields and update edited fields
-      const updatedStudent = {
-        ...existingStudent,
-
-        student_name: editStudent.student_name.trim(),
-
-        email: editStudent.email.trim(),
-
-        mobile_no: editStudent.mobile_no.trim(),
-
-        semester: editStudent.semester,
-
-        is_active: editStudent.is_active,
+      const updatedSubject = {
+        ...existingSubject,
+        subject_name: editSubject.subject_name.trim(),
+        faculty_id: editSubject.faculty_id,
+        is_active: editSubject.is_active,
       };
 
-      // Update JSON Server
       await axios.put(
-        `http://localhost:5000/tbl_student/${id}`,
-        updatedStudent,
+        `http://localhost:5000/tbl_subject/${id}`,
+        updatedSubject,
       );
 
-      // Exit edit mode
       setEditId(null);
 
-      // Reset edit form
-      setEditStudent({
-        student_name: "",
-        email: "",
-        mobile_no: "",
-        semester: "",
+      setEditSubject({
+        subject_name: "",
+        faculty_id: "",
         is_active: true,
       });
 
-      // Reload students
-      await loaddata();
+      await loadSubjects();
 
-      alert("Student updated successfully!");
+      alert("Subject updated successfully!");
     } catch (error) {
-      console.error("Error updating student:", error);
+      console.error("Error updating subject:", error);
 
-      alert("Failed to update student.");
+      alert("Failed to update subject.");
     }
   };
 
@@ -157,22 +170,20 @@ export default function ManageStudent() {
   const cancelEdit = () => {
     setEditId(null);
 
-    setEditStudent({
-      student_name: "",
-      email: "",
-      mobile_no: "",
-      semester: "",
+    setEditSubject({
+      subject_name: "",
+      faculty_id: "",
       is_active: true,
     });
   };
 
   // =====================================================
-  // DELETE STUDENT
+  // DELETE SUBJECT
   // =====================================================
 
-  const deleteStudent = async (id) => {
+  const deleteSubject = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this student?",
+      "Are you sure you want to delete this subject?",
     );
 
     if (!confirmDelete) {
@@ -180,50 +191,62 @@ export default function ManageStudent() {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/tbl_student/${id}`);
+      await axios.delete(`http://localhost:5000/tbl_subject/${id}`);
 
-      await loaddata();
+      await loadSubjects();
 
-      alert("Student deleted successfully!");
+      alert("Subject deleted successfully!");
     } catch (error) {
-      console.error("Error deleting student:", error);
+      console.error("Error deleting subject:", error);
 
-      alert("Failed to delete student.");
+      alert("Failed to delete subject.");
     }
   };
 
   // =====================================================
-  // ACTIVE STUDENT COUNT
+  // ACTIVE SUBJECT COUNT
   // =====================================================
 
-  const activeStudent = student.filter(
+  const activeSubjects = subjects.filter(
     (s) => s.is_active === true || s.is_active === 1,
   ).length;
 
   // =====================================================
-  // SEMESTER COUNT
+  // INACTIVE SUBJECT COUNT
   // =====================================================
 
-  const totalSemesters = new Set(student.map((s) => s.semester)).size;
+  const inactiveSubjects = subjects.length - activeSubjects;
 
   // =====================================================
-  // SEARCH + FILTER
+  // FACULTY COUNT
   // =====================================================
 
-  const filteredStudents = student.filter((s) => {
+  const totalFaculties = new Set(subjects.map((s) => String(s.faculty_id)))
+    .size;
+
+  // =====================================================
+  // SEARCH + FACULTY FILTER
+  // =====================================================
+
+  const filteredSubjects = subjects.filter((s) => {
     const searchText = search.toLowerCase();
 
+    const facultyName = getFacultyName(s.faculty_id).toLowerCase();
+
     const matchesSearch =
-      (s.student_name || "").toLowerCase().includes(searchText) ||
-      (s.email || "").toLowerCase().includes(searchText) ||
-      (s.mobile_no || "").toLowerCase().includes(searchText);
+      (s.subject_name || "").toLowerCase().includes(searchText) ||
+      facultyName.includes(searchText);
 
-    const matchesSemester =
-      semesterFilter === "All Semesters" ||
-      String(s.semester) === String(semesterFilter);
+    const matchesFaculty =
+      facultyFilter === "All Faculties" ||
+      String(s.faculty_id) === String(facultyFilter);
 
-    return matchesSearch && matchesSemester;
+    return matchesSearch && matchesFaculty;
   });
+
+  // =====================================================
+  // RETURN
+  // =====================================================
 
   return (
     <>
@@ -250,17 +273,17 @@ export default function ManageStudent() {
 
         <div className="page-top">
           <div>
-            <h1>Manage Student</h1>
+            <h1>Manage Subject</h1>
 
-            <p>View, manage and monitor all registered students.</p>
+            <p>View, manage and monitor all available subjects.</p>
           </div>
 
           <button
             className="add-student-btn"
-            onClick={() => navigate("/AddStudent")}
+            onClick={() => navigate("/AddSubject")}
           >
             <span>+</span>
-            Add Student
+            Add Subject
           </button>
         </div>
 
@@ -269,51 +292,83 @@ export default function ManageStudent() {
         ===================================================== */}
 
         <div className="student-stats">
-          {/* TOTAL STUDENTS */}
+          {/* TOTAL SUBJECTS */}
 
-          <div className="stat-card purple">
-            <div className="stat-icon">👥</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#f0efff",
+                color: "#6860ee",
+              }}
+            >
+              📚
+            </div>
 
             <div>
-              <span>Total Students</span>
+              <span>Total Subjects</span>
 
-              <strong>{student.length}</strong>
+              <strong>{subjects.length}</strong>
             </div>
           </div>
 
-          {/* ACTIVE STUDENTS */}
+          {/* ACTIVE SUBJECTS */}
 
-          <div className="stat-card green">
-            <div className="stat-icon">✓</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#e8faf3",
+                color: "#20a879",
+              }}
+            >
+              ✓
+            </div>
 
             <div>
-              <span>Active Students</span>
+              <span>Active Subjects</span>
 
-              <strong>{activeStudent}</strong>
+              <strong>{activeSubjects}</strong>
             </div>
           </div>
 
-          {/* SEMESTERS */}
+          {/* FACULTIES */}
 
-          <div className="stat-card orange">
-            <div className="stat-icon">🎓</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#fff5e8",
+                color: "#e99a38",
+              }}
+            >
+              👨‍🏫
+            </div>
 
             <div>
-              <span>Semesters</span>
+              <span>Faculties</span>
 
-              <strong>{totalSemesters}</strong>
+              <strong>{totalFaculties}</strong>
             </div>
           </div>
 
-          {/* INACTIVE STUDENTS */}
+          {/* INACTIVE SUBJECTS */}
 
-          <div className="stat-card blue">
-            <div className="stat-icon">⚠</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#eef6ff",
+                color: "#4b8bd8",
+              }}
+            >
+              ⚠
+            </div>
 
             <div>
-              <span>Inactive Students</span>
+              <span>Inactive Subjects</span>
 
-              <strong>{student.length - activeStudent}</strong>
+              <strong>{inactiveSubjects}</strong>
             </div>
           </div>
         </div>
@@ -329,9 +384,9 @@ export default function ManageStudent() {
 
           <div className="table-toolbar">
             <div>
-              <h2>All Students</h2>
+              <h2>All Subjects</h2>
 
-              <p>{filteredStudents.length} students found</p>
+              <p>{filteredSubjects.length} subjects found</p>
             </div>
 
             <div className="toolbar-actions">
@@ -342,32 +397,32 @@ export default function ManageStudent() {
 
                 <input
                   type="text"
-                  placeholder="Search student..."
+                  placeholder="Search subject..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
 
-              {/* SEMESTER FILTER */}
+              {/* FACULTY FILTER */}
 
               <select
                 className="course-filter"
-                value={semesterFilter}
-                onChange={(e) => setSemesterFilter(e.target.value)}
+                value={facultyFilter}
+                onChange={(e) => setFacultyFilter(e.target.value)}
               >
-                <option value="All Semesters">All Semesters</option>
+                <option value="All Faculties">All Faculties</option>
 
-                <option value="1">Semester 1</option>
-
-                <option value="2">Semester 2</option>
-
-                <option value="3">Semester 3</option>
-
-                <option value="4">Semester 4</option>
-
-                <option value="5">Semester 5</option>
-
-                <option value="6">Semester 6</option>
+                {faculty.map((f) => (
+                  <option
+                    key={f.id || f.faculty_id}
+                    value={f.faculty_id || f.id}
+                  >
+                    {f.faculty_name ||
+                      f.name ||
+                      f.faculty_username ||
+                      `Faculty ${f.faculty_id || f.id}`}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -380,131 +435,84 @@ export default function ManageStudent() {
             <table className="student-table">
               <thead>
                 <tr>
-                  <th>STUDENT</th>
-
-                  <th>EMAIL</th>
-
-                  <th>MOBILE</th>
-
-                  <th>SEMESTER</th>
-
+                  <th>SUBJECT</th>
+                  <th>FACULTY</th>
                   <th>STATUS</th>
-
                   <th>ACTION</th>
                 </tr>
               </thead>
 
               <tbody>
-                {filteredStudents.length > 0 ? (
-                  filteredStudents.map((s) => (
+                {filteredSubjects.length > 0 ? (
+                  filteredSubjects.map((s) => (
                     <tr
                       key={s.id}
                       className={editId === s.id ? "editing-row" : ""}
                     >
                       {/* =====================================================
-                          STUDENT
+                          SUBJECT
                       ===================================================== */}
 
                       <td>
                         <div className="student-info">
-                          <div
-                            className="student-avatar"
-                            style={{
-                              background: "#6c63ff",
-                            }}
-                          >
-                            {s.student_name
-                              ? s.student_name.charAt(0).toUpperCase()
+                          <div className="student-avatar">
+                            {s.subject_name
+                              ? s.subject_name.charAt(0).toUpperCase()
                               : "?"}
                           </div>
 
-                          <div className="student-name-wrapper">
+                          <div>
                             {editId === s.id ? (
                               <input
                                 type="text"
-                                name="student_name"
+                                name="subject_name"
                                 className="edit-input student-name-input"
-                                placeholder="Student name"
-                                value={editStudent.student_name}
+                                placeholder="Subject name"
+                                value={editSubject.subject_name}
                                 onChange={handleEditChange}
                               />
                             ) : (
-                              <strong>
-                                {s.student_name || "Unknown Student"}
-                              </strong>
+                              <>
+                                <strong>
+                                  {s.subject_name || "Unknown Subject"}
+                                </strong>
+
+                                <span>Subject</span>
+                              </>
                             )}
                           </div>
                         </div>
                       </td>
 
                       {/* =====================================================
-                          EMAIL
-                      ===================================================== */}
-
-                      <td>
-                        {editId === s.id ? (
-                          <input
-                            type="email"
-                            name="email"
-                            className="edit-input email-input"
-                            placeholder="Enter email"
-                            value={editStudent.email}
-                            onChange={handleEditChange}
-                            readOnly
-                          />
-                        ) : (
-                          <span>{s.email || "No email"}</span>
-                        )}
-                      </td>
-
-                      {/* =====================================================
-                          MOBILE
-                      ===================================================== */}
-
-                      <td>
-                        {editId === s.id ? (
-                          <input
-                            type="text"
-                            name="mobile_no"
-                            className="edit-input mobile-input"
-                            placeholder="Mobile number"
-                            value={editStudent.mobile_no}
-                            onChange={handleEditChange}
-                          />
-                        ) : (
-                          <span>{s.mobile_no || "No mobile"}</span>
-                        )}
-                      </td>
-
-                      {/* =====================================================
-                          SEMESTER
+                          FACULTY
                       ===================================================== */}
 
                       <td>
                         {editId === s.id ? (
                           <select
-                            name="semester"
-                            className="edit-input semester-input"
-                            value={editStudent.semester}
+                            name="faculty_id"
+                            className="edit-input faculty-input"
+                            value={editSubject.faculty_id}
                             onChange={handleEditChange}
                           >
-                            <option value="">Select</option>
+                            <option value="">Select Faculty</option>
 
-                            <option value="1">Semester 1</option>
-
-                            <option value="2">Semester 2</option>
-
-                            <option value="3">Semester 3</option>
-
-                            <option value="4">Semester 4</option>
-
-                            <option value="5">Semester 5</option>
-
-                            <option value="6">Semester 6</option>
+                            {faculty.map((f) => (
+                              <option
+                                key={f.id || f.faculty_id}
+                                value={f.faculty_id || f.id}
+                              >
+                                {f.faculty_name ||
+                                  f.name ||
+                                  f.faculty_username ||
+                                  `Faculty ${f.faculty_id || f.id}`}
+                              </option>
+                            ))}
                           </select>
                         ) : (
                           <span className="course-badge">
-                            Semester {s.semester || "N/A"}
+                            {getFacultyName(s.faculty_id)}
                           </span>
                         )}
                       </td>
@@ -519,10 +527,10 @@ export default function ManageStudent() {
                             name="is_active"
                             className="edit-input status-input"
                             value={
-                              editStudent.is_active ? "active" : "inactive"
+                              editSubject.is_active ? "active" : "inactive"
                             }
                             onChange={(e) =>
-                              setEditStudent((prev) => ({
+                              setEditSubject((prev) => ({
                                 ...prev,
                                 is_active: e.target.value === "active",
                               }))
@@ -594,7 +602,7 @@ export default function ManageStudent() {
                               <button
                                 className="icon-btn delete"
                                 title="Delete"
-                                onClick={() => deleteStudent(s.id)}
+                                onClick={() => deleteSubject(s.id)}
                               >
                                 🗑
                               </button>
@@ -606,8 +614,17 @@ export default function ManageStudent() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6">
-                      <div className="no-students">No students found.</div>
+                    <td colSpan="4">
+                      <div
+                        style={{
+                          padding: "35px",
+                          textAlign: "center",
+                          color: "#98a2b1",
+                          fontSize: "13px",
+                        }}
+                      >
+                        No subjects found.
+                      </div>
                     </td>
                   </tr>
                 )}

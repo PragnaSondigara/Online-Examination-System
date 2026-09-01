@@ -7,13 +7,15 @@ import FacultySider from "./FacultySider";
 
 export function AddSchedule() {
   const navigate = useNavigate();
-
+  const today = new Date().toISOString().split("T")[0];
   // =====================================================
   // FORM STATES
   // =====================================================
 
   const [facultyId, setFacultyId] = useState("");
+  const [facultyName, setFacultyName] = useState("");
   const [subjectId, setSubjectId] = useState("");
+
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -22,39 +24,83 @@ export function AddSchedule() {
   const [totalMarks, setTotalMarks] = useState("");
   const [isActive, setIsActive] = useState(true);
 
-  // Database lists
-  const [facultyList, setFacultyList] = useState([]);
+  // =====================================================
+  // DATABASE LISTS
+  // =====================================================
+
   const [subjectList, setSubjectList] = useState([]);
 
   // =====================================================
-  // LOAD FACULTY + SUBJECT
+  // LOAD LOGGED-IN FACULTY + ASSIGNED SUBJECTS
   // =====================================================
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [facultyRes, subjectRes] = await Promise.all([
-          axios.get("http://localhost:5000/tbl_faculty"),
-          axios.get("http://localhost:5000/tbl_subject"),
-        ]);
+        // -----------------------------------------------
+        // GET LOGGED-IN FACULTY FROM LOCAL STORAGE
+        // -----------------------------------------------
 
-        // Only active faculty
-        setFacultyList(
-          facultyRes.data.filter((faculty) => faculty.is_active === true),
+        const loggedInFacultyId = localStorage.getItem("facultyId");
+        const loggedInFacultyName = localStorage.getItem("username");
+
+        console.log("Logged-in Faculty ID:", loggedInFacultyId);
+        console.log("Logged-in Faculty Name:", loggedInFacultyName);
+
+        // -----------------------------------------------
+        // CHECK LOGIN
+        // -----------------------------------------------
+
+        if (!loggedInFacultyId || !loggedInFacultyName) {
+          alert("Faculty login information not found.");
+          navigate("/FacultyLogin");
+          return;
+        }
+
+        // -----------------------------------------------
+        // SET FACULTY AUTOMATICALLY
+        // -----------------------------------------------
+
+        setFacultyId(loggedInFacultyId);
+        setFacultyName(loggedInFacultyName);
+
+        // -----------------------------------------------
+        // GET ALL SUBJECTS
+        // -----------------------------------------------
+
+        const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
+
+        // -----------------------------------------------
+        // ONLY ACTIVE SUBJECTS OF LOGGED-IN FACULTY
+        // -----------------------------------------------
+
+        const assignedSubjects = subjectRes.data.filter(
+          (subject) =>
+            subject.is_active === true &&
+            String(subject.faculty_id) === String(loggedInFacultyId),
         );
 
-        // Only active subjects
-        setSubjectList(
-          subjectRes.data.filter((subject) => subject.is_active === true),
-        );
+        console.log("Assigned Subjects:", assignedSubjects);
+
+        setSubjectList(assignedSubjects);
+
+        // -----------------------------------------------
+        // OPTIONAL:
+        // IF ONLY ONE SUBJECT IS ASSIGNED,
+        // AUTOMATICALLY SELECT IT
+        // -----------------------------------------------
+
+        if (assignedSubjects.length === 1) {
+          setSubjectId(String(assignedSubjects[0].subject_id));
+        }
       } catch (error) {
-        console.error("Error loading faculty/subject:", error);
-        alert("Unable to load faculty and subject data.");
+        console.error("Error loading subject data:", error);
+        alert("Unable to load subject data.");
       }
     };
 
     loadData();
-  }, []);
+  }, [navigate]);
 
   // =====================================================
   // ADD EXAM SCHEDULE
@@ -63,12 +109,12 @@ export function AddSchedule() {
   const addSchedule = async (e) => {
     e.preventDefault();
 
-    // ---------------------------------------------------
+    // ===================================================
     // VALIDATION
-    // ---------------------------------------------------
+    // ===================================================
 
     if (!facultyId) {
-      alert("Please select faculty.");
+      alert("Faculty information is missing.");
       return;
     }
 
@@ -79,6 +125,11 @@ export function AddSchedule() {
 
     if (!date) {
       alert("Please select exam date.");
+      return;
+    }
+
+    if (date < today) {
+      alert("You cannot select a previous date.");
       return;
     }
 
@@ -117,9 +168,27 @@ export function AddSchedule() {
       return;
     }
 
-    // ---------------------------------------------------
+    // ===================================================
+    // CHECK THAT SUBJECT BELONGS TO LOGGED-IN FACULTY
+    // ===================================================
+
+    const selectedSubject = subjectList.find(
+      (subject) => String(subject.subject_id) === String(subjectId),
+    );
+
+    if (!selectedSubject) {
+      alert("Invalid subject selected.");
+      return;
+    }
+
+    if (String(selectedSubject.faculty_id) !== String(facultyId)) {
+      alert("You can only create an exam for your assigned subject.");
+      return;
+    }
+
+    // ===================================================
     // CONFIRMATION
-    // ---------------------------------------------------
+    // ===================================================
 
     if (!window.confirm("Do you want to add this exam schedule?")) {
       return;
@@ -127,7 +196,7 @@ export function AddSchedule() {
 
     try {
       // =================================================
-      // CREATE OBJECT ACCORDING TO tbl_exam
+      // CREATE EXAM OBJECT
       // =================================================
 
       const newExam = {
@@ -141,6 +210,8 @@ export function AddSchedule() {
         total_marks: Number(totalMarks),
         is_active: isActive,
       };
+
+      console.log("New Exam:", newExam);
 
       // =================================================
       // CHECK FOR DUPLICATE EXAM
@@ -164,10 +235,14 @@ export function AddSchedule() {
       }
 
       // =================================================
-      // ADD TO tbl_exam
+      // ADD EXAM TO DATABASE
       // =================================================
 
       await axios.post("http://localhost:5000/tbl_exam", newExam);
+
+      // =================================================
+      // SUCCESS
+      // =================================================
 
       alert("Exam schedule added successfully!");
 
@@ -175,7 +250,6 @@ export function AddSchedule() {
       // RESET FORM
       // =================================================
 
-      setFacultyId("");
       setSubjectId("");
       setDate("");
       setStartTime("");
@@ -186,7 +260,7 @@ export function AddSchedule() {
       setIsActive(true);
 
       // =================================================
-      // GO TO MANAGE SCHEDULE
+      // GO TO SCHEDULE MANAGEMENT
       // =================================================
 
       navigate("/ScheduleManagement");
@@ -207,6 +281,7 @@ export function AddSchedule() {
     <>
       <Header />
       <FacultySider />
+
       <div className="student-form-overlay">
         <div className="student-form-modal">
           {/* =================================================
@@ -240,18 +315,12 @@ export function AddSchedule() {
             <div className="form-group">
               <label>Faculty</label>
 
-              <select
-                value={facultyId}
-                onChange={(e) => setFacultyId(e.target.value)}
-              >
-                <option value="">Select Faculty</option>
-
-                {facultyList.map((faculty) => (
-                  <option key={faculty.faculty_id} value={faculty.faculty_id}>
-                    {faculty.faculty_name}
-                  </option>
-                ))}
-              </select>
+              <input
+                type="text"
+                value={facultyName}
+                readOnly
+                placeholder="Faculty name"
+              />
             </div>
 
             {/* =================================================
@@ -284,6 +353,7 @@ export function AddSchedule() {
 
               <input
                 type="date"
+                min={today}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
               />

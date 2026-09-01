@@ -10,9 +10,8 @@ export default function ManageFaculty() {
 
   const [faculty, setFaculty] = useState([]);
 
-  // Search and Subject Filter
+  // Search
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("All Subjects");
 
   // Edit state
   const [editId, setEditId] = useState(null);
@@ -21,7 +20,6 @@ export default function ManageFaculty() {
     faculty_name: "",
     email: "",
     mobile_no: "",
-    subject: "",
     is_active: true,
   });
 
@@ -44,18 +42,6 @@ export default function ManageFaculty() {
   }, []);
 
   // =====================================================
-  // GET UNIQUE SUBJECTS
-  // =====================================================
-
-  const subjects = [
-    ...new Set(
-      faculty
-        .map((f) => f.subject)
-        .filter((subject) => subject && subject.trim() !== ""),
-    ),
-  ];
-
-  // =====================================================
   // FACULTY STATISTICS
   // =====================================================
 
@@ -64,12 +50,6 @@ export default function ManageFaculty() {
   ).length;
 
   const inactiveFaculty = faculty.length - activeFaculty;
-
-  const totalSubjects = new Set(
-    faculty
-      .map((f) => f.subject)
-      .filter((subject) => subject && subject.trim() !== ""),
-  ).size;
 
   // =====================================================
   // FILTER FACULTY
@@ -81,13 +61,9 @@ export default function ManageFaculty() {
     const matchesSearch =
       (f.faculty_name || "").toLowerCase().includes(search) ||
       (f.email || "").toLowerCase().includes(search) ||
-      (f.mobile_no || "").toLowerCase().includes(search) ||
-      (f.subject || "").toLowerCase().includes(search);
+      (f.mobile_no || "").toLowerCase().includes(search);
 
-    const matchesSubject =
-      selectedSubject === "All Subjects" || f.subject === selectedSubject;
-
-    return matchesSearch && matchesSubject;
+    return matchesSearch;
   });
 
   // =====================================================
@@ -99,9 +75,11 @@ export default function ManageFaculty() {
 
     setEditFaculty({
       faculty_name: facultyData.faculty_name || "",
+
       email: facultyData.email || "",
+
       mobile_no: facultyData.mobile_no || "",
-      subject: facultyData.subject || "",
+
       is_active: facultyData.is_active === true || facultyData.is_active === 1,
     });
   };
@@ -115,6 +93,7 @@ export default function ManageFaculty() {
 
     setEditFaculty((prev) => ({
       ...prev,
+
       [name]: value,
     }));
   };
@@ -126,35 +105,37 @@ export default function ManageFaculty() {
   const saveEdit = async (id) => {
     try {
       // Basic validation
+
       if (!editFaculty.faculty_name.trim()) {
         alert("Faculty name is required.");
+
         return;
       }
 
       if (!editFaculty.email.trim()) {
         alert("Email is required.");
+
         return;
       }
 
       if (!editFaculty.mobile_no.trim()) {
         alert("Mobile number is required.");
-        return;
-      }
 
-      if (!editFaculty.subject.trim()) {
-        alert("Subject is required.");
         return;
       }
 
       // Find existing faculty
+
       const existingFaculty = faculty.find((f) => f.id === id);
 
       if (!existingFaculty) {
         alert("Faculty not found.");
+
         return;
       }
 
-      // Keep all existing fields and update edited fields
+      // Updated faculty
+
       const updatedFaculty = {
         ...existingFaculty,
 
@@ -164,30 +145,31 @@ export default function ManageFaculty() {
 
         mobile_no: editFaculty.mobile_no.trim(),
 
-        subject: editFaculty.subject.trim(),
-
         is_active: editFaculty.is_active,
       };
 
-      // PUT request to JSON Server
+      // PUT request
+
       await axios.put(
         `http://localhost:5000/tbl_faculty/${id}`,
         updatedFaculty,
       );
 
       // Exit edit mode
+
       setEditId(null);
 
       // Reset edit data
+
       setEditFaculty({
         faculty_name: "",
         email: "",
         mobile_no: "",
-        subject: "",
         is_active: true,
       });
 
       // Reload data
+
       await loaddata();
 
       alert("Faculty updated successfully!");
@@ -209,7 +191,6 @@ export default function ManageFaculty() {
       faculty_name: "",
       email: "",
       mobile_no: "",
-      subject: "",
       is_active: true,
     });
   };
@@ -243,6 +224,7 @@ export default function ManageFaculty() {
   return (
     <>
       <AdminSidebar />
+
       <Header />
 
       <main className="manage-student">
@@ -267,8 +249,8 @@ export default function ManageFaculty() {
         </div>
 
         {/* =====================================================
-    FACULTY STATISTICS
-===================================================== */}
+            FACULTY STATISTICS
+        ===================================================== */}
 
         <div className="student-stats">
           {/* TOTAL FACULTY */}
@@ -295,18 +277,6 @@ export default function ManageFaculty() {
             </div>
           </div>
 
-          {/* SUBJECTS */}
-
-          <div className="stat-card orange">
-            <div className="stat-icon">🎓</div>
-
-            <div>
-              <span>Subjects</span>
-
-              <strong>{totalSubjects}</strong>
-            </div>
-          </div>
-
           {/* INACTIVE FACULTY */}
 
           <div className="stat-card blue">
@@ -325,7 +295,7 @@ export default function ManageFaculty() {
         ===================================================== */}
 
         <section className="student-card">
-          {/* Toolbar */}
+          {/* TOOLBAR */}
 
           <div className="table-toolbar">
             <div>
@@ -334,9 +304,9 @@ export default function ManageFaculty() {
               <p>{filteredFaculty.length} faculty members registered</p>
             </div>
 
-            <div className="toolbar-actions">
-              {/* SEARCH */}
+            {/* SEARCH */}
 
+            <div className="toolbar-actions">
               <div className="search-box">
                 <span>⌕</span>
 
@@ -347,22 +317,6 @@ export default function ManageFaculty() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-
-              {/* SUBJECT FILTER */}
-
-              <select
-                className="course-filter"
-                value={selectedSubject}
-                onChange={(e) => setSelectedSubject(e.target.value)}
-              >
-                <option value="All Subjects">All Subjects</option>
-
-                {subjects.map((subject, index) => (
-                  <option key={index} value={subject}>
-                    {subject}
-                  </option>
-                ))}
-              </select>
             </div>
           </div>
 
@@ -375,10 +329,13 @@ export default function ManageFaculty() {
               <thead>
                 <tr>
                   <th>FACULTY</th>
+
                   <th>EMAIL</th>
+
                   <th>MOBILE</th>
-                  <th>SUBJECT</th>
+
                   <th>STATUS</th>
+
                   <th>ACTION</th>
                 </tr>
               </thead>
@@ -430,6 +387,7 @@ export default function ManageFaculty() {
                             placeholder="Email"
                             value={editFaculty.email}
                             onChange={handleEditChange}
+                            readOnly
                           />
                         ) : (
                           <span>{f.email || "No email"}</span>
@@ -453,25 +411,6 @@ export default function ManageFaculty() {
                         )}
                       </td>
 
-                      {/* SUBJECT */}
-
-                      <td>
-                        {editId === f.id ? (
-                          <input
-                            type="text"
-                            name="subject"
-                            className="edit-input"
-                            placeholder="Subject"
-                            value={editFaculty.subject}
-                            onChange={handleEditChange}
-                          />
-                        ) : (
-                          <span className="course-badge">
-                            {f.subject || "N/A"}
-                          </span>
-                        )}
-                      </td>
-
                       {/* STATUS */}
 
                       <td>
@@ -485,11 +424,13 @@ export default function ManageFaculty() {
                             onChange={(e) =>
                               setEditFaculty((prev) => ({
                                 ...prev,
+
                                 is_active: e.target.value === "active",
                               }))
                             }
                           >
                             <option value="active">Active</option>
+
                             <option value="inactive">Inactive</option>
                           </select>
                         ) : (
@@ -564,7 +505,7 @@ export default function ManageFaculty() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6">
+                    <td colSpan="5">
                       <div
                         style={{
                           textAlign: "center",

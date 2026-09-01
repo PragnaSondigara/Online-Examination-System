@@ -2,6 +2,7 @@ import "./Header.css";
 
 export default function Header() {
   const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
 
   return (
     <header className="admin-header">
@@ -12,8 +13,8 @@ export default function Header() {
           </div>
 
           <div className="profile-info">
-            <span className="admin-name">{username || "Admin"}</span>
-            <span className="admin-role">Administrator</span>
+            <span className="admin-name">{username}</span>
+            <span className="admin-role">{role}</span>
           </div>
         </div>
       </div>

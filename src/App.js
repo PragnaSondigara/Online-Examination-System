@@ -13,6 +13,8 @@ import ChangePassword from "./component/ChangePassword";
 import ForgotPassword from "./component/ForgotPassword";
 import ScheduleManagement from "./component/SchedulManagment";
 import ManageQuestion from "./component/ManageQuestion";
+import ManageSubject from "./component/ManageSubject";
+import AddSubject from "./component/AddSubject";
 
 function App() {
   return (
@@ -24,6 +26,9 @@ function App() {
         <Route path="/AddFaculty" element={<AddFaculty />} />
         <Route path="/AddSchedule" element={<AddSchedule />} />
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        <Route path="/ManageSubject" element={<ManageSubject />} />
+        <Route path="/AddSubject" element={<AddSubject />} />
+
         <Route path="/Feedback" element={<ViewFeedback />} />
         <Route path="/admin/view-feedback" element={<ViewFeedback />} />
         <Route path="/LoginPage" element={<LoginPage />} />
