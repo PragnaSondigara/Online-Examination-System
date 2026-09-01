@@ -519,7 +519,7 @@
     {
       "result_id": 1,
       "student_id": 1,
-      "exam_id": 1,
+      "exam_id": 5,
       "total_marks": 100,
       "obtained_marks": 90,
       "passing_marks": 40,
@@ -530,7 +530,7 @@
     {
       "result_id": 2,
       "student_id": 2,
-      "exam_id": 1,
+      "exam_id": 5,
       "total_marks": 100,
       "obtained_marks": 75,
       "passing_marks": 40,

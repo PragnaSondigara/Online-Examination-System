@@ -27,12 +27,12 @@ export default function FacultySider() {
           <span>Manage Question</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/ViewStudentResult" className="nav-item">
           <span className="nav-icon">📋</span>
           <span>View Result</span>
         </Link>
 
-        <Link to="/faculty/view-feedback" className="nav-item">
+        <Link to="/faculty/ViewFeedback" className="nav-item">
           <span className="nav-icon">💬</span>
           <span>View Feedback</span>
         </Link>

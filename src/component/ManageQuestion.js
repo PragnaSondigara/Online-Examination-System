@@ -562,6 +562,7 @@ export default function ManageQuestion() {
             </div>
 
             <div className="filters">
+              <span>⌕</span>
               <input
                 type="text"
                 placeholder="Search questions..."

@@ -15,6 +15,7 @@ import ScheduleManagement from "./component/SchedulManagment";
 import ManageQuestion from "./component/ManageQuestion";
 import ManageSubject from "./component/ManageSubject";
 import AddSubject from "./component/AddSubject";
+import ViewStudentResult from "./component/ViewStudentResult";
 
 function App() {
   return (
@@ -29,8 +30,7 @@ function App() {
         <Route path="/ManageSubject" element={<ManageSubject />} />
         <Route path="/AddSubject" element={<AddSubject />} />
 
-        <Route path="/Feedback" element={<ViewFeedback />} />
-        <Route path="/admin/view-feedback" element={<ViewFeedback />} />
+        <Route path="/admin/ViewFeedback" element={<ViewFeedback />} />
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
@@ -38,7 +38,8 @@ function App() {
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/ScheduleManagement" element={<ScheduleManagement />} />
         <Route path="/ManageQuestion" element={<ManageQuestion />} />
-        <Route path="/faculty/view-feedback" element={<ViewFeedback />} />
+        <Route path="/faculty/ViewFeedback" element={<ViewFeedback />} />
+        <Route path="ViewStudentResult" element={<ViewStudentResult />} />
       </Routes>
     </div>
   );
