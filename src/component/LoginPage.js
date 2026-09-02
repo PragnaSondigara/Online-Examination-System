@@ -27,19 +27,20 @@ export default function LoginPage() {
         localStorage.setItem("auth", "true");
         if (role === "admin") {
           localStorage.setItem("username", res.data[0].admin_name);
-          localStorage.setItem("role", "Administrator")
+          localStorage.setItem("role", "Administrator");
           navigate("/AdminDashboard");
         } else if (role === "faculty") {
           localStorage.setItem("username", res.data[0].faculty_name);
           localStorage.setItem("facultyId", res.data[0].faculty_id);
-          localStorage.setItem("role", "Faculty")
+          localStorage.setItem("role", "Faculty");
           navigate("/FacultyDashboard");
         } else if (role === "student") {
           localStorage.setItem("username", res.data[0].student_name);
-          localStorage.setItem("role", "Student")
+          localStorage.setItem("studentId", res.data[0].student_id);
+          localStorage.setItem("role", "Student");
           navigate("/StudentDashboard");
         }
-         window.location.reload();
+        window.location.reload();
       } else {
         alert("Invalid Data");
       }

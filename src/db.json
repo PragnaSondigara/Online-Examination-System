@@ -367,6 +367,18 @@
       "total_marks": 100,
       "is_active": true,
       "id": "oQglogfGgLQ"
+    },
+    {
+      "faculty_id": 1,
+      "subject_id": 1,
+      "duration": 1,
+      "date": "2026-09-05",
+      "start_time": "14:06",
+      "end_time": "15:06",
+      "passing_marks": 8,
+      "total_marks": 25,
+      "is_active": true,
+      "id": "m-ni6h12Jgc"
     }
   ],
   "tbl_question": [
