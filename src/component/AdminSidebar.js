@@ -35,7 +35,7 @@ export default function AdminSidebar() {
           <span>Feedback</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/Report" className="nav-item">
           <span className="nav-icon">📊</span>
           <span>Report</span>
         </Link>

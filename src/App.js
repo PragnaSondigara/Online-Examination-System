@@ -22,6 +22,7 @@ import ViewStudentResult from "./component/ViewStudentResult";
 import StudentDashboard from "./component/StudentDashboard";
 import ViewExamSchedule from "./component/ViewExamSchedule";
 import ViewResult from "./component/ViewResult";
+import Reports from "./component/Reports";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/admin/ViewFeedback" element={<ViewFeedback />} />
+        <Route path="Report" element={<Reports />} />
 
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
