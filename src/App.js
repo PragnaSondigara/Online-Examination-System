@@ -15,6 +15,8 @@ import ScheduleManagement from "./component/SchedulManagment";
 import ManageQuestion from "./component/ManageQuestion";
 import ManageSubject from "./component/ManageSubject";
 import AddSubject from "./component/AddSubject";
+import Profile from "./component/Profile";
+import Settings from "./component/Settings";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/ManageSubject" element={<ManageSubject />} />
         <Route path="/AddSubject" element={<AddSubject />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
 
         <Route path="/Feedback" element={<ViewFeedback />} />
         <Route path="/admin/view-feedback" element={<ViewFeedback />} />

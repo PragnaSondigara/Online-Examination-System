@@ -1,5 +1,5 @@
 import "./FacultyDashboard.css";
-import AdminSidebar from "./FacultySider";
+import FacultySidebar from "./FacultySider";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function FacultyDashboard() {
   return (
     <>
-      <AdminSidebar />
+      <FacultySidebar />
       <Header />
 
       <main className="manage-student">

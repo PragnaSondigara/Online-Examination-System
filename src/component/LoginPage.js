@@ -26,15 +26,18 @@ export default function LoginPage() {
       if (res.data.length == 1) {
         localStorage.setItem("auth", "true");
         if (role === "admin") {
+          localStorage.setItem("username", res.data[0].admin_name);
           navigate("/AdminDashboard");
         } else if (role === "faculty") {
+          localStorage.setItem("username", res.data[0].faculty_name);
           navigate("/FacultyDashboard");
         } else if (role === "student") {
+          localStorage.setItem("username", res.data[0].student_name);
           navigate("/StudentDashboard");
         }
-        window.location.reload();
+        // window.location.reload();
       } else {
-        alert("Enavlid Data");
+        alert("Invalid Data");
       }
     } catch (error) {
       console.error(error);
