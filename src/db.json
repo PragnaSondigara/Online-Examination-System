@@ -250,6 +250,13 @@
       "subject_name": "LOS",
       "is_active": true,
       "id": "Ss73m3BaPos"
+    },
+    {
+      "subject_id": 1788188097919,
+      "faculty_id": "1",
+      "subject_name": "wd",
+      "is_active": true,
+      "id": "WXheBRv8aDQ"
     }
   ],
   "tbl_exam": [
@@ -348,6 +355,30 @@
       "total_marks": 100,
       "is_active": true,
       "id": "tuI8QKlRyKM"
+    },
+    {
+      "faculty_id": 5,
+      "subject_id": 5,
+      "duration": 1,
+      "date": "2026-09-02",
+      "start_time": "20:53",
+      "end_time": "21:54",
+      "passing_marks": 40,
+      "total_marks": 100,
+      "is_active": true,
+      "id": "oQglogfGgLQ"
+    },
+    {
+      "faculty_id": 1,
+      "subject_id": 1,
+      "duration": 1,
+      "date": "2026-09-05",
+      "start_time": "14:06",
+      "end_time": "15:06",
+      "passing_marks": 8,
+      "total_marks": 25,
+      "is_active": true,
+      "id": "m-ni6h12Jgc"
     }
   ],
   "tbl_question": [
@@ -415,6 +446,45 @@
       "marks": 4,
       "question_type": "MCQ",
       "id": "n_XB6Rb1XR4"
+    },
+    {
+      "question_id": 3,
+      "exam_id": 1,
+      "question": "which function is used to override the function?",
+      "option_a": "interface",
+      "option_b": "inheritances",
+      "option_c": "implement",
+      "option_d": "constructor",
+      "correct_answer": "A",
+      "marks": 1,
+      "question_type": "MCQ",
+      "id": "eybcN3NzRXc"
+    },
+    {
+      "question_id": 1,
+      "exam_id": 5,
+      "question": "HTML is which type of language?",
+      "option_a": "front end",
+      "option_b": "back end",
+      "option_c": "database",
+      "option_d": "none of this",
+      "correct_answer": "A",
+      "marks": 2,
+      "question_type": "MCQ",
+      "id": "S1DvmzELLIU"
+    },
+    {
+      "question_id": 6,
+      "exam_id": 5,
+      "question": "React is a java-script front end library. true or false?",
+      "option_a": "True",
+      "option_b": "False",
+      "option_c": "",
+      "option_d": "",
+      "correct_answer": "True",
+      "marks": 2,
+      "question_type": "True/False",
+      "id": "XqrDg0-LbOo"
     }
   ],
   "tbl_student_exam": [
@@ -461,7 +531,7 @@
     {
       "result_id": 1,
       "student_id": 1,
-      "exam_id": 1,
+      "exam_id": 5,
       "total_marks": 100,
       "obtained_marks": 90,
       "passing_marks": 40,
@@ -472,7 +542,7 @@
     {
       "result_id": 2,
       "student_id": 2,
-      "exam_id": 1,
+      "exam_id": 5,
       "total_marks": 100,
       "obtained_marks": 75,
       "passing_marks": 40,

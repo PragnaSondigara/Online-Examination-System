@@ -1,4 +1,3 @@
-import "./ManageSubject.css";
 import AdminSidebar from "./AdminSidebar";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -8,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function ManageSubject() {
   const [subjects, setSubjects] = useState([]);
-
   const [faculty, setFaculty] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -95,8 +93,7 @@ export default function ManageSubject() {
     setEditSubject({
       subject_name: subjectData.subject_name || "",
       faculty_id: subjectData.faculty_id || "",
-      is_active:
-        subjectData.is_active === true || subjectData.is_active === 1,
+      is_active: subjectData.is_active === true || subjectData.is_active === 1,
     });
   };
 
@@ -119,19 +116,16 @@ export default function ManageSubject() {
 
   const saveEdit = async (id) => {
     try {
-      // Subject validation
       if (!editSubject.subject_name.trim()) {
         alert("Subject name is required.");
         return;
       }
 
-      // Faculty validation
       if (!editSubject.faculty_id) {
         alert("Please select a faculty.");
         return;
       }
 
-      // Find existing subject
       const existingSubject = subjects.find((s) => s.id === id);
 
       if (!existingSubject) {
@@ -139,34 +133,26 @@ export default function ManageSubject() {
         return;
       }
 
-      // Keep existing fields and update edited fields
       const updatedSubject = {
         ...existingSubject,
-
         subject_name: editSubject.subject_name.trim(),
-
         faculty_id: editSubject.faculty_id,
-
         is_active: editSubject.is_active,
       };
 
-      // Update JSON Server
       await axios.put(
         `http://localhost:5000/tbl_subject/${id}`,
         updatedSubject,
       );
 
-      // Exit edit mode
       setEditId(null);
 
-      // Reset edit form
       setEditSubject({
         subject_name: "",
         faculty_id: "",
         is_active: true,
       });
 
-      // Reload subjects
       await loadSubjects();
 
       alert("Subject updated successfully!");
@@ -235,9 +221,8 @@ export default function ManageSubject() {
   // FACULTY COUNT
   // =====================================================
 
-  const totalFaculties = new Set(
-    subjects.map((s) => String(s.faculty_id)),
-  ).size;
+  const totalFaculties = new Set(subjects.map((s) => String(s.faculty_id)))
+    .size;
 
   // =====================================================
   // SEARCH + FACULTY FILTER
@@ -281,7 +266,7 @@ export default function ManageSubject() {
           MAIN
       ===================================================== */}
 
-      <main className="manage-subject">
+      <main className="manage-student">
         {/* =====================================================
             PAGE TOP
         ===================================================== */}
@@ -294,7 +279,7 @@ export default function ManageSubject() {
           </div>
 
           <button
-            className="add-subject-btn"
+            className="add-student-btn"
             onClick={() => navigate("/AddSubject")}
           >
             <span>+</span>
@@ -306,11 +291,19 @@ export default function ManageSubject() {
             STATS
         ===================================================== */}
 
-        <div className="subject-stats">
+        <div className="student-stats">
           {/* TOTAL SUBJECTS */}
 
-          <div className="stat-card purple">
-            <div className="stat-icon">📚</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#f0efff",
+                color: "#6860ee",
+              }}
+            >
+              📚
+            </div>
 
             <div>
               <span>Total Subjects</span>
@@ -321,8 +314,16 @@ export default function ManageSubject() {
 
           {/* ACTIVE SUBJECTS */}
 
-          <div className="stat-card green">
-            <div className="stat-icon">✓</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#e8faf3",
+                color: "#20a879",
+              }}
+            >
+              ✓
+            </div>
 
             <div>
               <span>Active Subjects</span>
@@ -333,8 +334,16 @@ export default function ManageSubject() {
 
           {/* FACULTIES */}
 
-          <div className="stat-card orange">
-            <div className="stat-icon">👨‍🏫</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#fff5e8",
+                color: "#e99a38",
+              }}
+            >
+              👨‍🏫
+            </div>
 
             <div>
               <span>Faculties</span>
@@ -345,8 +354,16 @@ export default function ManageSubject() {
 
           {/* INACTIVE SUBJECTS */}
 
-          <div className="stat-card blue">
-            <div className="stat-icon">⚠</div>
+          <div className="stat-card">
+            <div
+              className="stat-icon"
+              style={{
+                background: "#eef6ff",
+                color: "#4b8bd8",
+              }}
+            >
+              ⚠
+            </div>
 
             <div>
               <span>Inactive Subjects</span>
@@ -360,7 +377,7 @@ export default function ManageSubject() {
             TABLE CARD
         ===================================================== */}
 
-        <section className="subject-card">
+        <section className="student-card">
           {/* =====================================================
               TOOLBAR
           ===================================================== */}
@@ -389,7 +406,7 @@ export default function ManageSubject() {
               {/* FACULTY FILTER */}
 
               <select
-                className="faculty-filter"
+                className="course-filter"
                 value={facultyFilter}
                 onChange={(e) => setFacultyFilter(e.target.value)}
               >
@@ -414,16 +431,13 @@ export default function ManageSubject() {
               TABLE
           ===================================================== */}
 
-          <div className="subject-table-wrapper">
-            <table className="subject-table">
+          <div className="student-table-wrapper">
+            <table className="student-table">
               <thead>
                 <tr>
                   <th>SUBJECT</th>
-
                   <th>FACULTY</th>
-
                   <th>STATUS</th>
-
                   <th>ACTION</th>
                 </tr>
               </thead>
@@ -440,32 +454,31 @@ export default function ManageSubject() {
                       ===================================================== */}
 
                       <td>
-                        <div className="subject-info">
-                          <div
-                            className="subject-avatar"
-                            style={{
-                              background: "#6c63ff",
-                            }}
-                          >
+                        <div className="student-info">
+                          <div className="student-avatar">
                             {s.subject_name
                               ? s.subject_name.charAt(0).toUpperCase()
                               : "?"}
                           </div>
 
-                          <div className="subject-name-wrapper">
+                          <div>
                             {editId === s.id ? (
                               <input
                                 type="text"
                                 name="subject_name"
-                                className="edit-input subject-name-input"
+                                className="edit-input student-name-input"
                                 placeholder="Subject name"
                                 value={editSubject.subject_name}
                                 onChange={handleEditChange}
                               />
                             ) : (
-                              <strong>
-                                {s.subject_name || "Unknown Subject"}
-                              </strong>
+                              <>
+                                <strong>
+                                  {s.subject_name || "Unknown Subject"}
+                                </strong>
+
+                                <span>Subject</span>
+                              </>
                             )}
                           </div>
                         </div>
@@ -498,7 +511,7 @@ export default function ManageSubject() {
                             ))}
                           </select>
                         ) : (
-                          <span className="faculty-badge">
+                          <span className="course-badge">
                             {getFacultyName(s.faculty_id)}
                           </span>
                         )}
@@ -602,7 +615,16 @@ export default function ManageSubject() {
                 ) : (
                   <tr>
                     <td colSpan="4">
-                      <div className="no-subjects">No subjects found.</div>
+                      <div
+                        style={{
+                          padding: "35px",
+                          textAlign: "center",
+                          color: "#98a2b1",
+                          fontSize: "13px",
+                        }}
+                      >
+                        No subjects found.
+                      </div>
                     </td>
                   </tr>
                 )}

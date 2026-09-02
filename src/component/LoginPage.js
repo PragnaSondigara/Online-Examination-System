@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
-  const [password, setPasswordd] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role");
@@ -27,15 +27,20 @@ export default function LoginPage() {
         localStorage.setItem("auth", "true");
         if (role === "admin") {
           localStorage.setItem("username", res.data[0].admin_name);
+          localStorage.setItem("role", "Administrator");
           navigate("/AdminDashboard");
         } else if (role === "faculty") {
           localStorage.setItem("username", res.data[0].faculty_name);
+          localStorage.setItem("facultyId", res.data[0].faculty_id);
+          localStorage.setItem("role", "Faculty");
           navigate("/FacultyDashboard");
         } else if (role === "student") {
           localStorage.setItem("username", res.data[0].student_name);
+          localStorage.setItem("studentId", res.data[0].student_id);
+          localStorage.setItem("role", "Student");
           navigate("/StudentDashboard");
         }
-        // window.location.reload();
+        window.location.reload();
       } else {
         alert("Invalid Data");
       }
@@ -77,7 +82,7 @@ export default function LoginPage() {
                     type="password"
                     className="form-control"
                     id="password"
-                    onChange={(e) => setPasswordd(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     name="password"
                     placeholder="Password"
                   />

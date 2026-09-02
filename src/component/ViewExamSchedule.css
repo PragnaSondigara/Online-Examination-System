@@ -1,0 +1,1049 @@
+/* =========================================================
+   VIEW EXAM SCHEDULE
+========================================================= */
+
+.schedule-page {
+  margin-left: 310px;
+  padding: 115px 38px 50px;
+  min-height: calc(100vh - 140px);
+  background: #f5f7fb;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.schedule-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.schedule-page-header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.schedule-page-header p {
+  margin: 8px 0 0;
+  color: #718096;
+  font-size: 15px;
+}
+
+/* =========================================================
+   FACULTY INFO
+========================================================= */
+
+.faculty-info-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  padding: 9px 16px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.faculty-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #32c59a;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.faculty-info-card span {
+  display: block;
+  color: #9ca3af;
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+.faculty-info-card strong {
+  display: block;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.schedule-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+
+  color: #b91c1c;
+
+  padding: 13px 16px;
+
+  border-radius: 9px;
+
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-error button {
+  border: none;
+  background: transparent;
+
+  color: #b91c1c;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.schedule-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+}
+
+.schedule-stat-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+
+  transition: all 0.2s ease;
+}
+
+.schedule-stat-card:hover {
+  border-color: #bcebdd;
+
+  box-shadow: 0 7px 20px rgba(50, 197, 154, 0.08);
+
+  transform: translateY(-1px);
+}
+
+.schedule-stat-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: #e5f8f2;
+  color: #159a76;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+}
+
+.schedule-stat-card span {
+  display: block;
+
+  color: #718096;
+
+  font-size: 13px;
+
+  margin-bottom: 5px;
+}
+
+.schedule-stat-card strong {
+  display: block;
+
+  color: #1f2937;
+
+  font-size: 23px;
+}
+
+/* =========================================================
+   MAIN SCHEDULE CARD
+========================================================= */
+
+.schedule-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.schedule-list-header {
+  padding: 22px 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.schedule-list-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  color: #1f2937;
+}
+
+.schedule-list-header p {
+  margin: 5px 0 0;
+
+  color: #718096;
+
+  font-size: 13px;
+}
+
+.schedule-count {
+  padding: 8px 14px;
+
+  background: #e5f8f2;
+
+  color: #159a76;
+
+  border: 1px solid #c9f0e3;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.schedule-filters {
+  padding: 18px 25px;
+
+  background: #fafdfc;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+}
+
+.schedule-search {
+  flex: 1;
+
+  max-width: 360px;
+
+  position: relative;
+}
+
+.schedule-search span {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #32c59a;
+
+  font-size: 14px;
+}
+
+.schedule-search input {
+  width: 100%;
+
+  height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 0 15px 0 40px;
+
+  border: 1px solid #d7e2df;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  font-size: 14px;
+
+  transition: all 0.2s ease;
+}
+
+.schedule-search input:focus {
+  border-color: #32c59a;
+
+  box-shadow: 0 0 0 3px rgba(50, 197, 154, 0.1);
+}
+
+.schedule-search input::placeholder {
+  color: #9ca3af;
+}
+
+.schedule-filters select {
+  height: 42px;
+
+  min-width: 160px;
+
+  padding: 0 13px;
+
+  background: #ffffff;
+
+  border: 1px solid #d7e2df;
+
+  border-radius: 8px;
+
+  color: #374151;
+
+  font-size: 14px;
+
+  outline: none;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.schedule-filters select:focus {
+  border-color: #32c59a;
+
+  box-shadow: 0 0 0 3px rgba(50, 197, 154, 0.08);
+}
+
+/* =========================================================
+   CLEAR BUTTON
+========================================================= */
+
+.clear-schedule-btn {
+  height: 42px;
+
+  padding: 0 17px;
+
+  border: 1px solid #cfdad7;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.clear-schedule-btn:hover {
+  background: #e5f8f2;
+
+  color: #159a76;
+
+  border-color: #aee5d4;
+}
+
+/* =========================================================
+   EXAM CARD GRID
+========================================================= */
+
+.schedule-card-grid {
+  padding: 25px;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 20px;
+
+  background: #ffffff;
+}
+
+/* =========================================================
+   EXAM CARD
+========================================================= */
+
+.exam-schedule-card {
+  background: #ffffff;
+
+  border: 1px solid #e3e9e7;
+
+  border-radius: 14px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.exam-schedule-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: #32c59a;
+}
+
+.exam-schedule-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #b9e8da;
+
+  box-shadow: 0 10px 28px rgba(50, 197, 154, 0.11);
+}
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.exam-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 15px;
+}
+
+.exam-subject-icon {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 11px;
+
+  background: #e5f8f2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 21px;
+}
+
+.exam-card-number {
+  padding: 5px 9px;
+
+  border-radius: 15px;
+
+  background: #f3f8f6;
+
+  color: #159a76;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   SUBJECT
+========================================================= */
+
+.exam-card-subject {
+  margin-bottom: 18px;
+}
+
+.exam-card-subject h3 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+.exam-card-subject span {
+  color: #9ca3af;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   DATE SECTION
+========================================================= */
+
+.exam-date-section {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 13px;
+
+  background: #f7fcfa;
+
+  border: 1px solid #e4f3ee;
+
+  border-radius: 10px;
+
+  margin-bottom: 13px;
+}
+
+.calendar-icon {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 9px;
+
+  background: #e5f8f2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+.exam-date-section span {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  margin-bottom: 3px;
+}
+
+.exam-date-section strong {
+  display: block;
+
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.exam-date-section small {
+  display: block;
+
+  color: #159a76;
+
+  font-size: 11px;
+
+  margin-top: 2px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   TIME SECTION
+========================================================= */
+
+.exam-time-section {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 13px 5px;
+
+  border-bottom: 1px solid #edf1f0;
+
+  margin-bottom: 13px;
+}
+
+.time-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.time-label {
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+}
+
+.time-item strong {
+  color: #374151;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.time-divider {
+  width: 1px;
+
+  height: 30px;
+
+  background: #e5e7eb;
+}
+
+/* =========================================================
+   DURATION
+========================================================= */
+
+.exam-duration {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px 12px;
+
+  background: #f9fafb;
+
+  border-radius: 9px;
+
+  margin-bottom: 17px;
+}
+
+.exam-duration > span {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 8px;
+
+  background: #e5f8f2;
+
+  color: #159a76;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+}
+
+.exam-duration small {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  margin-bottom: 2px;
+}
+
+.exam-duration strong {
+  color: #374151;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.exam-card-footer {
+  padding-top: 15px;
+
+  border-top: 1px solid #edf1f0;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.exam-faculty {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.mini-faculty-avatar {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #dff7ef;
+
+  color: #159a76;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.exam-faculty small {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 9px;
+
+  margin-bottom: 2px;
+}
+
+.exam-faculty strong {
+  display: block;
+
+  color: #374151;
+
+  font-size: 11px;
+
+  max-width: 100px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   VIEW DETAILS BUTTON
+========================================================= */
+
+.start-exam-btn {
+  border: 1px solid #aee5d4;
+  background: #e5f8f2;
+  color: #159a76;
+  padding: 8px 13px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.start-exam-btn:hover {
+  background: #32c59a;
+  border-color: #32c59a;
+  color: #ffffff;
+  box-shadow:
+    0 4px 10px rgba(50, 197, 154, 0.2);
+}
+
+.start-exam-btn:active {
+  transform: translateY(0);
+}
+/* =========================================================
+   LOADING
+========================================================= */
+
+.schedule-loading {
+  min-height: 280px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  color: #718096;
+}
+
+.schedule-spinner {
+  width: 35px;
+  height: 35px;
+
+  border: 4px solid #dff4ed;
+
+  border-top-color: #32c59a;
+
+  border-radius: 50%;
+
+  animation: scheduleSpin 0.8s linear infinite;
+
+  margin-bottom: 12px;
+}
+
+@keyframes scheduleSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   NO DATA
+========================================================= */
+
+.schedule-no-data {
+  min-height: 280px;
+
+  padding: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+.no-data-icon {
+  width: 65px;
+  height: 65px;
+
+  border-radius: 50%;
+
+  background: #e5f8f2;
+
+  color: #32c59a;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 28px;
+
+  margin-bottom: 12px;
+}
+
+.schedule-no-data h2,
+.schedule-no-data h3 {
+  margin: 0 0 7px;
+
+  color: #374151;
+}
+
+.schedule-no-data p {
+  max-width: 500px;
+
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.schedule-list-footer {
+  padding: 15px 25px;
+
+  border-top: 1px solid #e5e7eb;
+
+  background: #fafdfc;
+
+  color: #718096;
+
+  font-size: 13px;
+}
+
+.schedule-list-footer strong {
+  color: #159a76;
+}
+
+/* =========================================================
+   RESPONSIVE - LARGE TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+  .schedule-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schedule-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .schedule-page {
+    margin-left: 0;
+
+    padding: 25px 20px 40px;
+  }
+
+  .schedule-page-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .faculty-info-card {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .schedule-card-grid {
+    grid-template-columns: 1fr;
+
+    padding: 20px;
+  }
+
+  .schedule-filters {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .schedule-search {
+    max-width: none;
+
+    width: 100%;
+  }
+
+  .schedule-filters select,
+  .clear-schedule-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .schedule-page {
+    padding: 20px 15px 35px;
+  }
+
+  .schedule-page-header h1 {
+    font-size: 24px;
+  }
+
+  .schedule-page-header p {
+    font-size: 13px;
+  }
+
+  .schedule-stat-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .schedule-stat-card {
+    padding: 16px;
+  }
+
+  .schedule-list-header {
+    padding: 18px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .schedule-filters {
+    padding: 16px;
+  }
+
+  .schedule-card-grid {
+    padding: 15px;
+
+    gap: 15px;
+  }
+
+  .exam-schedule-card {
+    padding: 17px;
+  }
+
+  .exam-card-subject h3 {
+    font-size: 17px;
+  }
+
+  .exam-card-footer {
+    align-items: flex-end;
+  }
+
+  .view-schedule-btn {
+    padding: 8px 10px;
+
+    font-size: 10px;
+  }
+
+  .schedule-list-footer {
+    padding: 14px 18px;
+  }
+}

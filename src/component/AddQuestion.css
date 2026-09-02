@@ -1,0 +1,609 @@
+/* =========================================================
+   ADD QUESTION MODAL
+   ExamBly Theme
+========================================================= */
+
+/* =========================================================
+   MODAL OVERLAY
+========================================================= */
+
+.question-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  background: rgba(38, 56, 77, 0.62);
+
+  backdrop-filter: blur(3px);
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.question-modal {
+  width: 100%;
+
+  max-width: 850px;
+
+  max-height: 92vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow: 0 25px 70px rgba(28, 43, 58, 0.28);
+
+  animation: questionModalShow 0.2s ease;
+}
+
+@keyframes questionModalShow {
+  from {
+    opacity: 0;
+
+    transform: translateY(15px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.question-modal-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 25px 30px 22px;
+
+  border-bottom: 1px solid #e7edf1;
+}
+
+.question-modal-header h2 {
+  margin: 0;
+
+  color: #2f4359;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+.question-modal-header p {
+  margin: 6px 0 0;
+
+  color: #8798a8;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.modal-close-btn {
+  width: 42px;
+
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #f4f7f9;
+
+  color: #52677b;
+
+  font-size: 25px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: #eaf0f4;
+
+  color: #2f4359;
+}
+
+.modal-close-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.question-modal-form {
+  padding: 25px 30px 30px;
+
+  overflow-y: auto;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.modal-error {
+  padding: 12px 14px;
+
+  margin-bottom: 20px;
+
+  background: #fff1f1;
+
+  border: 1px solid #ffd2d2;
+
+  border-radius: 8px;
+
+  color: #dc3545;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.question-modal .form-group {
+  margin-bottom: 18px;
+}
+
+.question-modal .form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #2f4359;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.question-modal .form-group label span,
+.modal-tf-box > label span {
+  color: #dc3545;
+}
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+========================================================= */
+
+.question-modal input[type="text"],
+.question-modal input[type="number"],
+.question-modal select,
+.question-modal textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d3dce4;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #26384d;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  transition: 0.2s;
+}
+
+.question-modal input[type="text"]:hover,
+.question-modal input[type="number"]:hover,
+.question-modal select:hover,
+.question-modal textarea:hover {
+  border-color: #b9c8d3;
+}
+
+.question-modal input[type="text"]:focus,
+.question-modal input[type="number"]:focus,
+.question-modal select:focus,
+.question-modal textarea:focus {
+  border-color: #2bb89d;
+
+  box-shadow: 0 0 0 3px rgba(43, 184, 157, 0.12);
+}
+
+.question-modal input::placeholder,
+.question-modal textarea::placeholder {
+  color: #a5b1bc;
+}
+
+.question-modal textarea {
+  min-height: 90px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+.question-modal input:disabled,
+.question-modal select:disabled,
+.question-modal textarea:disabled {
+  background: #f4f6f8;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   TWO COLUMN ROW
+========================================================= */
+
+.modal-form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+/* =========================================================
+   MCQ OPTIONS
+========================================================= */
+
+.modal-options-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 0 20px;
+
+  padding: 17px;
+
+  margin-bottom: 20px;
+
+  background: #fafcfd;
+
+  border: 1px solid #e3e9ee;
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   CORRECT ANSWER
+========================================================= */
+
+.modal-answer-options {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+}
+
+.modal-answer-option {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  min-height: 42px;
+
+  padding: 8px 12px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #d3dce4;
+
+  border-radius: 8px;
+
+  color: #4f6478;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.modal-answer-option:hover {
+  background: #eaf8f5;
+
+  border-color: #2bb89d;
+}
+
+.modal-answer-option.selected {
+  background: #eaf8f5;
+
+  border-color: #2bb89d;
+
+  color: #168d78;
+
+  font-weight: 600;
+}
+
+.modal-answer-option input {
+  width: auto;
+
+  margin: 0;
+
+  accent-color: #2bb89d;
+}
+
+/* =========================================================
+   TRUE / FALSE
+========================================================= */
+
+.modal-tf-box {
+  padding: 17px;
+
+  margin-bottom: 20px;
+
+  background: #f8fbfa;
+
+  border: 1px solid #dceeea;
+
+  border-radius: 10px;
+}
+
+.modal-tf-box > label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #2f4359;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.modal-tf-options {
+  display: flex;
+
+  gap: 12px;
+}
+
+.modal-tf-options .modal-answer-option {
+  width: 130px;
+
+  justify-content: center;
+}
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.question-modal-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 20px;
+
+  margin-top: 8px;
+
+  border-top: 1px solid #e7edf1;
+}
+
+/* =========================================================
+   FOOTER BUTTONS
+========================================================= */
+
+.modal-cancel-btn,
+.modal-reset-btn,
+.modal-submit-btn {
+  min-width: 100px;
+
+  padding: 11px 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+/* =========================================================
+   CANCEL
+========================================================= */
+
+.modal-cancel-btn {
+  background: #ffffff;
+
+  border: 1px solid #dce3e8;
+
+  color: #52677b;
+}
+
+.modal-cancel-btn:hover {
+  background: #f5f7f9;
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.modal-reset-btn {
+  background: #eef1f4;
+
+  border: 1px solid #dce3e8;
+
+  color: #2f4359;
+}
+
+.modal-reset-btn:hover {
+  background: #e2e7eb;
+}
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.modal-submit-btn {
+  background: #2bb89d;
+
+  border: none;
+
+  color: #ffffff;
+
+  box-shadow: 0 4px 12px rgba(43, 184, 157, 0.2);
+}
+
+.modal-submit-btn:hover {
+  background: #20a98f;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 6px 16px rgba(43, 184, 157, 0.25);
+}
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.modal-cancel-btn:disabled,
+.modal-reset-btn:disabled,
+.modal-submit-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+  .question-modal-overlay {
+    padding: 12px;
+  }
+
+  .question-modal {
+    max-height: 95vh;
+
+    border-radius: 14px;
+  }
+
+  .question-modal-header {
+    padding: 20px;
+  }
+
+  .question-modal-header h2 {
+    font-size: 19px;
+  }
+
+  .question-modal-form {
+    padding: 20px;
+  }
+
+  .modal-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-options-grid {
+    grid-template-columns: 1fr;
+
+    padding: 15px;
+  }
+
+  .modal-answer-options {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .question-modal-footer {
+    flex-wrap: wrap;
+  }
+
+  .modal-cancel-btn,
+  .modal-reset-btn,
+  .modal-submit-btn {
+    flex: 1;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+  .question-modal-header {
+    padding: 18px;
+  }
+
+  .question-modal-form {
+    padding: 18px;
+  }
+
+  .modal-answer-options {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-tf-options {
+    flex-direction: column;
+  }
+
+  .modal-tf-options .modal-answer-option {
+    width: 100%;
+  }
+
+  .question-modal-footer {
+    flex-direction: column;
+  }
+
+  .modal-cancel-btn,
+  .modal-reset-btn,
+  .modal-submit-btn {
+    width: 100%;
+  }
+}
