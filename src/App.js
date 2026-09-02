@@ -21,6 +21,8 @@ import StudentDashboard from "./component/StudentDashboard";
 import ViewExamSchedule from "./component/ViewExamSchedule";
 import ViewResult from "./component/ViewResult";
 import ViewReport from "./component/ViewReport";
+import Profile from "./component/Profile";
+import Settings from "./component/Settings";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
 
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/ManageFaculty" element={<ManageFaculty />} />
@@ -51,7 +55,6 @@ function App() {
         <Route path="/StudentDashboard" element={<StudentDashboard />} />
         <Route path="/ViewExamSchedule" element={<ViewExamSchedule />} />
         <Route path="/ViewResult" element={<ViewResult />} />
-
       </Routes>
     </div>
   );
