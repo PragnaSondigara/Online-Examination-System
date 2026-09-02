@@ -20,6 +20,7 @@ import ViewStudentResult from "./component/ViewStudentResult";
 import StudentDashboard from "./component/StudentDashboard";
 import ViewExamSchedule from "./component/ViewExamSchedule";
 import ViewResult from "./component/ViewResult";
+import ViewReport from "./component/ViewReport";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/AddSchedule" element={<AddSchedule />} />
         <Route path="/ManageSubject" element={<ManageSubject />} />
         <Route path="/AddSubject" element={<AddSubject />} />
+        <Route path="/ViewReport" element={<ViewReport />} />
         <Route path="/admin/ViewFeedback" element={<ViewFeedback />} />
 
         <Route path="/LoginPage" element={<LoginPage />} />
