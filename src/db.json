@@ -262,6 +262,7 @@
   "tbl_exam": [
     {
       "id": "1",
+      "exam_title": "Java Programming Exam",
       "faculty_id": 1,
       "subject_id": 1,
       "duration": 2,
@@ -274,6 +275,7 @@
     },
     {
       "id": "2",
+      "exam_title": "C++ Programming Exam",
       "faculty_id": 2,
       "subject_id": 2,
       "duration": 2,
@@ -286,6 +288,7 @@
     },
     {
       "id": "3",
+      "exam_title": "Python Programming Exam",
       "faculty_id": 3,
       "subject_id": 3,
       "duration": 2,
@@ -298,6 +301,7 @@
     },
     {
       "id": "4",
+      "exam_title": "Database Management Exam",
       "faculty_id": 4,
       "subject_id": 4,
       "duration": 2,
@@ -310,6 +314,7 @@
     },
     {
       "id": "5",
+      "exam_title": "Web Development Exam",
       "faculty_id": 5,
       "subject_id": 5,
       "duration": 2,
@@ -322,6 +327,7 @@
     },
     {
       "id": "6",
+      "exam_title": "Software Engineering Exam",
       "faculty_id": 6,
       "subject_id": 6,
       "duration": 2,
@@ -333,6 +339,8 @@
       "is_active": false
     },
     {
+      "id": "hvqYPDc4Q3c",
+      "exam_title": "Web Development Practice Exam",
       "faculty_id": 5,
       "subject_id": 5,
       "duration": 2,
@@ -341,10 +349,11 @@
       "end_time": "13:00",
       "passing_marks": 40,
       "total_marks": 100,
-      "is_active": true,
-      "id": "hvqYPDc4Q3c"
+      "is_active": true
     },
     {
+      "id": "tuI8QKlRyKM",
+      "exam_title": "Python Practice Exam",
       "faculty_id": 5,
       "subject_id": 3,
       "duration": 2,
@@ -353,10 +362,11 @@
       "end_time": "17:00",
       "passing_marks": 40,
       "total_marks": 100,
-      "is_active": true,
-      "id": "tuI8QKlRyKM"
+      "is_active": true
     },
     {
+      "id": "oQglogfGgLQ",
+      "exam_title": "Web Development Test",
       "faculty_id": 5,
       "subject_id": 5,
       "duration": 1,
@@ -365,10 +375,11 @@
       "end_time": "21:54",
       "passing_marks": 40,
       "total_marks": 100,
-      "is_active": true,
-      "id": "oQglogfGgLQ"
+      "is_active": true
     },
     {
+      "id": "m-ni6h12Jgc",
+      "exam_title": "Java Programming Test",
       "faculty_id": 1,
       "subject_id": 1,
       "duration": 1,
@@ -377,8 +388,7 @@
       "end_time": "15:06",
       "passing_marks": 8,
       "total_marks": 25,
-      "is_active": true,
-      "id": "m-ni6h12Jgc"
+      "is_active": true
     }
   ],
   "tbl_question": [
@@ -529,26 +539,22 @@
   ],
   "tbl_result": [
     {
-      "result_id": 1,
       "student_id": 1,
-      "exam_id": 5,
+      "exam_id": 1,
       "total_marks": 100,
       "obtained_marks": 90,
       "passing_marks": 40,
       "percentage": 90,
-      "status": "Pass",
-      "id": "YSxt8k32Wmg"
+      "status": "Pass"
     },
     {
-      "result_id": 2,
       "student_id": 2,
       "exam_id": 5,
       "total_marks": 100,
       "obtained_marks": 75,
       "passing_marks": 40,
       "percentage": 75,
-      "status": "Pass",
-      "id": "8fI_q_bd-_c"
+      "status": "Pass"
     }
   ],
   "tbl_feedback": [

@@ -7,13 +7,17 @@ export default function Header() {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-
   const navigate = useNavigate();
+
+  const firstLetter = username.charAt(0).toUpperCase();
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
         setShowDropdown(false);
       }
     };
@@ -40,55 +44,78 @@ export default function Header() {
     localStorage.removeItem("token");
 
     setShowDropdown(false);
-
     navigate("/login");
   };
-
-  const firstLetter = username.charAt(0).toUpperCase();
 
   return (
     <header className="admin-header">
       <div className="header-right">
         <div className="admin-profile" ref={dropdownRef}>
-          {/* Profile Button */}
-          <div
-            className="profile-trigger"
+
+          {/* ================= PROFILE TRIGGER ================= */}
+          <button
+            type="button"
+            className={`profile-trigger ${
+              showDropdown ? "profile-active" : ""
+            }`}
             onClick={() => setShowDropdown((prev) => !prev)}
           >
-            <div className="profile-circle">{firstLetter}</div>
-
-            <div className="profile-info">
-              <span className="admin-name">{username}</span>
-
-              <span className="admin-role">Administrator</span>
+            <div className="profile-circle">
+              {firstLetter}
             </div>
 
-            <span className="profile-arrow">{showDropdown ? "▲" : "▼"}</span>
-          </div>
+            <div className="profile-info">
+              <span className="admin-name">
+                {username}
+              </span>
 
-          {/* Dropdown */}
+              <span className="admin-role">
+                Administrator
+              </span>
+            </div>
+
+            <span
+              className={`profile-arrow ${
+                showDropdown ? "arrow-up" : ""
+              }`}
+            >
+              ▾
+            </span>
+          </button>
+
+          {/* ================= DROPDOWN ================= */}
           {showDropdown && (
             <div className="profile-dropdown">
-              {/* User Information */}
+
+              {/* User Header */}
               <div className="dropdown-user">
-                <div className="dropdown-avatar">{firstLetter}</div>
+                <div className="dropdown-avatar">
+                  {firstLetter}
+                </div>
 
                 <div className="dropdown-user-info">
-                  <div className="dropdown-user-name">{username}</div>
+                  <div className="dropdown-user-name">
+                    {username}
+                  </div>
 
-                  <div className="dropdown-user-role">Administrator</div>
+                  <div className="dropdown-user-role">
+                    Administrator
+                  </div>
                 </div>
               </div>
 
-              <div className="dropdown-divider"></div>
+              <div className="dropdown-divider" />
 
-              {/* My Profile */}
+              {/* Profile */}
               <button
                 type="button"
                 className="dropdown-item"
                 onClick={handleProfile}
               >
-                <span className="dropdown-icon">👤</span>
+                <span className="dropdown-icon profile-icon">
+                  <span>♙</span>
+                </span>
+
                 <span>My Profile</span>
               </button>
 
@@ -98,11 +125,14 @@ export default function Header() {
                 className="dropdown-item"
                 onClick={handleSettings}
               >
-                <span className="dropdown-icon">⚙</span>
+                <span className="dropdown-icon settings-icon">
+                  ⚙
+                </span>
+
                 <span>Settings</span>
               </button>
 
-              <div className="dropdown-divider"></div>
+              <div className="dropdown-divider" />
 
               {/* Logout */}
               <button
@@ -110,7 +140,10 @@ export default function Header() {
                 className="dropdown-item logout-item"
                 onClick={handleLogout}
               >
-                <span className="dropdown-icon">⇥</span>
+                <span className="dropdown-icon logout-icon">
+                  ↪
+                </span>
+
                 <span>Logout</span>
               </button>
             </div>
@@ -119,4 +152,4 @@ export default function Header() {
       </div>
     </header>
   );
-}
+}   

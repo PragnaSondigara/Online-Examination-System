@@ -1,56 +1,67 @@
-/* ================================
+/* =====================================================
    HEADER
-================================ */
+===================================================== */
 
 .admin-header {
   position: fixed;
   top: 0;
   left: 310px;
+  right: 0;
 
-  width: calc(100% - 310px);
-  height: 85px;
+  height: 92px;
 
   background: #ffffff;
-  border-bottom: 1px solid #e8eeee;
+  border-bottom: 1px solid #e9eef2;
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
-  padding: 0 35px;
+  padding: 0 40px;
+
   box-sizing: border-box;
 
   z-index: 1000;
 
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
 }
 
-/* ================================
-   HEADER RIGHT
-================================ */
+/* =====================================================
+   RIGHT SIDE
+===================================================== */
 
-.header-right {
+.admin-header .header-right {
   display: flex;
   align-items: center;
 }
 
-/* ================================
-   ADMIN PROFILE
-================================ */
+/* =====================================================
+   PROFILE CONTAINER
+===================================================== */
 
-.admin-profile {
+.admin-header .admin-profile {
   position: relative;
 }
 
-/* ================================
+/* =====================================================
    PROFILE TRIGGER
-================================ */
+===================================================== */
 
-.profile-trigger {
+.admin-header .profile-trigger {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
 
-  gap: 11px;
+  gap: 12px;
 
   padding: 7px 10px;
 
@@ -58,24 +69,31 @@
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  font-family: inherit;
 
-  user-select: none;
+  transition: background 0.2s ease;
+
+  box-sizing: border-box;
 }
 
-.profile-trigger:hover {
+.admin-header .profile-trigger:hover {
   background: #f4faf8;
 }
 
-/* ================================
-   PROFILE CIRCLE
-================================ */
+.admin-header .profile-trigger.profile-active {
+  background: #f4faf8;
+}
 
-.profile-circle {
-  width: 43px;
-  height: 43px;
+/* =====================================================
+   PROFILE AVATAR
+===================================================== */
 
-  min-width: 43px;
+.admin-header .profile-circle {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+  min-height: 48px;
 
   border-radius: 50%;
 
@@ -87,40 +105,226 @@
   align-items: center;
   justify-content: center;
 
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
 
-  box-shadow: 0 3px 8px rgba(53, 199, 154, 0.18);
+  line-height: 1;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 4px 10px rgba(53, 199, 154, 0.18);
 }
 
-/* ================================
-   PROFILE INFORMATION
-================================ */
+/* =====================================================
+   PROFILE TEXT
+===================================================== */
 
-.profile-info {
+.admin-header .profile-info {
   display: flex;
-  flex-direction: column;
 
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
 
-  gap: 3px;
+  gap: 2px;
 
-  min-width: 105px;
+  width: 125px;
+  min-width: 125px;
 }
 
-.admin-name {
+.admin-header .admin-name {
+  display: block;
+
+  color: #293c50;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 20px;
+
+  white-space: nowrap;
+}
+
+.admin-header .admin-role {
+  display: block;
+
+  color: #8b969f;
+
+  font-size: 11px;
+  font-weight: 400;
+
+  line-height: 16px;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   ARROW
+===================================================== */
+
+.admin-header .profile-arrow {
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #63717c;
+
+  font-size: 13px;
+
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.admin-header .profile-arrow.arrow-up {
+  transform: rotate(180deg);
+}
+
+/* =====================================================
+   DROPDOWN
+===================================================== */
+
+.admin-header .profile-dropdown {
+  position: absolute;
+
+  top: calc(100% + 14px);
+  right: 0;
+
+  width: 270px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5ebee;
+
+  border-radius: 15px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 18px 40px rgba(30, 50, 65, 0.14),
+    0 4px 12px rgba(30, 50, 65, 0.06);
+
+  z-index: 2000;
+
+  animation: dropdownOpen 0.18s ease-out;
+}
+
+/* =====================================================
+   DROPDOWN ARROW
+===================================================== */
+
+.admin-header .profile-dropdown::before {
+  content: "";
+
+  position: absolute;
+
+  top: -7px;
+  right: 34px;
+
+  width: 13px;
+  height: 13px;
+
+  background: #ffffff;
+
+  border-left: 1px solid #e5ebee;
+  border-top: 1px solid #e5ebee;
+
+  transform: rotate(45deg);
+
+  z-index: -1;
+}
+
+/* =====================================================
+   DROPDOWN USER
+===================================================== */
+
+.admin-header .dropdown-user {
+  width: 100%;
+
+  display: flex !important;
+  flex-direction: row !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 12px;
+
+  padding: 12px 10px;
+
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   DROPDOWN AVATAR
+===================================================== */
+
+.admin-header .dropdown-avatar {
+  width: 45px;
+  height: 45px;
+
+  min-width: 45px;
+  min-height: 45px;
+
+  border-radius: 50%;
+
+  background: #35c79a;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+/* =====================================================
+   DROPDOWN USER INFO
+===================================================== */
+
+.admin-header .dropdown-user-info {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  gap: 3px;
+}
+
+.admin-header .dropdown-user-name {
+  display: block;
+
+  width: 100%;
+
   color: #2d4055;
 
   font-size: 14px;
   font-weight: 600;
 
-  line-height: 18px;
+  line-height: 19px;
 
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.admin-role {
-  color: #8a969f;
+.admin-header .dropdown-user-role {
+  display: block;
+
+  color: #8c979f;
 
   font-size: 11px;
   font-weight: 400;
@@ -130,164 +334,51 @@
   white-space: nowrap;
 }
 
-/* ================================
-   PROFILE ARROW
-================================ */
-
-.profile-arrow {
-  color: #65727d;
-
-  font-size: 10px;
-
-  margin-left: 2px;
-
-  transition: transform 0.2s ease;
-}
-
-/* ================================
-   PROFILE DROPDOWN
-================================ */
-
-.profile-dropdown {
-  position: absolute;
-
-  top: calc(100% + 10px);
-  right: 0;
-
-  width: 245px;
-
-  background: #ffffff;
-
-  border: 1px solid #e6eeee;
-
-  border-radius: 12px;
-
-  box-shadow:
-    0 12px 30px rgba(31, 53, 68, 0.12),
-    0 3px 8px rgba(31, 53, 68, 0.05);
-
-  padding: 8px;
-
-  overflow: hidden;
-
-  z-index: 1100;
-
-  animation: dropdownOpen 0.18s ease-out;
-}
-
-/* Small arrow above dropdown */
-
-.profile-dropdown::before {
-  content: "";
-
-  position: absolute;
-
-  top: -6px;
-  right: 25px;
-
-  width: 11px;
-  height: 11px;
-
-  background: #ffffff;
-
-  border-left: 1px solid #e6eeee;
-  border-top: 1px solid #e6eeee;
-
-  transform: rotate(45deg);
-}
-
-/* ================================
-   DROPDOWN USER
-================================ */
-
-.dropdown-user {
-  display: flex;
-  align-items: center;
-
-  gap: 11px;
-
-  padding: 11px 10px;
-}
-
-/* Dropdown Avatar */
-
-.dropdown-avatar {
-  width: 40px;
-  height: 40px;
-
-  min-width: 40px;
-
-  border-radius: 50%;
-
-  background: #35c79a;
-
-  color: #ffffff;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 15px;
-  font-weight: 700;
-}
-
-/* Dropdown User Info */
-
-.dropdown-user-info {
-  display: flex;
-  flex-direction: column;
-
-  gap: 3px;
-
-  min-width: 0;
-}
-
-.dropdown-user-name {
-  color: #2d4055;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.dropdown-user-role {
-  color: #8a969f;
-
-  font-size: 11px;
-  font-weight: 400;
-}
-
-/* ================================
+/* =====================================================
    DIVIDER
-================================ */
+===================================================== */
 
-.dropdown-divider {
+.admin-header .dropdown-divider {
+  width: calc(100% - 10px);
   height: 1px;
 
-  background: #edf1f1;
+  background: #edf1f2;
 
-  margin: 5px 4px;
+  margin: 5px auto;
+
+  padding: 0;
 }
 
-/* ================================
+/* =====================================================
    DROPDOWN ITEMS
-================================ */
+===================================================== */
 
-.dropdown-item {
+/*
+   IMPORTANT:
+   !important is used here because your project
+   appears to have another CSS rule overriding flex.
+*/
+
+.admin-header .profile-dropdown .dropdown-item {
   width: 100%;
+  height: 46px;
 
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  flex-direction: row !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
 
   gap: 12px;
 
-  padding: 11px 10px;
+  padding: 7px 9px;
+
+  margin: 0;
 
   border: none;
-  border-radius: 8px;
+  outline: none;
+
+  border-radius: 9px;
 
   background: transparent;
 
@@ -298,70 +389,139 @@
   font-size: 13px;
   font-weight: 500;
 
+  line-height: normal;
+
   text-align: left;
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
-.dropdown-item:hover {
+/* =====================================================
+   REMOVE GLOBAL SPAN PROBLEMS
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-item > span {
+  display: flex;
+  flex-direction: row;
+}
+
+/* =====================================================
+   ITEM TEXT
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-item > span:last-child {
+  display: block !important;
+
+  width: auto;
+
+  flex: 1;
+
+  color: inherit;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  line-height: 20px;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   ITEM HOVER
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-item:hover {
   background: #f0faf7;
 
-  color: #25b88b;
+  color: #20ad82;
 }
 
-/* ================================
-   DROPDOWN ICON
-================================ */
+/* =====================================================
+   ICON
+===================================================== */
 
-.dropdown-icon {
-  width: 28px;
-  height: 28px;
+.admin-header .profile-dropdown .dropdown-icon {
+  width: 32px;
+  height: 32px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
 
-  border-radius: 7px;
+  flex: 0 0 32px;
+
+  display: flex !important;
+  flex-direction: row !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 8px;
 
   background: #f3f8f7;
 
-  font-size: 14px;
+  color: #53636e;
 
-  flex-shrink: 0;
+  font-size: 15px;
+
+  line-height: 1;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
-.dropdown-item:hover .dropdown-icon {
+/* =====================================================
+   ICON HOVER
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-item:hover .dropdown-icon {
   background: #dff7ef;
+
+  color: #20ad83;
 }
 
-/* ================================
+/* =====================================================
    LOGOUT
-================================ */
+===================================================== */
 
-.logout-item {
+.admin-header .profile-dropdown .logout-item {
   color: #d9534f;
 }
 
-.logout-item:hover {
+.admin-header .profile-dropdown .logout-item:hover {
   background: #fff3f2;
 
   color: #d64541;
 }
 
-.logout-item .dropdown-icon {
+.admin-header .profile-dropdown .logout-item .logout-icon {
   background: #fff3f2;
+
+  color: #d9534f;
 }
 
-/* ================================
-   DROPDOWN ANIMATION
-================================ */
+.admin-header .profile-dropdown .logout-item:hover .logout-icon {
+  background: #ffe5e3;
+
+  color: #d64541;
+}
+
+/* =====================================================
+   ANIMATION
+===================================================== */
 
 @keyframes dropdownOpen {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-7px);
   }
 
   to {
@@ -370,54 +530,76 @@
   }
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+  .admin-header {
+    left: 280px;
+
+    padding: 0 25px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 768px) {
   .admin-header {
-    position: fixed;
-
     left: 0;
 
     width: 100%;
 
-    height: 75px;
+    height: 72px;
 
-    padding: 0 20px;
+    padding: 0 18px;
   }
 
-  .profile-info {
+  .admin-header .profile-info {
     display: none;
   }
 
-  .profile-trigger {
-    padding: 5px;
-  }
-
-  .profile-arrow {
+  .admin-header .profile-arrow {
     display: none;
   }
 
-  .profile-dropdown {
-    right: 0;
+  .admin-header .profile-trigger {
+    padding: 4px;
+  }
 
-    width: 230px;
+  .admin-header .profile-circle {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .admin-header .profile-dropdown {
+    top: calc(100% + 10px);
+
+    right: -4px;
+
+    width: 250px;
   }
 }
 
-/* ================================
+/* =====================================================
    SMALL MOBILE
-================================ */
+===================================================== */
 
 @media (max-width: 480px) {
   .admin-header {
+    height: 68px;
+
     padding: 0 12px;
   }
 
-  .profile-dropdown {
-    width: 220px;
+  .admin-header .profile-dropdown {
+    width: 235px;
 
-    right: -5px;
+    right: -4px;
   }
 }
