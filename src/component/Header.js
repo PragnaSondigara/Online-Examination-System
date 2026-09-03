@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 export default function Header() {
-  const username = localStorage.getItem("username") || "Admin";
+  const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -14,10 +15,7 @@ export default function Header() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
       }
     };
@@ -44,14 +42,13 @@ export default function Header() {
     localStorage.removeItem("token");
 
     setShowDropdown(false);
-    navigate("/login");
+    navigate("/LoginPage");
   };
 
   return (
     <header className="admin-header">
       <div className="header-right">
         <div className="admin-profile" ref={dropdownRef}>
-
           {/* ================= PROFILE TRIGGER ================= */}
           <button
             type="button"
@@ -60,25 +57,15 @@ export default function Header() {
             }`}
             onClick={() => setShowDropdown((prev) => !prev)}
           >
-            <div className="profile-circle">
-              {firstLetter}
-            </div>
+            <div className="profile-circle">{firstLetter}</div>
 
             <div className="profile-info">
-              <span className="admin-name">
-                {username}
-              </span>
+              <span className="admin-name">{username}</span>
 
-              <span className="admin-role">
-                Administrator
-              </span>
+              <span className="admin-role">{role}</span>
             </div>
 
-            <span
-              className={`profile-arrow ${
-                showDropdown ? "arrow-up" : ""
-              }`}
-            >
+            <span className={`profile-arrow ${showDropdown ? "arrow-up" : ""}`}>
               ▾
             </span>
           </button>
@@ -86,21 +73,14 @@ export default function Header() {
           {/* ================= DROPDOWN ================= */}
           {showDropdown && (
             <div className="profile-dropdown">
-
               {/* User Header */}
               <div className="dropdown-user">
-                <div className="dropdown-avatar">
-                  {firstLetter}
-                </div>
+                <div className="dropdown-avatar">{firstLetter}</div>
 
                 <div className="dropdown-user-info">
-                  <div className="dropdown-user-name">
-                    {username}
-                  </div>
+                  <div className="dropdown-user-name">{username}</div>
 
-                  <div className="dropdown-user-role">
-                    Administrator
-                  </div>
+                  <div className="dropdown-user-role">{role}</div>
                 </div>
               </div>
 
@@ -125,9 +105,7 @@ export default function Header() {
                 className="dropdown-item"
                 onClick={handleSettings}
               >
-                <span className="dropdown-icon settings-icon">
-                  ⚙
-                </span>
+                <span className="dropdown-icon settings-icon">⚙</span>
 
                 <span>Settings</span>
               </button>
@@ -140,9 +118,7 @@ export default function Header() {
                 className="dropdown-item logout-item"
                 onClick={handleLogout}
               >
-                <span className="dropdown-icon logout-icon">
-                  ↪
-                </span>
+                <span className="dropdown-icon logout-icon">↪</span>
 
                 <span>Logout</span>
               </button>
@@ -152,4 +128,4 @@ export default function Header() {
       </div>
     </header>
   );
-}   
+}
