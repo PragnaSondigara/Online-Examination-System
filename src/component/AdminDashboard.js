@@ -179,7 +179,7 @@ export default function AdminDashboard() {
 
             {/* Feedback */}
             <Link
-              to="/feedback.php"
+              to="/admin/ViewFeedback"
               className="dashboard-card dashboard-feedback"
             >
               <div className="dashboard-card-header">
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
             </Link>
 
             {/* Reports */}
-            <Link to="/report.php" className="dashboard-card dashboard-report">
+            <Link to="/ViewReport" className="dashboard-card dashboard-report">
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">📊</div>
                 <div className="dashboard-card-arrow">→</div>

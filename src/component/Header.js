@@ -42,7 +42,7 @@ export default function Header() {
     localStorage.removeItem("token");
 
     setShowDropdown(false);
-    navigate("/LoginPage");
+    navigate("/");
   };
 
   return (

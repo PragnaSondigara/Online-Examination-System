@@ -23,6 +23,8 @@ import ViewResult from "./component/ViewResult";
 import ViewReport from "./component/ViewReport";
 import Profile from "./component/Profile";
 import Settings from "./component/Settings";
+import StartExam from "./component/StartExam";
+import Feedback from "./component/Feedback";
 
 function App() {
   return (
@@ -55,6 +57,8 @@ function App() {
         <Route path="/StudentDashboard" element={<StudentDashboard />} />
         <Route path="/ViewExamSchedule" element={<ViewExamSchedule />} />
         <Route path="/ViewResult" element={<ViewResult />} />
+        <Route path="/StartExam" element={<StartExam />} />
+        <Route path="/Feedback" element={<Feedback />} />
       </Routes>
     </div>
   );

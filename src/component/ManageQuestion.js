@@ -4,41 +4,34 @@ import "./ManageQuestion.css";
 import FacultySider from "./FacultySider";
 import Header from "./Header";
 import Footer from "./Footer";
-
 import AddQuestion from "./AddQuestion";
 
 const API_URL = "http://localhost:5000";
 
 export default function ManageQuestion() {
-  // =========================================================
+  // =====================================================
   // STATES
-  // =========================================================
+  // =====================================================
 
   const [questions, setQuestions] = useState([]);
   const [exams, setExams] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [faculties, setFaculties] = useState([]);
 
-  const [facultyId, setFacultyId] = useState(null);
-  const [assignedSubject, setAssignedSubject] = useState(null);
+  const [facultyId, setFacultyId] = useState("");
 
   const [loading, setLoading] = useState(false);
-
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedExam, setSelectedExam] = useState("all");
 
-  // Modal
   const [showAddQuestion, setShowAddQuestion] = useState(false);
-
-  // Edit
   const [editingQuestion, setEditingQuestion] = useState(null);
 
-  // =========================================================
-  // GET LOGGED-IN FACULTY
-  // =========================================================
+  // =====================================================
+  // GET LOGGED-IN FACULTY ID
+  // =====================================================
 
   useEffect(() => {
     const storedFacultyId = localStorage.getItem("facultyId");
@@ -48,124 +41,137 @@ export default function ManageQuestion() {
       return;
     }
 
-    const loggedInFacultyId = Number(storedFacultyId);
+    setFacultyId(storedFacultyId);
 
-    if (isNaN(loggedInFacultyId)) {
-      setError("Invalid faculty login session.");
-      return;
-    }
-
-    setFacultyId(loggedInFacultyId);
-
-    fetchData(loggedInFacultyId);
+    fetchData(storedFacultyId);
   }, []);
 
-  // =========================================================
+  // =====================================================
   // FETCH DATA
-  // =========================================================
+  // =====================================================
 
-  const fetchData = async (loggedInFacultyId = facultyId) => {
+  const fetchData = async (loggedFacultyId) => {
     try {
       setLoading(true);
       setError("");
 
-      if (!loggedInFacultyId) {
-        throw new Error("Faculty ID not found.");
-      }
+      // -------------------------------------------------
+      // 1. GET FACULTY
+      // -------------------------------------------------
 
-      const [
-        questionsResponse,
-        examsResponse,
-        subjectsResponse,
-        facultiesResponse,
-      ] = await Promise.all([
-        fetch(`${API_URL}/tbl_question`),
-        fetch(`${API_URL}/tbl_exam`),
-        fetch(`${API_URL}/tbl_subject`),
-        fetch(`${API_URL}/tbl_faculty`),
-      ]);
-
-      if (
-        !questionsResponse.ok ||
-        !examsResponse.ok ||
-        !subjectsResponse.ok ||
-        !facultiesResponse.ok
-      ) {
-        throw new Error("Failed to fetch data.");
-      }
-
-      const questionsData = await questionsResponse.json();
-      const examsData = await examsResponse.json();
-      const subjectsData = await subjectsResponse.json();
-      const facultiesData = await facultiesResponse.json();
-
-      // =====================================================
-      // FIND FACULTY
-      // =====================================================
-
-      const loggedInFaculty = facultiesData.find(
-        (faculty) => Number(faculty.faculty_id) === Number(loggedInFacultyId),
+      const facultyResponse = await fetch(
+        `${API_URL}/tbl_faculty/${loggedFacultyId}`,
       );
 
-      if (!loggedInFaculty) {
-        throw new Error("Faculty account not found.");
+      if (!facultyResponse.ok) {
+        throw new Error("Faculty not found.");
       }
 
-      if (loggedInFaculty.is_active !== true) {
-        setQuestions([]);
-        setExams([]);
-        setSubjects([]);
-        setFaculties([]);
-        setAssignedSubject(null);
+      const faculty = await facultyResponse.json();
 
+      if (faculty.is_active !== true) {
         throw new Error(
           "Your faculty account is inactive. Please contact administrator.",
         );
       }
 
-      setFaculties([loggedInFaculty]);
+      // -------------------------------------------------
+      // 2. GET SUBJECTS
+      // -------------------------------------------------
 
-      // =====================================================
-      // FIND ASSIGNED SUBJECT
-      // =====================================================
+      const subjectResponse = await fetch(`${API_URL}/tbl_subject`);
 
-      const subject = subjectsData.find(
-        (item) =>
-          Number(item.faculty_id) === Number(loggedInFacultyId) &&
-          item.is_active === true,
-      );
-
-      if (!subject) {
-        setQuestions([]);
-        setExams([]);
-        setSubjects([]);
-        setAssignedSubject(null);
-
-        throw new Error("No active subject is assigned to this faculty.");
+      if (!subjectResponse.ok) {
+        throw new Error("Unable to load subjects.");
       }
 
-      setAssignedSubject(subject);
-      setSubjects([subject]);
+      const allSubjects = await subjectResponse.json();
 
-      // =====================================================
-      // FACULTY EXAMS
-      // =====================================================
+      /*
+        IMPORTANT:
 
-      const facultyExams = examsData.filter(
-        (exam) =>
-          Number(exam.faculty_id) === Number(loggedInFacultyId) &&
-          Number(exam.subject_id) === Number(subject.subject_id),
+        Your database uses:
+
+        subject.id
+        subject.faculty_id
+
+        Example:
+
+        {
+          "faculty_id": "oIveipxloTU",
+          "subject_name": "Java",
+          "id": "PS7FhgzUvTA"
+        }
+      */
+
+      const facultySubjects = allSubjects.filter(
+        (subject) =>
+          String(subject.faculty_id) === String(faculty.id) &&
+          subject.is_active === true,
       );
+
+      if (facultySubjects.length === 0) {
+        setSubjects([]);
+        setExams([]);
+        setQuestions([]);
+
+        throw new Error("No subject is assigned to this faculty.");
+      }
+
+      setSubjects(facultySubjects);
+
+      // -------------------------------------------------
+      // 3. GET EXAMS
+      // -------------------------------------------------
+
+      const examResponse = await fetch(`${API_URL}/tbl_exam`);
+
+      if (!examResponse.ok) {
+        throw new Error("Unable to load exams.");
+      }
+
+      const allExams = await examResponse.json();
+
+      /*
+        Get only subjects assigned to this faculty.
+
+        Because your subject database uses "id",
+        we compare exam.subject_id with subject.id.
+      */
+
+      const facultySubjectIds = facultySubjects.map((subject) =>
+        String(subject.id),
+      );
+
+      const facultyExams = allExams.filter((exam) => {
+        const correctFaculty = String(exam.faculty_id) === String(faculty.id);
+
+        const correctSubject = facultySubjectIds.includes(
+          String(exam.subject_id),
+        );
+
+        return correctFaculty && correctSubject;
+      });
 
       setExams(facultyExams);
 
-      // =====================================================
-      // FACULTY QUESTIONS
-      // =====================================================
+      // -------------------------------------------------
+      // 4. GET QUESTIONS
+      // -------------------------------------------------
 
+      const questionResponse = await fetch(`${API_URL}/tbl_question`);
+
+      if (!questionResponse.ok) {
+        throw new Error("Unable to load questions.");
+      }
+
+      const allQuestions = await questionResponse.json();
+
+      // Get exam IDs belonging to this faculty
       const facultyExamIds = facultyExams.map((exam) => String(exam.id));
 
-      const facultyQuestions = questionsData.filter((question) =>
+      // Only questions from faculty's exams
+      const facultyQuestions = allQuestions.filter((question) =>
         facultyExamIds.includes(String(question.exam_id)),
       );
 
@@ -175,78 +181,75 @@ export default function ManageQuestion() {
     } catch (err) {
       console.error(err);
 
-      setError(err.message || "Unable to load data. Please check JSON Server.");
+      setError(err.message || "Unable to load data. Check JSON Server.");
     } finally {
       setLoading(false);
     }
   };
 
-  // =========================================================
+  // =====================================================
   // GET EXAM
-  // =========================================================
+  // =====================================================
 
   const getExam = (examId) => {
     return exams.find((exam) => String(exam.id) === String(examId));
   };
 
-  // =========================================================
+  // =====================================================
   // GET SUBJECT
-  // =========================================================
+  // =====================================================
 
   const getSubject = (subjectId) => {
-    return subjects.find(
-      (subject) => String(subject.subject_id) === String(subjectId),
-    );
+    return subjects.find((subject) => String(subject.id) === String(subjectId));
   };
 
-  // =========================================================
-  // GET FACULTY
-  // =========================================================
-
-  const getFaculty = (facultyId) => {
-    return faculties.find(
-      (faculty) => String(faculty.faculty_id) === String(facultyId),
-    );
-  };
-
-  // =========================================================
-  // CHECK EXAM OWNERSHIP
-  // =========================================================
+  // =====================================================
+  // CHECK EXAM ACCESS
+  // =====================================================
 
   const isExamAllowed = (examId) => {
     const exam = getExam(examId);
 
-    if (!exam || !assignedSubject || !facultyId) {
+    if (!exam) {
       return false;
     }
 
-    return (
-      Number(exam.faculty_id) === Number(facultyId) &&
-      Number(exam.subject_id) === Number(assignedSubject.subject_id)
+    // Check faculty
+    if (String(exam.faculty_id) !== String(facultyId)) {
+      return false;
+    }
+
+    // Check subject
+    const subjectExists = subjects.some(
+      (subject) => String(subject.id) === String(exam.subject_id),
     );
+
+    return subjectExists;
   };
 
-  // =========================================================
-  // OPEN ADD MODAL
-  // =========================================================
+  // =====================================================
+  // ADD QUESTION
+  // =====================================================
 
   const handleAddQuestion = () => {
     setEditingQuestion(null);
-    setError("");
     setMessage("");
+    setError("");
+
     setShowAddQuestion(true);
   };
 
-  // =========================================================
-  // OPEN EDIT MODAL
-  // =========================================================
+  // =====================================================
+  // EDIT QUESTION
+  // =====================================================
 
   const handleEdit = (question) => {
-    setError("");
     setMessage("");
+    setError("");
 
     if (!isExamAllowed(question.exam_id)) {
-      setError("You can only edit questions from your assigned subject.");
+      setError("You can only edit questions from your assigned subjects.");
+
       return;
     }
 
@@ -254,18 +257,18 @@ export default function ManageQuestion() {
     setShowAddQuestion(true);
   };
 
-  // =========================================================
+  // =====================================================
   // CLOSE MODAL
-  // =========================================================
+  // =====================================================
 
   const closeQuestionModal = () => {
     setShowAddQuestion(false);
     setEditingQuestion(null);
   };
 
-  // =========================================================
+  // =====================================================
   // SAVE QUESTION
-  // =========================================================
+  // =====================================================
 
   const handleSaveQuestion = async (formData) => {
     try {
@@ -273,25 +276,31 @@ export default function ManageQuestion() {
       setError("");
       setMessage("");
 
-      // =====================================================
+      // Check exam
+      if (!formData.exam_id) {
+        throw new Error("Please select an exam.");
+      }
+
+      // Security check
+      if (!isExamAllowed(formData.exam_id)) {
+        throw new Error(
+          "You can only add questions to your assigned subjects.",
+        );
+      }
+
+      // =================================================
       // UPDATE
-      // =====================================================
+      // =================================================
 
       if (editingQuestion) {
         if (!isExamAllowed(editingQuestion.exam_id)) {
           throw new Error("You are not allowed to edit this question.");
         }
 
-        if (!isExamAllowed(formData.exam_id)) {
-          throw new Error(
-            "You cannot move this question to another faculty's exam.",
-          );
-        }
-
         const updatedQuestion = {
           ...editingQuestion,
 
-          exam_id: Number(formData.exam_id),
+          exam_id: formData.exam_id,
 
           question: formData.question.trim(),
 
@@ -322,9 +331,11 @@ export default function ManageQuestion() {
           `${API_URL}/tbl_question/${editingQuestion.id}`,
           {
             method: "PUT",
+
             headers: {
               "Content-Type": "application/json",
             },
+
             body: JSON.stringify(updatedQuestion),
           },
         );
@@ -336,19 +347,12 @@ export default function ManageQuestion() {
         setMessage("Question updated successfully.");
       }
 
-      // =====================================================
+      // =================================================
       // ADD
-      // =====================================================
+      // =================================================
       else {
-        const maxQuestionId =
-          questions.length > 0
-            ? Math.max(...questions.map((q) => Number(q.question_id) || 0))
-            : 0;
-
         const newQuestion = {
-          question_id: maxQuestionId + 1,
-
-          exam_id: Number(formData.exam_id),
+          exam_id: formData.exam_id,
 
           question: formData.question.trim(),
 
@@ -377,9 +381,11 @@ export default function ManageQuestion() {
 
         const response = await fetch(`${API_URL}/tbl_question`, {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify(newQuestion),
         });
 
@@ -402,13 +408,13 @@ export default function ManageQuestion() {
     }
   };
 
-  // =========================================================
-  // DELETE
-  // =========================================================
+  // =====================================================
+  // DELETE QUESTION
+  // =====================================================
 
   const handleDelete = async (id) => {
-    setError("");
     setMessage("");
+    setError("");
 
     const question = questions.find((item) => String(item.id) === String(id));
 
@@ -417,8 +423,10 @@ export default function ManageQuestion() {
       return;
     }
 
+    // Security check
     if (!isExamAllowed(question.exam_id)) {
-      setError("You can only delete questions from your assigned subject.");
+      setError("You can only delete questions from your assigned subjects.");
+
       return;
     }
 
@@ -453,9 +461,9 @@ export default function ManageQuestion() {
     }
   };
 
-  // =========================================================
-  // FILTER
-  // =========================================================
+  // =====================================================
+  // SEARCH + FILTER
+  // =====================================================
 
   const filteredQuestions = questions.filter((question) => {
     const search = searchTerm.toLowerCase().trim();
@@ -475,9 +483,9 @@ export default function ManageQuestion() {
     return matchesSearch && matchesExam;
   });
 
-  // =========================================================
+  // =====================================================
   // JSX
-  // =========================================================
+  // =====================================================
 
   return (
     <>
@@ -486,46 +494,42 @@ export default function ManageQuestion() {
       <Header />
 
       <div className="manage-question">
-        {/* =================================================
+        {/* =============================================
             PAGE HEADER
-        ================================================= */}
+        ============================================= */}
 
         <div className="page-header">
           <div>
             <h1>Manage Questions</h1>
 
-            <p>View, add, edit and manage exam questions.</p>
+            <p>View, add, edit and manage your exam questions.</p>
 
-            {assignedSubject && (
+            {/* ASSIGNED SUBJECTS */}
+
+            {subjects.length > 0 && (
               <div className="assigned-subject">
-                Assigned Subject:{" "}
-                <strong>{assignedSubject.subject_name}</strong>
-              </div>
-            )}
-
-            {facultyId && faculties.length > 0 && (
-              <div className="faculty-name">
-                Faculty: <strong>{faculties[0]?.faculty_name}</strong>
+                Assigned Subjects:
+                {subjects.map((subject) => (
+                  <strong key={subject.id}> {subject.subject_name}</strong>
+                ))}
               </div>
             )}
           </div>
-
-          {/* ADD BUTTON */}
 
           <button
             type="button"
             className="add-question-btn"
             onClick={handleAddQuestion}
-            disabled={loading || !assignedSubject || exams.length === 0}
+            disabled={loading || subjects.length === 0 || exams.length === 0}
           >
             <span className="plus-icon">+</span>
             Add Question
           </button>
         </div>
 
-        {/* =================================================
-            MESSAGES
-        ================================================= */}
+        {/* =============================================
+            SUCCESS MESSAGE
+        ============================================= */}
 
         {message && (
           <div className="success-message">
@@ -537,6 +541,10 @@ export default function ManageQuestion() {
           </div>
         )}
 
+        {/* =============================================
+            ERROR MESSAGE
+        ============================================= */}
+
         {error && (
           <div className="error-message">
             <span>{error}</span>
@@ -547,9 +555,9 @@ export default function ManageQuestion() {
           </div>
         )}
 
-        {/* =================================================
+        {/* =============================================
             QUESTION LIST
-        ================================================= */}
+        ============================================= */}
 
         <div className="question-list-card">
           <div className="list-header">
@@ -563,6 +571,7 @@ export default function ManageQuestion() {
 
             <div className="filters">
               <span>⌕</span>
+
               <input
                 type="text"
                 placeholder="Search questions..."
@@ -589,16 +598,16 @@ export default function ManageQuestion() {
             </div>
           </div>
 
-          {/* =================================================
-              TABLE
-          ================================================= */}
+          {/* =========================================
+              LOADING
+          ========================================= */}
 
           {loading && questions.length === 0 ? (
             <div className="loading">Loading questions...</div>
           ) : filteredQuestions.length === 0 ? (
             <div className="no-data">
               {questions.length === 0
-                ? "No questions available for your assigned subject."
+                ? "No questions available for your assigned subjects."
                 : "No questions found."}
             </div>
           ) : (
@@ -622,13 +631,15 @@ export default function ManageQuestion() {
 
                     const subject = exam ? getSubject(exam.subject_id) : null;
 
-                    const faculty = exam ? getFaculty(exam.faculty_id) : null;
-
                     const isTrueFalse = question.question_type === "True/False";
 
                     return (
                       <tr key={question.id}>
-                        <td>{question.question_id || index + 1}</td>
+                        {/* NUMBER */}
+
+                        <td>{index + 1}</td>
+
+                        {/* QUESTION */}
 
                         <td>
                           <div className="question-text">
@@ -639,6 +650,8 @@ export default function ManageQuestion() {
                             {question.question_type || "MCQ"}
                           </span>
                         </td>
+
+                        {/* OPTIONS */}
 
                         <td>
                           <div className="options-list">
@@ -664,15 +677,21 @@ export default function ManageQuestion() {
                           </div>
                         </td>
 
+                        {/* CORRECT */}
+
                         <td>
                           <span className="correct-badge">
                             {question.correct_answer}
                           </span>
                         </td>
 
+                        {/* MARKS */}
+
                         <td>
                           <span className="marks-badge">{question.marks}</span>
                         </td>
+
+                        {/* EXAM */}
 
                         <td>
                           {exam ? (
@@ -681,20 +700,20 @@ export default function ManageQuestion() {
                                 {subject?.subject_name || "Unknown Subject"}
                               </strong>
 
-                              <span>{exam.date}</span>
+                              <span>Date: {exam.date}</span>
 
                               <span>
-                                {exam.start_time} - {exam.end_time}
+                                Time: {exam.start_time} - {exam.end_time}
                               </span>
 
-                              {faculty && (
-                                <small>Faculty: {faculty.faculty_name}</small>
-                              )}
+                              <span>Total Marks: {exam.total_marks}</span>
                             </div>
                           ) : (
                             <span>Exam not found</span>
                           )}
                         </td>
+
+                        {/* ACTIONS */}
 
                         <td>
                           <div className="action-buttons">
@@ -725,6 +744,8 @@ export default function ManageQuestion() {
             </div>
           )}
 
+          {/* SUMMARY */}
+
           <div className="result-summary">
             Showing <strong>{filteredQuestions.length}</strong> of{" "}
             <strong>{questions.length}</strong> questions
@@ -732,15 +753,14 @@ export default function ManageQuestion() {
         </div>
       </div>
 
-      {/* =====================================================
+      {/* ===============================================
           ADD / EDIT QUESTION MODAL
-      ===================================================== */}
+      =============================================== */}
 
       {showAddQuestion && (
         <AddQuestion
           exams={exams}
           subjects={subjects}
-          assignedSubject={assignedSubject}
           editingQuestion={editingQuestion}
           onClose={closeQuestionModal}
           onSubmit={handleSaveQuestion}

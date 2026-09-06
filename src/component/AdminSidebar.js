@@ -43,7 +43,7 @@ export default function AdminSidebar() {
 
       {/* Bottom */}
       <div className="sidebar-bottom">
-        <Link className="logout-item" to="/LoginPage">
+        <Link className="logout-item" to="/">
           <span className="nav-icon">↪</span>
           <span>Logout</span>
         </Link>

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./ViewExamSchedule.css";
+
 import StudentSider from "./StudentSider";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5000";
 
 export default function ViewExamSchedule() {
+  const navigate = useNavigate();
   const [exams, setExams] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [faculties, setFaculties] = useState([]);
@@ -42,11 +45,15 @@ export default function ViewExamSchedule() {
       const subjectsData = await subjectsResponse.json();
       const facultiesData = await facultiesResponse.json();
 
+      console.log("Exams:", examsData);
+      console.log("Subjects:", subjectsData);
+      console.log("Faculties:", facultiesData);
+
       setExams(examsData);
       setSubjects(subjectsData);
       setFaculties(facultiesData);
     } catch (err) {
-      console.error(err);
+      console.error("Fetch Error:", err);
 
       setError(
         "Unable to load schedule. Please check whether JSON Server is running.",
@@ -66,37 +73,45 @@ export default function ViewExamSchedule() {
 
   // =========================================================
   // GET SUBJECT
+  //
+  // tbl_exam.subject_id
+  //        ↓
+  // tbl_subject.id
   // =========================================================
 
   const getSubject = (subjectId) => {
-    return subjects.find(
-      (subject) => String(subject.subject_id) === String(subjectId),
-    );
+    return subjects.find((subject) => String(subject.id) === String(subjectId));
   };
 
   // =========================================================
   // GET FACULTY
+  //
+  // tbl_exam.faculty_id
+  //        ↓
+  // tbl_faculty.id
   // =========================================================
 
   const getFaculty = (facultyIdValue) => {
     return faculties.find(
-      (faculty) => String(faculty.faculty_id) === String(facultyIdValue),
+      (faculty) => String(faculty.id) === String(facultyIdValue),
     );
   };
 
   // =========================================================
-  // ALL FACULTY EXAMS
+  // ACTIVE EXAMS
+  //
+  // Student should see active exams only
   // =========================================================
 
-  const facultyExams = exams;
+  const activeExams = exams.filter((exam) => exam.is_active === true);
 
   // =========================================================
   // AVAILABLE SUBJECTS
   // =========================================================
 
   const availableSubjects = subjects.filter((subject) => {
-    return exams.some(
-      (exam) => String(exam.subject_id) === String(subject.subject_id),
+    return activeExams.some(
+      (exam) => String(exam.subject_id) === String(subject.id),
     );
   });
 
@@ -105,29 +120,42 @@ export default function ViewExamSchedule() {
   // =========================================================
 
   const availableDates = [
-    ...new Set(exams.map((exam) => exam.date).filter(Boolean)),
+    ...new Set(activeExams.map((exam) => exam.date).filter(Boolean)),
   ].sort();
 
   // =========================================================
   // FILTER SCHEDULE
   // =========================================================
 
-  const filteredExams = facultyExams.filter((exam) => {
+  const filteredExams = activeExams.filter((exam) => {
     const subject = getSubject(exam.subject_id);
     const faculty = getFaculty(exam.faculty_id);
 
     const search = searchTerm.toLowerCase().trim();
 
+    // ===================================================
+    // SEARCH
+    // ===================================================
+
     const matchesSearch =
+      search === "" ||
       subject?.subject_name?.toLowerCase().includes(search) ||
       faculty?.faculty_name?.toLowerCase().includes(search) ||
       exam.date?.toLowerCase().includes(search) ||
       exam.start_time?.toLowerCase().includes(search) ||
       exam.end_time?.toLowerCase().includes(search);
 
+    // ===================================================
+    // SUBJECT FILTER
+    // ===================================================
+
     const matchesSubject =
       selectedSubject === "all" ||
       String(exam.subject_id) === String(selectedSubject);
+
+    // ===================================================
+    // DATE FILTER
+    // ===================================================
 
     const matchesDate =
       selectedDate === "all" || String(exam.date) === String(selectedDate);
@@ -223,23 +251,17 @@ export default function ViewExamSchedule() {
     return `${remainingMinutes}m`;
   };
 
-  // =========================================================
-  // VIEW SCHEDULE DETAILS
-  // =========================================================
+  const handleStartExam = (exam) => {
+    if (!exam.is_active) {
+      alert("This exam is currently inactive.");
+      return;
+    }
 
-  const handleViewDetails = (exam) => {
-    const subject = getSubject(exam.subject_id);
+    // Store selected exam
+    localStorage.setItem("examId", exam.id);
 
-    const faculty = getFaculty(exam.faculty_id);
-
-    alert(
-      `Subject: ${subject?.subject_name || "Unknown"}\n` +
-        `Date: ${formatDate(exam.date)}\n` +
-        `Day: ${getDay(exam.date)}\n` +
-        `Time: ${exam.start_time || "N/A"} - ${exam.end_time || "N/A"}\n` +
-        `Duration: ${calculateDuration(exam.start_time, exam.end_time)}\n` +
-        `Faculty: ${faculty?.faculty_name || "Unknown Faculty"}`,
-    );
+    // Go to exam page
+    navigate("/StartExam");
   };
 
   // =========================================================
@@ -253,21 +275,21 @@ export default function ViewExamSchedule() {
       <Header />
 
       <div className="schedule-page">
-        {/* =====================================================
+        {/* ===================================================
             PAGE HEADER
-        ===================================================== */}
+        =================================================== */}
 
         <div className="schedule-page-header">
           <div>
             <h1>Exam Schedule</h1>
 
-            <p>View examination schedules for all faculties and subjects.</p>
+            <p>View examination schedules for all active exams.</p>
           </div>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             ERROR
-        ===================================================== */}
+        =================================================== */}
 
         {error && (
           <div className="schedule-error">
@@ -279,18 +301,18 @@ export default function ViewExamSchedule() {
           </div>
         )}
 
-        {/* =====================================================
+        {/* ===================================================
             STATISTICS
-        ===================================================== */}
+        =================================================== */}
 
         <div className="schedule-stat-grid">
           <div className="schedule-stat-card">
             <div className="schedule-stat-icon">📅</div>
 
             <div>
-              <span>Total Exams</span>
+              <span>Active Exams</span>
 
-              <strong>{facultyExams.length}</strong>
+              <strong>{activeExams.length}</strong>
             </div>
           </div>
 
@@ -305,9 +327,9 @@ export default function ViewExamSchedule() {
           </div>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             MAIN SCHEDULE CARD
-        ===================================================== */}
+        =================================================== */}
 
         <div className="schedule-card">
           {/* HEADER */}
@@ -316,15 +338,15 @@ export default function ViewExamSchedule() {
             <div>
               <h2>Exam Schedule</h2>
 
-              <p>Examination schedules assigned to all faculties.</p>
+              <p>Examination schedules for active exams.</p>
             </div>
 
             <div className="schedule-count">{filteredExams.length} Exams</div>
           </div>
 
-          {/* ===================================================
+          {/* =================================================
               FILTERS
-          =================================================== */}
+          ================================================= */}
 
           <div className="schedule-filters">
             {/* SEARCH */}
@@ -349,7 +371,7 @@ export default function ViewExamSchedule() {
               <option value="all">All Subjects</option>
 
               {availableSubjects.map((subject) => (
-                <option key={subject.subject_id} value={subject.subject_id}>
+                <option key={subject.id} value={subject.id}>
                   {subject.subject_name}
                 </option>
               ))}
@@ -381,9 +403,9 @@ export default function ViewExamSchedule() {
             </button>
           </div>
 
-          {/* ===================================================
+          {/* =================================================
               LOADING
-          =================================================== */}
+          ================================================= */}
 
           {loading ? (
             <div className="schedule-loading">
@@ -397,7 +419,7 @@ export default function ViewExamSchedule() {
 
               <h3>No Exam Schedule Found</h3>
 
-              <p>No exams were found matching the selected filters.</p>
+              <p>No active exams were found matching the selected filters.</p>
             </div>
           ) : (
             /* =================================================
@@ -411,102 +433,123 @@ export default function ViewExamSchedule() {
                 const faculty = getFaculty(exam.faculty_id);
 
                 return (
-                  <div className="exam-schedule-card" key={exam.id}>
-                    {/* CARD TOP */}
+                  <div className="modern-exam-card" key={exam.id}>
+                    {/* TOP SECTION */}
+                    <div className="modern-card-header">
+                      <div className="modern-subject">
+                        <div className="subject-circle">📚</div>
 
-                    <div className="exam-card-top">
-                      <div className="exam-subject-icon">📚</div>
+                        <div>
+                          <span>SUBJECT</span>
+                          <h3>{subject?.subject_name || "Unknown Subject"}</h3>
+                        </div>
+                      </div>
 
-                      <div className="exam-card-number">#{index + 1}</div>
+                      <span className="active-badge">● Active</span>
                     </div>
 
-                    {/* SUBJECT */}
-
-                    <div className="exam-card-subject">
-                      <h3>{subject?.subject_name || "Unknown Subject"}</h3>
-
-                      <span>Subject ID: {exam.subject_id || "N/A"}</span>
-                    </div>
-
-                    {/* DATE */}
-
-                    <div className="exam-date-section">
-                      <div className="calendar-icon">📅</div>
-
-                      <div>
-                        <span>Exam Date</span>
+                    {/* DATE SECTION */}
+                    <div className="modern-date-box">
+                      <div className="date-left">
+                        <span className="date-label">EXAM DATE</span>
 
                         <strong>{formatDate(exam.date)}</strong>
 
                         <small>{getDay(exam.date)}</small>
                       </div>
+
+                      <div className="date-icon">📅</div>
                     </div>
 
-                    {/* TIME */}
+                    {/* EXAM INFORMATION */}
+                    <div className="modern-info-grid">
+                      {/* TIME */}
+                      <div className="modern-info-item">
+                        <div className="info-icon">🕐</div>
 
-                    <div className="exam-time-section">
-                      <div className="time-item">
-                        <span className="time-label">Start</span>
+                        <div>
+                          <span>Time</span>
 
-                        <strong>🕐 {exam.start_time || "N/A"}</strong>
+                          <strong>
+                            {exam.start_time} - {exam.end_time}
+                          </strong>
+                        </div>
                       </div>
 
-                      <div className="time-divider"></div>
+                      {/* DURATION */}
+                      <div className="modern-info-item">
+                        <div className="info-icon">⏱</div>
 
-                      <div className="time-item">
-                        <span className="time-label">End</span>
+                        <div>
+                          <span>Duration</span>
 
-                        <strong>🕐 {exam.end_time || "N/A"}</strong>
+                          <strong>
+                            {calculateDuration(exam.start_time, exam.end_time)}
+                          </strong>
+                        </div>
+                      </div>
+
+                      {/* MARKS */}
+                      <div className="modern-info-item">
+                        <div className="info-icon">📝</div>
+
+                        <div>
+                          <span>Total Marks</span>
+
+                          <strong>{exam.total_marks}</strong>
+                        </div>
+                      </div>
+
+                      {/* PASSING MARKS */}
+                      <div className="modern-info-item">
+                        <div className="info-icon">✓</div>
+
+                        <div>
+                          <span>Passing Marks</span>
+
+                          <strong>{exam.passing_marks}</strong>
+                        </div>
                       </div>
                     </div>
 
-                    {/* DURATION */}
-
-                    <div className="exam-duration">
-                      <span>⏱</span>
-
-                      <div>
-                        <small>Duration</small>
-
-                        <strong>
-                          {calculateDuration(exam.start_time, exam.end_time)}
-                        </strong>
-                      </div>
-                    </div>
-
-                    {/* CARD FOOTER */}
-
-                    <div className="exam-card-footer">
-                      <div className="exam-faculty">
-                        <div className="mini-faculty-avatar">
+                    {/* FACULTY */}
+                    <div className="modern-faculty-section">
+                      <div className="modern-faculty-info">
+                        <div className="modern-faculty-avatar">
                           {faculty?.faculty_name?.charAt(0)?.toUpperCase() ||
                             "F"}
                         </div>
 
                         <div>
-                          <small>Faculty</small>
+                          <span>FACULTY</span>
                           <strong>{faculty?.faculty_name || "Faculty"}</strong>
                         </div>
                       </div>
 
-                      <button type="button" className="start-exam-btn">
-                        Start Exam
-                      </button>
+                      <div className="exam-id-text">ID: {exam.id}</div>
                     </div>
+
+                    <button
+                      type="button"
+                      className="modern-view-btn"
+                      onClick={() => handleStartExam(exam)}
+                    >
+                      Start Exam <span>→</span>
+                    </button>
                   </div>
                 );
               })}
             </div>
           )}
 
-          {/* ===================================================
+          {/* =================================================
               FOOTER
-          =================================================== */}
+          ================================================= */}
 
           <div className="schedule-list-footer">
             <span>
               Showing <strong>{filteredExams.length}</strong> of{" "}
-              <strong>{facultyExams.length}</strong> total exams
+              <strong>{activeExams.length}</strong> active exams
             </span>
           </div>
         </div>

@@ -26,11 +26,16 @@ export default function StudentSider() {
           <span className="nav-icon">📝</span>
           <span>View Result</span>
         </Link>
+
+        <Link to="/Feedback" className="nav-item">
+          <span className="nav-icon">💬</span>
+          <span>Provide Feedback</span>
+        </Link>
       </nav>
 
       {/* Bottom */}
       <div className="sidebar-bottom">
-        <Link className="logout-item" to="/LoginPage">
+        <Link className="logout-item" to="/">
           <span className="nav-icon">↪</span>
           <span>Logout</span>
         </Link>
