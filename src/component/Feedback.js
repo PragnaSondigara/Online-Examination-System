@@ -129,7 +129,7 @@ export default function Feedback() {
 
           {/* ================= FEEDBACK FORM ================= */}
           <div className="feedback-card">
-            <div className="card-header">
+            <div className="feedback-card-header">
               <div className="header-content">
                 <span className="card-label">YOUR OPINION MATTERS</span>
 
