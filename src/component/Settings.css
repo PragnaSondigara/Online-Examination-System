@@ -4,9 +4,7 @@
 
 .settings-container {
   min-height: 100vh;
-
   display: flex;
-
   background: #f5f8fa;
 }
 
@@ -17,13 +15,9 @@
 
 .settings-main {
   width: calc(100% - 300px);
-
   margin-left: 300px;
-
   min-height: 100vh;
-
   background: #f5f8fa;
-
   overflow-x: hidden;
 }
 
@@ -34,7 +28,6 @@
 
 .settings-page {
   width: 100%;
-
   padding: 32px;
 }
 
@@ -49,19 +42,14 @@
 
 .settings-page-header h1 {
   margin: 0;
-
   color: #102a43;
-
   font-size: 27px;
-
   font-weight: 600;
 }
 
 .settings-page-header p {
   margin: 7px 0 0;
-
   color: #829ab1;
-
   font-size: 13px;
 }
 
@@ -72,19 +60,12 @@
 
 .settings-card {
   width: 100%;
-
   margin-bottom: 22px;
-
   padding: 25px 28px;
-
   background: #ffffff;
-
   border: 1px solid #e4eaee;
-
   border-radius: 13px;
-
-  box-shadow:
-    0 3px 12px rgba(16, 42, 67, 0.04);
+  box-shadow: 0 3px 12px rgba(16, 42, 67, 0.04);
 }
 
 
@@ -94,47 +75,36 @@
 
 .settings-card-header {
   display: flex;
-
   align-items: center;
-
   gap: 15px;
-
   padding-bottom: 20px;
-
   border-bottom: 1px solid #e7edf1;
 }
 
 .settings-card-header h2 {
   margin: 0;
-
   color: #102a43;
-
   font-size: 17px;
-
   font-weight: 600;
 }
 
 .settings-card-header p {
   margin: 5px 0 0;
-
   color: #829ab1;
-
   font-size: 12px;
 }
 
 
 /* =========================================
-   HEADER ICON
+   SETTINGS PAGE ICON
 ========================================= */
 
-.settings-icon {
+.settings-page-icon {
   width: 45px;
   height: 45px;
-
   flex-shrink: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -158,13 +128,10 @@
   min-height: 82px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   gap: 20px;
-
   padding: 17px 4px;
 
   border-bottom: 1px solid #edf1f3;
@@ -172,7 +139,6 @@
 
 .settings-option:last-child {
   border-bottom: none;
-
   padding-bottom: 5px;
 }
 
@@ -183,11 +149,8 @@
 
 .option-left {
   display: flex;
-
   align-items: center;
-
   gap: 15px;
-
   min-width: 0;
 }
 
@@ -203,7 +166,6 @@
   flex-shrink: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -221,19 +183,14 @@
 
 .option-left h3 {
   margin: 0;
-
   color: #243b53;
-
   font-size: 14px;
-
   font-weight: 600;
 }
 
 .option-left p {
   margin: 5px 0 0;
-
   color: #829ab1;
-
   font-size: 12px;
 }
 
@@ -244,20 +201,17 @@
 
 .settings-action {
   min-width: 95px;
-
   height: 36px;
 
   padding: 0 13px;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   gap: 8px;
 
   border: 1px solid #d7e2e7;
-
   border-radius: 7px;
 
   background: #ffffff;
@@ -265,9 +219,7 @@
   color: #087f95;
 
   font-family: inherit;
-
   font-size: 12px;
-
   font-weight: 600;
 
   cursor: pointer;
@@ -281,11 +233,8 @@
 
 .settings-action:hover {
   background: #087f95;
-
   border-color: #087f95;
-
   color: #ffffff;
-
   transform: translateX(2px);
 }
 
@@ -298,7 +247,6 @@
 
   .settings-main {
     width: calc(100% - 280px);
-
     margin-left: 280px;
   }
 
@@ -316,7 +264,6 @@
 
   .settings-main {
     width: 100%;
-
     margin-left: 0;
   }
 
@@ -330,7 +277,6 @@
 
   .settings-option {
     align-items: flex-start;
-
     flex-direction: column;
   }
 

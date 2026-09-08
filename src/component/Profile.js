@@ -3,13 +3,16 @@ import axios from "axios";
 import "./Profile.css";
 import AdminSidebar from "./AdminSidebar";
 import Header from "./Header";
+import FacultySider from "./FacultySider";
+import StudentSider from "./StudentSider";
 
 export default function Profile() {
   // =========================================
-  // LOGGED-IN USERNAME
+  // LOGIN DATA
   // =========================================
 
-  const username = localStorage.getItem("username") || "Admin";
+  const username = localStorage.getItem("username") || "";
+  const role = localStorage.getItem("role") || "";
 
   // =========================================
   // PROFILE DATA
@@ -19,93 +22,147 @@ export default function Profile() {
     username: username,
     email: "",
     phone: "",
-    role: "Administrator",
+    role: role,
+    extra: "",
   });
 
-  // =========================================
-  // PASSWORD DATA
-  // =========================================
+  const [userId, setUserId] = useState("");
 
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  // =========================================
-  // LOADING
-  // =========================================
+  const [isActive, setIsActive] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
   // =========================================
-  // FETCH LOGGED-IN ADMIN
+  // GET TABLE NAME
+  // =========================================
+
+  const getTableName = () => {
+    if (role === "Administrator") {
+      return "tbl_admin";
+    }
+
+    if (role === "Faculty") {
+      return "tbl_faculty";
+    }
+
+    if (role === "Student") {
+      return "tbl_student";
+    }
+
+    return "";
+  };
+
+  // =========================================
+  // GET NAME FIELD
+  // =========================================
+
+  const getNameField = () => {
+    if (role === "Administrator") {
+      return "admin_name";
+    }
+
+    if (role === "Faculty") {
+      return "faculty_name";
+    }
+
+    if (role === "Student") {
+      return "student_name";
+    }
+
+    return "";
+  };
+
+  // =========================================
+  // FETCH PROFILE
   // =========================================
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/tbl_admin?admin_name=${username}`
-        );
+        const tableName = getTableName();
+        const nameField = getNameField();
 
-        if (res.data.length > 0) {
-          const user = res.data[0];
-
-          setFormData({
-            username: user.admin_name || username,
-
-            email:
-              user.email ||
-              "",
-
-            // MOBILE NUMBER
-            phone:
-              user.mobile_no ||
-              "",
-
-            role: "Administrator",
-          });
+        if (!tableName || !nameField) {
+          alert("Invalid Role");
+          setLoading(false);
+          return;
         }
-      } catch (error) {
-        console.error(
-          "Error fetching profile:",
-          error
+
+        const res = await axios.get(
+          `http://localhost:5000/${tableName}?${nameField}=${encodeURIComponent(
+            username
+          )}`
         );
+
+        console.log("Profile Data:", res.data);
+
+        if (res.data.length === 0) {
+          alert("User data not found.");
+          setLoading(false);
+          return;
+        }
+
+        const user = res.data[0];
+
+        // Save JSON Server id
+        setUserId(user.id);
+
+        // Active status
+        setIsActive(user.is_active);
+
+        // =========================================
+        // SET COMMON DATA
+        // =========================================
+
+        setFormData({
+          username:
+            user.admin_name ||
+            user.faculty_name ||
+            user.student_name ||
+            username,
+
+          email: user.email || "",
+
+          phone: user.mobile_no || "",
+
+          role: role,
+
+          // Faculty = Subject
+          // Student = Semester
+          // Admin = blank
+          extra:
+            role === "Faculty"
+              ? user.subject || user.subject_id || ""
+              : role === "Student"
+              ? user.semester || ""
+              : "",
+        });
+      } catch (error) {
+        console.error("Profile fetch error:", error);
+        alert("Unable to load profile.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [username]);
+  }, [username, role]);
 
   // =========================================
-  // AVATAR LETTER
+  // AVATAR
   // =========================================
 
   const firstLetter = formData.username
     ? formData.username.charAt(0).toUpperCase()
-    : "A";
+    : "U";
 
   // =========================================
-  // HANDLE PROFILE INPUT
+  // INPUT CHANGE
   // =========================================
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // =========================================
-  // HANDLE PASSWORD INPUT
-  // =========================================
-
-  const handlePasswordChange = (e) => {
-    setPasswordData({
-      ...passwordData,
       [e.target.name]: e.target.value,
     });
   };
@@ -118,48 +175,96 @@ export default function Profile() {
     e.preventDefault();
 
     try {
-      // Find logged-in admin
-      const res = await axios.get(
-        `http://localhost:5000/tbl_admin?admin_name=${username}`
-      );
+      const tableName = getTableName();
 
-      if (res.data.length === 0) {
-        alert("User not found.");
+      if (!tableName) {
+        alert("Invalid Role");
         return;
       }
 
-      const user = res.data[0];
+      if (!userId) {
+        alert("User ID not found.");
+        return;
+      }
 
-      // Update admin record
-      await axios.patch(
-        `http://localhost:5000/tbl_admin/${user.id}`,
-        {
+      let updateData = {};
+
+      // =========================================
+      // ADMIN
+      // =========================================
+
+      if (role === "Administrator") {
+        updateData = {
           admin_name: formData.username,
           email: formData.email,
+        };
+      }
 
-          // MOBILE NUMBER
+      // =========================================
+      // FACULTY
+      // =========================================
+
+      if (role === "Faculty") {
+        updateData = {
+          faculty_name: formData.username,
+          email: formData.email,
           mobile_no: formData.phone,
-        }
+        };
+      }
+
+      // =========================================
+      // STUDENT
+      // =========================================
+
+      if (role === "Student") {
+        updateData = {
+          student_name: formData.username,
+          email: formData.email,
+          mobile_no: formData.phone,
+        };
+      }
+
+      // =========================================
+      // UPDATE JSON SERVER
+      // =========================================
+
+      await axios.patch(
+        `http://localhost:5000/${tableName}/${userId}`,
+        updateData
       );
 
-      // Update local username
-      localStorage.setItem(
-        "username",
-        formData.username
-      );
+      // Update Header username also
+      localStorage.setItem("username", formData.username);
 
       alert("Profile updated successfully!");
 
+      // Reload page so Header gets new username
+      window.location.reload();
     } catch (error) {
-      console.error(
-        "Profile update error:",
-        error
-      );
-
+      console.error("Profile update error:", error);
       alert("Unable to update profile.");
     }
   };
 
+  // =========================================
+  // SIDEBAR
+  // =========================================
+
+  const getSidebar = () => {
+    if (role === "Administrator") {
+      return <AdminSidebar />;
+    }
+
+    if (role === "Faculty") {
+      return <FacultySider/>;
+    }
+
+    if (role === "Student") {
+      return <StudentSider />;
+    }
+
+    return null;
+  };
 
   // =========================================
   // LOADING
@@ -168,19 +273,15 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="profile-container">
-
-        <AdminSidebar />
+        {getSidebar()}
 
         <div className="profile-main">
-
           <Header />
 
           <div className="profile-loading">
             Loading profile...
           </div>
-
         </div>
-
       </div>
     );
   }
@@ -192,11 +293,15 @@ export default function Profile() {
   return (
     <div className="profile-container">
 
-      {/* SIDEBAR */}
+      {/* =====================================
+          SIDEBAR
+      ===================================== */}
 
-      <AdminSidebar />
+      {getSidebar()}
 
-      {/* MAIN CONTENT */}
+      {/* =====================================
+          MAIN
+      ===================================== */}
 
       <div className="profile-main">
 
@@ -213,16 +318,11 @@ export default function Profile() {
           <div className="profile-page-header">
 
             <div>
-
-              <h1>
-                My Profile
-              </h1>
+              <h1>My Profile</h1>
 
               <p>
-                Manage your account information
-                and password.
+                Manage your account information and password.
               </p>
-
             </div>
 
           </div>
@@ -231,7 +331,9 @@ export default function Profile() {
 
           <div className="profile-content">
 
-            {/* PROFILE SUMMARY */}
+            {/* =================================
+                LEFT PROFILE SUMMARY
+            ================================= */}
 
             <div className="profile-card profile-summary">
 
@@ -257,51 +359,49 @@ export default function Profile() {
 
               <div className="active-status">
 
-                <span></span>
+                <span
+                  className={
+                    isActive
+                      ? ""
+                      : "inactive-dot"
+                  }
+                ></span>
 
-                Active
+                {isActive ? "Active" : "Inactive"}
 
               </div>
 
               <div className="summary-line"></div>
 
-              {/* Email */}
+              {/* EMAIL */}
 
               <div className="summary-row">
 
-                <span>
-                  Email
-                </span>
+                <span>Email</span>
 
                 <strong>
-                  {formData.email ||
-                    "Not provided"}
+                  {formData.email || "Not provided"}
                 </strong>
 
               </div>
 
-              {/* Mobile Number */}
+              {/* MOBILE */}
 
               <div className="summary-row">
 
-                <span>
-                  Mobile
-                </span>
+                <span>Mobile</span>
 
                 <strong>
-                  {formData.phone ||
-                    "Not provided"}
+                  {formData.phone || "Not provided"}
                 </strong>
 
               </div>
 
-              {/* Role */}
+              {/* ROLE */}
 
               <div className="summary-row">
 
-                <span>
-                  Role
-                </span>
+                <span>Role</span>
 
                 <strong>
                   {formData.role}
@@ -309,13 +409,43 @@ export default function Profile() {
 
               </div>
 
+              {/* FACULTY SUBJECT */}
+
+              {role === "Faculty" && (
+                <div className="summary-row">
+
+                  <span>Subject</span>
+
+                  <strong>
+                    {formData.extra || "Not provided"}
+                  </strong>
+
+                </div>
+              )}
+
+              {/* STUDENT SEMESTER */}
+
+              {role === "Student" && (
+                <div className="summary-row">
+
+                  <span>Semester</span>
+
+                  <strong>
+                    {formData.extra || "Not provided"}
+                  </strong>
+
+                </div>
+              )}
+
             </div>
 
-            {/* PERSONAL INFORMATION */}
+            {/* =================================
+                RIGHT PERSONAL INFORMATION
+            ================================= */}
 
             <div className="profile-card personal-card">
 
-              {/* Card Header */}
+              {/* HEADER */}
 
               <div className="card-title">
 
@@ -329,11 +459,9 @@ export default function Profile() {
 
               </div>
 
-              {/* Form */}
+              {/* FORM */}
 
-              <form
-                onSubmit={handleProfileSubmit}
-              >
+              <form onSubmit={handleProfileSubmit}>
 
                 <div className="input-grid">
 
@@ -348,9 +476,7 @@ export default function Profile() {
                     <input
                       type="text"
                       name="username"
-                      value={
-                        formData.username
-                      }
+                      value={formData.username}
                       onChange={handleChange}
                       placeholder="Enter username"
                       required
@@ -369,9 +495,7 @@ export default function Profile() {
                     <input
                       type="email"
                       name="email"
-                      value={
-                        formData.email
-                      }
+                      value={formData.email}
                       onChange={handleChange}
                       placeholder="Enter email address"
                       required
@@ -379,7 +503,7 @@ export default function Profile() {
 
                   </div>
 
-                  {/* MOBILE NUMBER */}
+                  {/* MOBILE */}
 
                   <div className="input-group">
 
@@ -390,9 +514,7 @@ export default function Profile() {
                     <input
                       type="text"
                       name="phone"
-                      value={
-                        formData.phone
-                      }
+                      value={formData.phone}
                       onChange={handleChange}
                       placeholder="Enter mobile number"
                     />
@@ -409,9 +531,7 @@ export default function Profile() {
 
                     <input
                       type="text"
-                      value={
-                        formData.role
-                      }
+                      value={formData.role}
                       disabled
                     />
 
@@ -423,9 +543,7 @@ export default function Profile() {
 
                 <div className="button-area">
 
-                  <button
-                    type="submit"
-                  >
+                  <button type="submit">
                     Save Changes
                   </button>
 

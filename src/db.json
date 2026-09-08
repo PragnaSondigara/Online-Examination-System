@@ -82,7 +82,7 @@
       "email": "amit@examhub.com",
       "mobile_no": "9876543215",
       "subject": "Computer Networks",
-      "password": "Amit6",
+      "password": "amit@123",
       "is_active": false,
       "id": "PLyrDD8VXmE"
     },
@@ -545,7 +545,8 @@
       "obtained_marks": 90,
       "passing_marks": 40,
       "percentage": 90,
-      "status": "Pass"
+      "status": "Pass",
+      "id": "LPVJkO-ncIk"
     },
     {
       "student_id": 2,
@@ -554,7 +555,8 @@
       "obtained_marks": 75,
       "passing_marks": 40,
       "percentage": 75,
-      "status": "Pass"
+      "status": "Pass",
+      "id": "99zadnh_C3g"
     }
   ],
   "tbl_feedback": [
@@ -586,5 +588,6 @@
       "feedback": "The online exam system works well and provides a good examination experience.",
       "date": "2026-08-29"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

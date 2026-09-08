@@ -6,36 +6,105 @@ import "./ForgotPassword.css";
 function ForgotPassword() {
   const navigate = useNavigate();
 
+  // =========================================
+  // LOGIN USER DATA
+  // =========================================
+
+  const username = localStorage.getItem("username") || "";
+  const role = localStorage.getItem("role") || "";
+
+  // =========================================
+  // STATES
+  // =========================================
+
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const username = localStorage.getItem("username");
+  // =========================================
+  // GET TABLE NAME
+  // =========================================
+
+  const getTableName = () => {
+    if (role === "Administrator") {
+      return "tbl_admin";
+    }
+
+    if (role === "Faculty") {
+      return "tbl_faculty";
+    }
+
+    if (role === "Student") {
+      return "tbl_student";
+    }
+
+    return "";
+  };
+
+  // =========================================
+  // GET NAME FIELD
+  // =========================================
+
+  const getNameField = () => {
+    if (role === "Administrator") {
+      return "admin_name";
+    }
+
+    if (role === "Faculty") {
+      return "faculty_name";
+    }
+
+    if (role === "Student") {
+      return "student_name";
+    }
+
+    return "";
+  };
+
+  // =========================================
+  // GET LOGGED-IN USER EMAIL
+  // =========================================
 
   useEffect(() => {
     const getLoggedInUserEmail = async () => {
-      if (!username) {
+      if (!username || !role) {
         alert("User is not logged in.");
-        navigate("/Login");
+        navigate("/login");
         return;
       }
 
       try {
+        const tableName = getTableName();
+        const nameField = getNameField();
+
+        if (!tableName || !nameField) {
+          alert("Invalid user role.");
+          setLoading(false);
+          return;
+        }
+
         const response = await axios.get(
-          `http://localhost:5000/tbl_admin?admin_name=${username}`
+          `http://localhost:5000/${tableName}?${nameField}=${encodeURIComponent(
+            username
+          )}`
         );
 
+        console.log("Forgot Password User:", response.data);
+
         if (response.data.length === 0) {
-          alert("Admin account not found.");
+          alert("User account not found.");
           return;
         }
 
         const user = response.data[0];
 
-        // Get logged-in user's email
+        // Logged-in user's email
         setEmail(user.email || "");
-
       } catch (error) {
-        console.error("Error fetching email:", error);
+        console.error(
+          "Error fetching email:",
+          error
+        );
+
         alert("Unable to load your email.");
       } finally {
         setLoading(false);
@@ -43,8 +112,11 @@ function ForgotPassword() {
     };
 
     getLoggedInUserEmail();
-  }, [username, navigate]);
+  }, [username, role, navigate]);
 
+  // =========================================
+  // RESET BUTTON
+  // =========================================
 
   const handleReset = () => {
     if (!email) {
@@ -52,17 +124,22 @@ function ForgotPassword() {
       return;
     }
 
-    // Go to Change Password
     navigate("/ChangePassword");
   };
 
+  // =========================================
+  // PAGE
+  // =========================================
 
   return (
     <div className="forgot-password-page">
 
       <div className="forgot-password-container">
 
-        {/* Left Side Image */}
+        {/* =================================
+            LEFT IMAGE
+        ================================= */}
+
         <div className="forgot-password-left">
 
           <img
@@ -73,21 +150,27 @@ function ForgotPassword() {
 
         </div>
 
+        {/* =================================
+            RIGHT FORM
+        ================================= */}
 
-        {/* Right Side Form */}
         <div className="forgot-password-card">
 
           <h2>Reset Password</h2>
 
           <p className="forgot-description">
-            Enter your email address below to receive a
-            password reset link.
+            Your registered email address is shown below.
           </p>
 
+          {/* =================================
+              EMAIL
+          ================================= */}
 
           <div className="forgot-form-group">
 
-            <label>Email Address</label>
+            <label>
+              Email Address
+            </label>
 
             <div className="email-input">
 
@@ -104,19 +187,25 @@ function ForgotPassword() {
 
           </div>
 
+          {/* =================================
+              RESET BUTTON
+          ================================= */}
 
-          {/* Reset Button */}
           <button
             type="button"
             className="send-reset-btn"
             onClick={handleReset}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Click to reset"}
+            {loading
+              ? "Loading..."
+              : "Click to reset"}
           </button>
 
+          {/* =================================
+              BACK TO LOGIN
+          ================================= */}
 
-          {/* Back to Login */}
           <div
             className="back-login"
             onClick={() => navigate("/login")}
