@@ -6,7 +6,8 @@ export default function AdminSidebar() {
     <aside className="admin-sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="logo-circle">S</div>
+        {/* <div className="logo-circle">S</div> */}
+        <img src="/image/logo.png" alt="Logo" className="logo-circle" />
         <span>Admin Portal</span>
       </div>
 

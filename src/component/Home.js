@@ -13,7 +13,7 @@ export default function GuestHome() {
           <Link to="/" className="brand-logo">
             <div className="brand-icon">
               <img
-                src="/image/R2.png"
+                src="/image/logo.png"
                 alt="Exambly Logo"
                 className="brand-logo-img"
               />

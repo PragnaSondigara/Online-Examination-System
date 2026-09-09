@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import "./StudentSider.css";
 
 export default function StudentSider() {
   return (
-    <aside className="student-sidebar">
+    <aside className="admin-sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="logo-circle">S</div>
+        <img src="/image/logo.png" alt="Logo" className="logo-circle" />
         <span>Student Portal</span>
       </div>
 
