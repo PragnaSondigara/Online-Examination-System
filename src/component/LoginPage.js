@@ -72,6 +72,7 @@ export default function LoginPage() {
                     name="userEmail"
                     placeholder="User Name"
                     required
+                    autoFocus
                   />
 
                   <label htmlFor="studentName">User Eamil</label>

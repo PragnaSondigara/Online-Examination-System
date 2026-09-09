@@ -228,6 +228,22 @@
       "submitted_at": null,
       "status": "Started",
       "id": "ZXjq2-Omg9A"
+    },
+    {
+      "student_id": "-AnWpEM837k",
+      "exam_id": "ui_2F3xzuAg",
+      "started_at": "2026-09-09T16:34:40.911Z",
+      "submitted_at": null,
+      "status": "Started",
+      "id": "B15X_NbaqzY"
+    },
+    {
+      "student_id": "-AnWpEM837k",
+      "exam_id": "ui_2F3xzuAg",
+      "started_at": "2026-09-09T16:34:40.913Z",
+      "submitted_at": null,
+      "status": "Started",
+      "id": "eXHoHiK3xA0"
     }
   ],
   "tbl_student_answer": [

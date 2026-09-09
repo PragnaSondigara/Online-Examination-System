@@ -35,7 +35,7 @@ export default function Header() {
 
     setShowDropdown(false);
 
-    navigate("/");
+    navigate("/LoginPage");
   };
 
   // Role pramane sidebar select karo
@@ -58,6 +58,7 @@ export default function Header() {
       <header className="admin-header">
         <div className="header-right">
           <div className="admin-profile">
+
             {/* Profile Trigger */}
             <button
               type="button"
@@ -66,16 +67,24 @@ export default function Header() {
               }`}
               onClick={() => setShowDropdown(!showDropdown)}
             >
-              <div className="profile-circle">{firstLetter}</div>
+              <div className="profile-circle">
+                {firstLetter}
+              </div>
 
               <div className="profile-info">
-                <span className="admin-name">{username}</span>
+                <span className="admin-name">
+                  {username}
+                </span>
 
-                <span className="admin-role">{role}</span>
+                <span className="admin-role">
+                  {role}
+                </span>
               </div>
 
               <span
-                className={`profile-arrow ${showDropdown ? "arrow-up" : ""}`}
+                className={`profile-arrow ${
+                  showDropdown ? "arrow-up" : ""
+                }`}
               >
                 ▾
               </span>
@@ -84,14 +93,21 @@ export default function Header() {
             {/* Dropdown */}
             {showDropdown && (
               <div className="profile-dropdown">
+
                 {/* User Information */}
                 <div className="dropdown-user">
-                  <div className="dropdown-avatar">{firstLetter}</div>
+                  <div className="dropdown-avatar">
+                    {firstLetter}
+                  </div>
 
                   <div className="dropdown-user-info">
-                    <div className="dropdown-user-name">{username}</div>
+                    <div className="dropdown-user-name">
+                      {username}
+                    </div>
 
-                    <div className="dropdown-user-role">{role}</div>
+                    <div className="dropdown-user-role">
+                      {role}
+                    </div>
                   </div>
                 </div>
 
@@ -103,7 +119,9 @@ export default function Header() {
                   className="dropdown-item"
                   onClick={handleProfile}
                 >
-                  <span className="dropdown-icon profile-icon">♙</span>
+                  <span className="dropdown-icon profile-icon">
+                    ♙
+                  </span>
 
                   <span>My Profile</span>
                 </button>
@@ -114,7 +132,9 @@ export default function Header() {
                   className="dropdown-item"
                   onClick={handleSettings}
                 >
-                  <span className="dropdown-icon settings-icon">⚙</span>
+                  <span className="dropdown-icon settings-icon">
+                    ⚙
+                  </span>
 
                   <span>Settings</span>
                 </button>
@@ -127,10 +147,13 @@ export default function Header() {
                   className="dropdown-item logout-item"
                   onClick={handleLogout}
                 >
-                  <span className="dropdown-icon logout-icon">↪</span>
+                  <span className="dropdown-icon logout-icon">
+                    ↪
+                  </span>
 
                   <span>Logout</span>
                 </button>
+
               </div>
             )}
           </div>
@@ -139,4 +162,3 @@ export default function Header() {
     </>
   );
 }
-

@@ -1,60 +1,267 @@
-/* =========================================
+/* =====================================================
    HEADER
-========================================= */
+===================================================== */
 
 .admin-header {
-  width: 100%;
-  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 310px;
+  right: 0;
+
+  height: 92px;
+
   background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e9eef2;
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  justify-content: flex-end;
 
-  padding: 0 24px;
+  padding: 0 40px;
+
   box-sizing: border-box;
+
+  z-index: 1000;
+
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
 }
+
+/* =====================================================
+   RIGHT SIDE
+===================================================== */
 
 .admin-header .header-right {
   display: flex;
   align-items: center;
 }
 
+/* =====================================================
+   PROFILE CONTAINER
+===================================================== */
 
-/* =========================================
-   PROFILE
-========================================= */
-
-.admin-profile {
+.admin-header .admin-profile {
   position: relative;
 }
 
-.profile-trigger {
-  height: 58px;
+/* =====================================================
+   PROFILE TRIGGER
+===================================================== */
+
+.admin-header .profile-trigger {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 7px 10px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition: background 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+.admin-header .profile-trigger:hover {
+  background: #f4faf8;
+}
+
+.admin-header .profile-trigger.profile-active {
+  background: #f4faf8;
+}
+
+/* =====================================================
+   PROFILE AVATAR
+===================================================== */
+
+.admin-header .profile-circle {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+  min-height: 48px;
+
+  border-radius: 50%;
+
+  background: #35c79a;
+
+  color: #ffffff;
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
-  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
 
-  padding: 5px 10px;
+  line-height: 1;
 
-  border-radius: 8px;
+  box-sizing: border-box;
 
-  cursor: pointer;
-  user-select: none;
-
-  transition: background 0.2s ease;
+  box-shadow: 0 4px 10px rgba(53, 199, 154, 0.18);
 }
 
-.profile-trigger:hover {
-  background: #f6f8f9;
+/* =====================================================
+   PROFILE TEXT
+===================================================== */
+
+.admin-header .profile-info {
+  display: flex;
+
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 2px;
+
+  width: 125px;
+  min-width: 125px;
 }
 
+.admin-header .admin-name {
+  display: block;
 
-/* Profile circle */
+  color: #293c50;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 20px;
+
+  white-space: nowrap;
+}
+
+.admin-header .admin-role {
+  display: block;
+
+  color: #8b969f;
+
+  font-size: 11px;
+  font-weight: 400;
+
+  line-height: 16px;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   ARROW
+===================================================== */
+
+.admin-header .profile-arrow {
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #63717c;
+
+  font-size: 13px;
+
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.admin-header .profile-arrow.arrow-up {
+  transform: rotate(180deg);
+}
+
+/* =====================================================
+   DROPDOWN
+===================================================== */
+
+.admin-header .profile-dropdown {
+  position: absolute;
+
+  top: calc(100% + 14px);
+  right: 0;
+
+  width: 270px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5ebee;
+
+  border-radius: 15px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 18px 40px rgba(30, 50, 65, 0.14),
+    0 4px 12px rgba(30, 50, 65, 0.06);
+
+  z-index: 2000;
+
+  animation: dropdownOpen 0.18s ease-out;
+}
+
+/* =====================================================
+   DROPDOWN ARROW
+===================================================== */
+
+.admin-header .profile-dropdown::before {
+  content: "";
+
+  position: absolute;
+
+  top: -7px;
+  right: 34px;
+
+  width: 13px;
+  height: 13px;
+
+  background: #ffffff;
+
+  border-left: 1px solid #e5ebee;
+  border-top: 1px solid #e5ebee;
+
+  transform: rotate(45deg);
+
+  z-index: -1;
+}
+
+/* =====================================================
+   DROPDOWN USER
+===================================================== */
+
+.admin-header .dropdown-user {
+  width: 100%;
+
+  display: flex !important;
+  flex-direction: row !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 12px;
+
+  padding: 12px 10px;
+
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   DROPDOWN AVATAR
+===================================================== */
 
 .admin-header .dropdown-avatar {
   width: 45px;
@@ -65,192 +272,96 @@
 
   border-radius: 50%;
 
-  background: #e5f5f7;
-  color: #087f95;
+  background: #35c79a;
+
+  color: #ffffff;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
 
-  flex-shrink: 0;
+  line-height: 1;
 }
 
+/* =====================================================
+   DROPDOWN USER INFO
+===================================================== */
 
-/* Profile name */
+.admin-header .dropdown-user-info {
+  flex: 1;
 
-.profile-info {
-  display: flex;
-  flex-direction: column;
+  min-width: 0;
 
-  justify-content: center;
+  display: flex !important;
+  flex-direction: column !important;
 
-  min-width: 110px;
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  gap: 3px;
 }
 
-.admin-name {
-  color: #102a43;
+.admin-header .dropdown-user-name {
+  display: block;
 
-  font-size: 13px;
-  font-weight: 600;
+  width: 100%;
 
-  line-height: 18px;
-}
-
-.admin-role {
-  color: #829ab1;
-
-  font-size: 10px;
-  font-weight: 400;
-
-  line-height: 15px;
-}
-
-
-/* Arrow */
-
-.profile-arrow {
-  color: #829ab1;
-
-  font-size: 9px;
-
-  margin-left: 3px;
-}
-
-
-/* =========================================
-   DROPDOWN
-========================================= */
-
-.profile-dropdown {
-  position: absolute;
-
-  top: calc(100% + 8px);
-  right: 0;
-
-  width: 275px;
-
-  background: #ffffff;
-
-  border: 1px solid #e5eaee;
-
-  border-radius: 14px;
-
-  padding: 14px;
-
-  box-sizing: border-box;
-
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.10),
-    0 3px 8px rgba(0, 0, 0, 0.05);
-
-  z-index: 9999;
-
-  animation: dropdownOpen 0.18s ease-out;
-}
-
-@keyframes dropdownOpen {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-/* =========================================
-   DROPDOWN USER HEADER
-========================================= */
-
-.dropdown-user {
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  padding: 4px 4px 14px 4px;
-}
-
-
-/* Avatar inside dropdown */
-
-.dropdown-avatar {
-  width: 46px;
-  height: 46px;
-
-  border-radius: 50%;
-
-  background: #e5f5f7;
-  color: #087f95;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  flex-shrink: 0;
-}
-
-
-/* User text */
-
-.dropdown-user-info {
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-
-  gap: 2px;
-}
-
-.dropdown-user-name {
-  color: #102a43;
+  color: #2d4055;
 
   font-size: 14px;
   font-weight: 600;
 
   line-height: 19px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.dropdown-user-role {
-  color: #829ab1;
+.admin-header .dropdown-user-role {
+  display: block;
 
-  font-size: 10px;
+  color: #8c979f;
+
+  font-size: 11px;
   font-weight: 400;
 
   line-height: 15px;
+
+  white-space: nowrap;
 }
 
-
-/* =========================================
+/* =====================================================
    DIVIDER
-========================================= */
+===================================================== */
 
-.dropdown-divider {
-  width: 100%;
+.admin-header .dropdown-divider {
+  width: calc(100% - 10px);
   height: 1px;
 
-  background: #e3e9ed;
+  background: #edf1f2;
 
-  margin: 2px 0;
+  margin: 5px auto;
+
+  padding: 0;
 }
 
+/* =====================================================
+   DROPDOWN ITEMS
+===================================================== */
 
-/* =========================================
-   MENU ITEM
-========================================= */
+/*
+   IMPORTANT:
+   !important is used here because your project
+   appears to have another CSS rule overriding flex.
+*/
 
-.dropdown-item {
+.admin-header .profile-dropdown .dropdown-item {
   width: 100%;
-  height: 44px;
+  height: 46px;
 
   display: flex !important;
   flex-direction: row !important;
@@ -260,23 +371,25 @@
 
   gap: 12px;
 
-  padding: 0 8px;
+  padding: 7px 9px;
 
   margin: 0;
 
   border: none;
-  border-radius: 7px;
+  outline: none;
+
+  border-radius: 9px;
 
   background: transparent;
 
-  color: #486581;
+  color: #34495a;
 
   font-family: inherit;
 
   font-size: 13px;
   font-weight: 500;
 
-  line-height: 1;
+  line-height: normal;
 
   text-align: left;
 
@@ -285,75 +398,208 @@
   box-sizing: border-box;
 
   transition:
-    background-color 0.2s ease,
+    background 0.2s ease,
     color 0.2s ease;
 }
 
-.dropdown-item:hover {
-  background: #f3f8fa;
+/* =====================================================
+   REMOVE GLOBAL SPAN PROBLEMS
+===================================================== */
 
-  color: #102a43;
+.admin-header .profile-dropdown .dropdown-item > span {
+  display: flex;
+  flex-direction: row;
 }
 
+/* =====================================================
+   ITEM TEXT
+===================================================== */
 
-/* =========================================
-   ICON
-========================================= */
+.admin-header .profile-dropdown .dropdown-item > span:last-child {
+  display: block !important;
 
-.dropdown-icon {
-  width: 22px;
-  min-width: 22px;
+  width: auto;
 
-  height: 22px;
+  flex: 1;
 
-  display: flex !important;
+  color: inherit;
 
-  align-items: center !important;
-  justify-content: center !important;
-
-  font-size: 17px;
-
-  line-height: 1;
-
-  flex-shrink: 0;
-}
-
-
-/* Text inside item */
-
-.dropdown-item span:last-child {
-  display: block;
+  font-size: 13px;
+  font-weight: 500;
 
   line-height: 20px;
 
   white-space: nowrap;
 }
 
+/* =====================================================
+   ITEM HOVER
+===================================================== */
 
-/* =========================================
+.admin-header .profile-dropdown .dropdown-item:hover {
+  background: #f0faf7;
+
+  color: #20ad82;
+}
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-icon {
+  width: 32px;
+  height: 32px;
+
+  min-width: 32px;
+  min-height: 32px;
+
+  flex: 0 0 32px;
+
+  display: flex !important;
+  flex-direction: row !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 8px;
+
+  background: #f3f8f7;
+
+  color: #53636e;
+
+  font-size: 15px;
+
+  line-height: 1;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+/* =====================================================
+   ICON HOVER
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-item:hover .dropdown-icon {
+  background: #dff7ef;
+
+  color: #20ad83;
+}
+
+/* =====================================================
    LOGOUT
-========================================= */
+===================================================== */
 
-.logout-item {
-  color: #ef5350;
+.admin-header .profile-dropdown .logout-item {
+  color: #d9534f;
 }
 
-.logout-item:hover {
-  background: #fff5f5;
+.admin-header .profile-dropdown .logout-item:hover {
+  background: #fff3f2;
 
-  color: #d32f2f;
+  color: #d64541;
 }
 
-.logout-item .dropdown-icon {
-  color: #ef5350;
+.admin-header .profile-dropdown .logout-item .logout-icon {
+  background: #fff3f2;
+
+  color: #d9534f;
 }
 
+.admin-header .profile-dropdown .logout-item:hover .logout-icon {
+  background: #ffe5e3;
 
-/* =========================================
-   OPTIONAL:
-   Make emoji icons look smaller
-========================================= */
+  color: #d64541;
+}
 
-.dropdown-icon {
-  font-family: "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+@keyframes dropdownOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+  .admin-header {
+    left: 280px;
+
+    padding: 0 25px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+  .admin-header {
+    left: 0;
+
+    width: 100%;
+
+    height: 72px;
+
+    padding: 0 18px;
+  }
+
+  .admin-header .profile-info {
+    display: none;
+  }
+
+  .admin-header .profile-arrow {
+    display: none;
+  }
+
+  .admin-header .profile-trigger {
+    padding: 4px;
+  }
+
+  .admin-header .profile-circle {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .admin-header .profile-dropdown {
+    top: calc(100% + 10px);
+
+    right: -4px;
+
+    width: 250px;
+  }
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+  .admin-header {
+    height: 68px;
+
+    padding: 0 12px;
+  }
+
+  .admin-header .profile-dropdown {
+    width: 235px;
+
+    right: -4px;
+  }
 }
