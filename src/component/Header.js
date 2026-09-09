@@ -3,20 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 export default function Header() {
-  const username = localStorage.getItem("username") || "Admin";
+  const username = localStorage.getItem("username") || "User";
+  const role = localStorage.getItem("role") || "Administrator";
 
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
 
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
+
+  const firstLetter = username.charAt(0).toUpperCase();
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
       }
     };
@@ -28,75 +28,71 @@ export default function Header() {
     };
   }, []);
 
+  // My Profile
   const handleProfile = () => {
     setShowDropdown(false);
     navigate("/profile");
   };
 
+  // Settings
   const handleSettings = () => {
     setShowDropdown(false);
     navigate("/settings");
   };
 
+  // Logout
   const handleLogout = () => {
+    localStorage.removeItem("auth");
     localStorage.removeItem("username");
+    localStorage.removeItem("role");
     localStorage.removeItem("token");
+    localStorage.removeItem("facultyId");
+    localStorage.removeItem("studentId");
 
     setShowDropdown(false);
 
-    navigate("/login");
+    navigate("/LoginPage");
   };
-
-  const firstLetter = username.charAt(0).toUpperCase();
 
   return (
     <header className="admin-header">
       <div className="header-right">
-
         <div className="admin-profile" ref={dropdownRef}>
-
           {/* Profile Button */}
-          <div
-            className="profile-trigger"
+          <button
+            type="button"
+            className={`profile-trigger ${
+              showDropdown ? "profile-active" : ""
+            }`}
             onClick={() => setShowDropdown((prev) => !prev)}
           >
-            <div className="profile-circle">
-              {firstLetter}
-            </div>
+            {/* Profile Letter */}
+            <div className="profile-circle">{firstLetter}</div>
 
+            {/* Profile Information */}
             <div className="profile-info">
-              <span className="admin-name">
-                {username}
-              </span>
+              <span className="admin-name">{username}</span>
 
-              <span className="admin-role">
-                Administrator
-              </span>
+              <span className="admin-role">{role}</span>
             </div>
 
-            <span className="profile-arrow">
-              {showDropdown ? "▲" : "▼"}
+            {/* Arrow */}
+            <span className={`profile-arrow ${showDropdown ? "arrow-up" : ""}`}>
+              ▾
             </span>
-          </div>
+          </button>
 
           {/* Dropdown */}
           {showDropdown && (
             <div className="profile-dropdown">
-
               {/* User Information */}
               <div className="dropdown-user">
-                <div className="dropdown-avatar">
-                  {firstLetter}
-                </div>
+                <div className="dropdown-avatar">{firstLetter}</div>
 
                 <div className="dropdown-user-info">
-                  <div className="dropdown-user-name">
-                    {username}
-                  </div>
+                  <div className="dropdown-user-name">{username}</div>
 
-                  <div className="dropdown-user-role">
-                    Administrator
-                  </div>
+                  <div className="dropdown-user-role">{role}</div>
                 </div>
               </div>
 
@@ -108,7 +104,8 @@ export default function Header() {
                 className="dropdown-item"
                 onClick={handleProfile}
               >
-                <span className="dropdown-icon">👤</span>
+                <span className="dropdown-icon profile-icon">👤</span>
+
                 <span>My Profile</span>
               </button>
 
@@ -118,7 +115,8 @@ export default function Header() {
                 className="dropdown-item"
                 onClick={handleSettings}
               >
-                <span className="dropdown-icon">⚙</span>
+                <span className="dropdown-icon settings-icon">⚙</span>
+
                 <span>Settings</span>
               </button>
 
@@ -130,15 +128,13 @@ export default function Header() {
                 className="dropdown-item logout-item"
                 onClick={handleLogout}
               >
-                <span className="dropdown-icon">⇥</span>
+                <span className="dropdown-icon logout-icon">↪</span>
+
                 <span>Logout</span>
               </button>
-
             </div>
           )}
-
         </div>
-
       </div>
     </header>
   );

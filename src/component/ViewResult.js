@@ -23,7 +23,10 @@ export default function ViewResult() {
   // GET LOGGED-IN STUDENT ID
   // =========================================================
 
-  const studentId = localStorage.getItem("studentId");
+  const studentId =
+    localStorage.getItem("studentId") ||
+    localStorage.getItem("student_id") ||
+    localStorage.getItem("id");
 
   // =========================================================
   // FETCH DATA
@@ -34,26 +37,38 @@ export default function ViewResult() {
       setLoading(true);
       setError("");
 
-      const [
-        resultsResponse,
-        examsResponse,
-        subjectsResponse,
-        studentsResponse,
-      ] = await Promise.all([
-        fetch(`${API_URL}/tbl_result`),
-        fetch(`${API_URL}/tbl_exam`),
-        fetch(`${API_URL}/tbl_subject`),
-        fetch(`${API_URL}/tbl_student`),
-      ]);
+      // -------------------------------------------------------
+      // FETCH EACH API SEPARATELY
+      // -------------------------------------------------------
 
-      if (
-        !resultsResponse.ok ||
-        !examsResponse.ok ||
-        !subjectsResponse.ok ||
-        !studentsResponse.ok
-      ) {
-        throw new Error("Failed to fetch result data");
+      const resultsResponse = await fetch(`${API_URL}/tbl_result`);
+      const examsResponse = await fetch(`${API_URL}/tbl_exam`);
+      const subjectsResponse = await fetch(`${API_URL}/tbl_subject`);
+      const studentsResponse = await fetch(`${API_URL}/tbl_student`);
+
+      // -------------------------------------------------------
+      // CHECK API RESPONSES
+      // -------------------------------------------------------
+
+      if (!resultsResponse.ok) {
+        throw new Error("Failed to fetch results");
       }
+
+      if (!examsResponse.ok) {
+        throw new Error("Failed to fetch exams");
+      }
+
+      if (!subjectsResponse.ok) {
+        throw new Error("Failed to fetch subjects");
+      }
+
+      if (!studentsResponse.ok) {
+        throw new Error("Failed to fetch students");
+      }
+
+      // -------------------------------------------------------
+      // CONVERT TO JSON
+      // -------------------------------------------------------
 
       const resultsData = await resultsResponse.json();
       const examsData = await examsResponse.json();
@@ -61,29 +76,66 @@ export default function ViewResult() {
       const studentsData = await studentsResponse.json();
 
       // -------------------------------------------------------
+      // DEBUG
+      // -------------------------------------------------------
+
+      console.log("=================================");
+      console.log("Logged in student ID:", studentId);
+      console.log("Students:", studentsData);
+      console.log("Results:", resultsData);
+      console.log("Exams:", examsData);
+      console.log("Subjects:", subjectsData);
+      console.log("=================================");
+
+      // -------------------------------------------------------
       // FIND LOGGED-IN STUDENT
       // -------------------------------------------------------
 
       const currentStudent = studentsData.find(
-        (item) => String(item.student_id) === String(studentId),
+        (student) =>
+          String(student.student_id) === String(studentId) ||
+          String(student.studentId) === String(studentId) ||
+          String(student.id) === String(studentId),
       );
+
+      console.log("Current Student:", currentStudent);
 
       setStudent(currentStudent || null);
 
       // -------------------------------------------------------
-      // IMPORTANT:
-      // ONLY STORE LOGGED-IN STUDENT RESULTS
+      // GET ACTUAL STUDENT ID
+      // -------------------------------------------------------
+
+      const actualStudentId =
+        currentStudent?.student_id ??
+        currentStudent?.studentId ??
+        currentStudent?.id ??
+        studentId;
+
+      console.log("Actual Student ID:", actualStudentId);
+
+      // -------------------------------------------------------
+      // GET ONLY LOGGED-IN STUDENT RESULTS
       // -------------------------------------------------------
 
       const studentResults = resultsData.filter(
-        (result) => String(result.student_id) === String(studentId),
+        (result) =>
+          String(result.student_id) === String(actualStudentId) ||
+          String(result.studentId) === String(actualStudentId) ||
+          String(result.student) === String(actualStudentId),
       );
+
+      console.log("Student Results:", studentResults);
+
+      // -------------------------------------------------------
+      // SAVE DATA
+      // -------------------------------------------------------
 
       setResults(studentResults);
       setExams(examsData);
       setSubjects(subjectsData);
     } catch (err) {
-      console.error(err);
+      console.error("Result Error:", err);
 
       setError(
         "Unable to load your results. Please check whether JSON Server is running.",
@@ -108,7 +160,11 @@ export default function ViewResult() {
   // =========================================================
 
   const getExam = (examId) => {
-    return exams.find((exam) => String(exam.id) === String(examId));
+    return exams.find(
+      (exam) =>
+        String(exam.id) === String(examId) ||
+        String(exam.exam_id) === String(examId),
+    );
   };
 
   // =========================================================
@@ -117,7 +173,9 @@ export default function ViewResult() {
 
   const getSubject = (subjectId) => {
     return subjects.find(
-      (subject) => String(subject.subject_id) === String(subjectId),
+      (subject) =>
+        String(subject.subject_id) === String(subjectId) ||
+        String(subject.id) === String(subjectId),
     );
   };
 
@@ -145,7 +203,9 @@ export default function ViewResult() {
         .map((result) => {
           const subject = getResultSubject(result);
 
-          return subject ? [String(subject.subject_id), subject] : null;
+          return subject
+            ? [String(subject.subject_id || subject.id), subject]
+            : null;
         })
         .filter(Boolean),
     ).values(),
@@ -168,9 +228,11 @@ export default function ViewResult() {
       String(result.percentage).toLowerCase().includes(search) ||
       result.status?.toLowerCase().includes(search);
 
+    const subjectId = subject?.subject_id ?? subject?.id;
+
     const matchesSubject =
       selectedSubject === "all" ||
-      String(subject?.subject_id) === String(selectedSubject);
+      String(subjectId) === String(selectedSubject);
 
     const matchesStatus =
       selectedStatus === "all" ||
@@ -236,26 +298,6 @@ export default function ViewResult() {
       : 0;
 
   // =========================================================
-  // VIEW RESULT DETAILS
-  // =========================================================
-
-  const handleViewDetails = (result) => {
-    const exam = getExam(result.exam_id);
-    const subject = getResultSubject(result);
-
-    alert(
-      `Student: ${student?.student_name || "Student"}\n` +
-        `Subject: ${subject?.subject_name || "Unknown Subject"}\n` +
-        `Exam Date: ${formatDate(exam?.date)}\n` +
-        `Obtained Marks: ${result.obtained_marks}\n` +
-        `Total Marks: ${result.total_marks}\n` +
-        `Passing Marks: ${result.passing_marks}\n` +
-        `Percentage: ${result.percentage}%\n` +
-        `Status: ${result.status}`,
-    );
-  };
-
-  // =========================================================
   // STUDENT NOT LOGGED IN
   // =========================================================
 
@@ -319,9 +361,7 @@ export default function ViewResult() {
       <Header />
 
       <div className="result-page">
-        {/* =====================================================
-            PAGE HEADER
-        ===================================================== */}
+        {/* PAGE HEADER */}
 
         <div className="result-page-header">
           <div>
@@ -331,9 +371,7 @@ export default function ViewResult() {
           </div>
         </div>
 
-        {/* =====================================================
-            ERROR
-        ===================================================== */}
+        {/* ERROR */}
 
         {error && (
           <div className="result-error">
@@ -345,9 +383,7 @@ export default function ViewResult() {
           </div>
         )}
 
-        {/* =====================================================
-            RESULT CARD
-        ===================================================== */}
+        {/* RESULT CARD */}
 
         <div className="result-card">
           {/* HEADER */}
@@ -362,9 +398,7 @@ export default function ViewResult() {
             <div className="result-count">{filteredResults.length} Results</div>
           </div>
 
-          {/* ===================================================
-              FILTERS
-          =================================================== */}
+          {/* FILTERS */}
 
           <div className="result-filters">
             {/* SEARCH */}
@@ -388,11 +422,15 @@ export default function ViewResult() {
             >
               <option value="all">All Subjects</option>
 
-              {availableSubjects.map((subject) => (
-                <option key={subject.subject_id} value={subject.subject_id}>
-                  {subject.subject_name}
-                </option>
-              ))}
+              {availableSubjects.map((subject) => {
+                const subjectId = subject.subject_id ?? subject.id;
+
+                return (
+                  <option key={subjectId} value={subjectId}>
+                    {subject.subject_name}
+                  </option>
+                );
+              })}
             </select>
 
             {/* STATUS */}
@@ -419,9 +457,7 @@ export default function ViewResult() {
             </button>
           </div>
 
-          {/* ===================================================
-              LOADING
-          =================================================== */}
+          {/* LOADING */}
 
           {loading ? (
             <div className="result-loading">
@@ -438,9 +474,7 @@ export default function ViewResult() {
               <p>You do not have any results matching the selected filters.</p>
             </div>
           ) : (
-            /* =================================================
-               RESULT CARDS
-            ================================================= */
+            /* RESULT CARDS */
 
             <div className="result-card-grid">
               {filteredResults.map((result, index) => {
@@ -453,7 +487,7 @@ export default function ViewResult() {
                 return (
                   <div
                     className="student-result-card"
-                    key={result.id || result.result_id}
+                    key={result.id || result.result_id || index}
                   >
                     {/* TOP */}
 
@@ -538,9 +572,7 @@ export default function ViewResult() {
             </div>
           )}
 
-          {/* ===================================================
-              FOOTER
-          =================================================== */}
+          {/* FOOTER */}
 
           <div className="result-list-footer">
             <span>

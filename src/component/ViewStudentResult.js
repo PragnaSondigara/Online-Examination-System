@@ -37,12 +37,13 @@ export default function ViewStudentResult() {
       setLoading(true);
       setError("");
 
-      // Faculty login check
+      // Check faculty login
       if (!facultyId) {
         setError("Faculty information not found. Please login again.");
         return;
       }
 
+      // Fetch all required data
       const [
         resultsResponse,
         studentsResponse,
@@ -55,35 +56,63 @@ export default function ViewStudentResult() {
         fetch(`${API_URL}/tbl_subject`),
       ]);
 
-      if (
-        !resultsResponse.ok ||
-        !studentsResponse.ok ||
-        !examsResponse.ok ||
-        !subjectsResponse.ok
-      ) {
-        throw new Error("Failed to fetch data");
+      // Check responses
+      if (!resultsResponse.ok) {
+        throw new Error("Failed to fetch results");
       }
 
+      if (!studentsResponse.ok) {
+        throw new Error("Failed to fetch students");
+      }
+
+      if (!examsResponse.ok) {
+        throw new Error("Failed to fetch exams");
+      }
+
+      if (!subjectsResponse.ok) {
+        throw new Error("Failed to fetch subjects");
+      }
+
+      // Convert to JSON
       const resultsData = await resultsResponse.json();
       const studentsData = await studentsResponse.json();
       const examsData = await examsResponse.json();
       const subjectsData = await subjectsResponse.json();
 
+      // Debug
+      console.log("Faculty ID:", facultyId);
+      console.log("Results:", resultsData);
+      console.log("Students:", studentsData);
+      console.log("Exams:", examsData);
+      console.log("Subjects:", subjectsData);
+
       // =====================================================
-      // ONLY FACULTY ASSIGNED SUBJECTS
+      // GET FACULTY ASSIGNED SUBJECTS
+      //
+      // tbl_subject:
+      // faculty_id -> tbl_faculty.id
+      // id         -> subject id
       // =====================================================
 
       const facultySubjects = subjectsData.filter(
-        (subject) => String(subject.faculty_id) === String(facultyId),
+        (subject) =>
+          String(subject.faculty_id) === String(facultyId) &&
+          subject.is_active === true,
       );
 
+      console.log("Faculty Assigned Subjects:", facultySubjects);
+
+      // =====================================================
+      // SET DATA
+      // =====================================================
+
+      setResults(resultsData);
+      setStudents(studentsData);
+      setExams(examsData);
       setSubjects(subjectsData);
       setAssignedSubjects(facultySubjects);
-      setExams(examsData);
-      setStudents(studentsData);
-      setResults(resultsData);
     } catch (err) {
-      console.error(err);
+      console.error("Fetch Error:", err);
 
       setError(
         "Unable to load student results. Please check whether JSON Server is running.",
@@ -103,16 +132,21 @@ export default function ViewStudentResult() {
 
   // =========================================================
   // GET STUDENT
+  //
+  // IMPORTANT:
+  // tbl_student has "id", NOT "student_id"
   // =========================================================
 
   const getStudent = (studentId) => {
-    return students.find(
-      (student) => String(student.student_id) === String(studentId),
-    );
+    return students.find((student) => String(student.id) === String(studentId));
   };
 
   // =========================================================
   // GET EXAM
+  //
+  // tbl_result.exam_id
+  //        ↓
+  // tbl_exam.id
   // =========================================================
 
   const getExam = (examId) => {
@@ -121,37 +155,59 @@ export default function ViewStudentResult() {
 
   // =========================================================
   // GET SUBJECT
+  //
+  // tbl_exam.subject_id
+  //        ↓
+  // tbl_subject.id
+  //
+  // IMPORTANT:
+  // tbl_subject has "id", NOT "subject_id"
   // =========================================================
 
   const getSubject = (subjectId) => {
-    return subjects.find(
-      (subject) => String(subject.subject_id) === String(subjectId),
-    );
+    return subjects.find((subject) => String(subject.id) === String(subjectId));
   };
 
   // =========================================================
-  // CHECK WHETHER SUBJECT BELONGS TO FACULTY
+  // CHECK SUBJECT BELONGS TO LOGGED-IN FACULTY
   // =========================================================
 
   const isAssignedSubject = (subjectId) => {
     return assignedSubjects.some(
-      (subject) => String(subject.subject_id) === String(subjectId),
+      (subject) => String(subject.id) === String(subjectId),
     );
   };
 
   // =========================================================
+  // GET FACULTY EXAMS
+  //
+  // Exam must belong to:
+  // 1. Logged-in faculty
+  // 2. Faculty assigned subject
+  // =========================================================
+
+  const facultyExams = exams.filter((exam) => {
+    return (
+      String(exam.faculty_id) === String(facultyId) &&
+      isAssignedSubject(exam.subject_id)
+    );
+  });
+
+  // =========================================================
+  // GET FACULTY EXAM IDs
+  // =========================================================
+
+  const facultyExamIds = facultyExams.map((exam) => String(exam.id));
+
+  // =========================================================
   // FILTER RESULTS
-  // ONLY ASSIGNED SUBJECT RESULTS
+  //
+  // Only show results whose exam belongs to
+  // logged-in faculty.
   // =========================================================
 
   const facultyResults = results.filter((result) => {
-    const exam = getExam(result.exam_id);
-
-    if (!exam) {
-      return false;
-    }
-
-    return isAssignedSubject(exam.subject_id);
+    return facultyExamIds.includes(String(result.exam_id));
   });
 
   // =========================================================
@@ -160,19 +216,34 @@ export default function ViewStudentResult() {
 
   const filteredResults = facultyResults.filter((result) => {
     const student = getStudent(result.student_id);
+
     const exam = getExam(result.exam_id);
+
     const subject = exam ? getSubject(exam.subject_id) : null;
 
     const search = searchTerm.toLowerCase().trim();
 
+    // ===================================================
+    // SEARCH
+    // ===================================================
+
     const matchesSearch =
+      search === "" ||
       student?.student_name?.toLowerCase().includes(search) ||
       student?.email?.toLowerCase().includes(search) ||
       subject?.subject_name?.toLowerCase().includes(search);
 
+    // ===================================================
+    // SUBJECT FILTER
+    // ===================================================
+
     const matchesSubject =
       selectedSubject === "all" ||
       String(exam?.subject_id) === String(selectedSubject);
+
+    // ===================================================
+    // STATUS FILTER
+    // ===================================================
 
     const matchesStatus =
       selectedStatus === "all" || result.status === selectedStatus;
@@ -182,7 +253,6 @@ export default function ViewStudentResult() {
 
   // =========================================================
   // STATISTICS
-  // ONLY FACULTY RESULTS
   // =========================================================
 
   const totalResults = facultyResults.length;
@@ -216,26 +286,6 @@ export default function ViewStudentResult() {
   };
 
   // =========================================================
-  // VIEW RESULT
-  // =========================================================
-
-  const handleViewResult = (result) => {
-    const student = getStudent(result.student_id);
-
-    const exam = getExam(result.exam_id);
-
-    const subject = exam ? getSubject(exam.subject_id) : null;
-
-    alert(
-      `Student: ${student?.student_name || "Unknown"}\n` +
-        `Subject: ${subject?.subject_name || "Unknown"}\n` +
-        `Obtained Marks: ${result.obtained_marks}/${result.total_marks}\n` +
-        `Percentage: ${result.percentage}%\n` +
-        `Status: ${result.status}`,
-    );
-  };
-
-  // =========================================================
   // JSX
   // =========================================================
 
@@ -246,9 +296,9 @@ export default function ViewStudentResult() {
       <Header />
 
       <div className="student-result-page">
-        {/* =====================================================
+        {/* ===================================================
             PAGE HEADER
-        ===================================================== */}
+        =================================================== */}
 
         <div className="result-page-header">
           <div>
@@ -262,9 +312,9 @@ export default function ViewStudentResult() {
           </div>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             ERROR
-        ===================================================== */}
+        =================================================== */}
 
         {error && (
           <div className="result-error">
@@ -276,9 +326,9 @@ export default function ViewStudentResult() {
           </div>
         )}
 
-        {/* =====================================================
+        {/* ===================================================
             STATISTICS
-        ===================================================== */}
+        =================================================== */}
 
         <div className="result-stat-grid">
           <div className="result-stat-card">
@@ -322,9 +372,9 @@ export default function ViewStudentResult() {
           </div>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             RESULT CARD
-        ===================================================== */}
+        =================================================== */}
 
         <div className="student-result-card">
           {/* HEADER */}
@@ -339,9 +389,9 @@ export default function ViewStudentResult() {
             <div className="result-count">{filteredResults.length} Results</div>
           </div>
 
-          {/* ===================================================
+          {/* =================================================
               FILTERS
-          =================================================== */}
+          ================================================= */}
 
           <div className="result-filters">
             {/* SEARCH */}
@@ -366,7 +416,7 @@ export default function ViewStudentResult() {
               <option value="all">All My Subjects</option>
 
               {assignedSubjects.map((subject) => (
-                <option key={subject.subject_id} value={subject.subject_id}>
+                <option key={subject.id} value={subject.id}>
                   {subject.subject_name}
                 </option>
               ))}
@@ -396,17 +446,21 @@ export default function ViewStudentResult() {
             </button>
           </div>
 
-          {/* ===================================================
+          {/* =================================================
               LOADING
-          =================================================== */}
+          ================================================= */}
 
-          {loading && results.length === 0 ? (
+          {loading ? (
             <div className="result-loading">
               <div className="spinner"></div>
 
               <p>Loading student results...</p>
             </div>
           ) : filteredResults.length === 0 ? (
+            /* =================================================
+               NO DATA
+            ================================================= */
+
             <div className="result-no-data">
               <div className="no-data-icon">📋</div>
 
@@ -426,22 +480,13 @@ export default function ViewStudentResult() {
                 <thead>
                   <tr>
                     <th>#</th>
-
                     <th>Student</th>
-
                     <th>Subject</th>
-
                     <th>Exam Date</th>
-
                     <th>Total Marks</th>
-
                     <th>Obtained</th>
-
                     <th>Percentage</th>
-
                     <th>Status</th>
-
-                    <th>Action</th>
                   </tr>
                 </thead>
 
@@ -556,18 +601,6 @@ export default function ViewStudentResult() {
                             {result.status === "Pass" ? "✓ Pass" : "✕ Fail"}
                           </span>
                         </td>
-
-                        {/* ACTION */}
-
-                        <td>
-                          <button
-                            type="button"
-                            className="view-result-btn"
-                            onClick={() => handleViewResult(result)}
-                          >
-                            View
-                          </button>
-                        </td>
                       </tr>
                     );
                   })}
@@ -576,9 +609,9 @@ export default function ViewStudentResult() {
             </div>
           )}
 
-          {/* ===================================================
+          {/* =================================================
               FOOTER
-          =================================================== */}
+          ================================================= */}
 
           <div className="result-list-footer">
             <span>

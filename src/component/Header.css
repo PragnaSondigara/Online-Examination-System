@@ -1,22 +1,40 @@
-/* =========================================
+/* =====================================================
    HEADER
-========================================= */
+===================================================== */
 
 .admin-header {
-  width: 100%;
-  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 310px;
+  right: 0;
+
+  height: 92px;
+
   background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e9eef2;
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  padding: 0 40px;
 
   padding: 0 24px;
   box-sizing: border-box;
 }
 
 .header-right {
+
+  z-index: 1000;
+
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+}
+
+/* =====================================================
+   RIGHT SIDE
+===================================================== */
+
+.admin-header .header-right {
   display: flex;
   align-items: center;
 }
@@ -54,67 +72,338 @@
 
 
 /* Profile circle */
+/* =====================================================
+   PROFILE CONTAINER
+===================================================== */
 
-.profile-circle {
-  width: 42px;
-  height: 42px;
+.admin-header .admin-profile {
+  position: relative;
+}
+
+/* =====================================================
+   PROFILE TRIGGER
+===================================================== */
+
+.admin-header .profile-trigger {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 7px 10px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition: background 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+.admin-header .profile-trigger:hover {
+  background: #f4faf8;
+}
+
+.admin-header .profile-trigger.profile-active {
+  background: #f4faf8;
+}
+
+/* =====================================================
+   PROFILE AVATAR
+===================================================== */
+
+.admin-header .profile-circle {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+  min-height: 48px;
 
   border-radius: 50%;
 
-  background: #e5f5f7;
-  color: #087f95;
+  background: #35c79a;
+
+  color: #ffffff;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
 
-  flex-shrink: 0;
+  line-height: 1;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 4px 10px rgba(53, 199, 154, 0.18);
 }
 
+/* =====================================================
+   PROFILE TEXT
+===================================================== */
 
-/* Profile name */
-
-.profile-info {
+.admin-header .profile-info {
   display: flex;
-  flex-direction: column;
 
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
 
-  min-width: 110px;
+  gap: 2px;
+
+  width: 125px;
+  min-width: 125px;
 }
+
+.admin-header /* =====================================================
+   DROPDOWN USER TEXT
+===================================================== */
 
 .admin-name {
   color: #102a43;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  line-height: 18px;
 }
 
 .admin-role {
   color: #829ab1;
-
   font-size: 10px;
   font-weight: 400;
-
   line-height: 15px;
 }
 
-
 /* Arrow */
-
 .profile-arrow {
   color: #829ab1;
-
-  font-size: 9px;
-
-  margin-left: 3px;
+  line-height: 19px;
 }
 
+.admin-header .dropdown-user-name {
+  display: block;
+  width: 100%;
+  color: #2d4055;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-header .dropdown-user-role {
+  display: block;
+  color: #8c979f;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.admin-header .dropdown-divider {
+  width: calc(100% - 10px);
+  height: 1px;
+  background: #edf1f2;
+  margin: 5px auto;
+  padding: 0;
+}
+
+/* =====================================================
+   DROPDOWN ITEMS
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-item {
+  width: 100%;
+  height: 46px;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 12px;
+  padding: 7px 9px;
+  margin: 0;
+
+  border: none;
+  outline: none;
+  border-radius: 9px;
+
+  background: transparent;
+  color: #34495a;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
+
+  cursor: pointer;
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.admin-header .profile-dropdown .dropdown-item > span {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-header .profile-dropdown .dropdown-item > span:last-child {
+  display: block !important;
+  width: auto;
+  flex: 1;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.admin-header .profile-dropdown .dropdown-item:hover {
+  background: #f0faf7;
+  color: #20ad82;
+}
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.admin-header .profile-dropdown .dropdown-icon {
+  width: 32px;
+  height: 32px;
+
+  min-width: 32px;
+  min-height: 32px;
+  flex: 0 0 32px;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 8px;
+  background: #f3f8f7;
+  color: #53636e;
+
+  font-size: 15px;
+  line-height: 1;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.admin-header .profile-dropdown .dropdown-item:hover .dropdown-icon {
+  background: #dff7ef;
+  color: #20ad83;
+}
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.admin-header .profile-dropdown .logout-item {
+  color: #d9534f;
+}
+
+.admin-header .profile-dropdown .logout-item:hover {
+  background: #fff3f2;
+  color: #d64541;
+}
+
+.admin-header .profile-dropdown .logout-item .logout-icon {
+  background: #fff3f2;
+  color: #d9534f;
+}
+
+.admin-header .profile-dropdown .logout-item:hover .logout-icon {
+  background: #ffe5e3;
+  color: #d64541;
+}
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+@keyframes dropdownOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+  .admin-header {
+    left: 280px;
+    padding: 0 25px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+  .admin-header {
+    left: 0;
+    height: 72px;
+    padding: 0 18px;
+  }
+
+  .admin-header .profile-info {
+    display: none;
+  }
+
+  .admin-header .profile-arrow {
+    display: none;
+  }
+
+  .admin-header .profile-trigger {
+    padding: 4px;
+  }
+
+  .admin-header .profile-circle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .admin-header .profile-dropdown {
+    top: calc(100% + 10px);
+    right: -4px;
+    width: 250px;
+  }
+}
 
 /* =========================================
    DROPDOWN
@@ -122,18 +411,13 @@
 
 .profile-dropdown {
   position: absolute;
-
   top: calc(100% + 8px);
   right: 0;
-
   width: 275px;
 
   background: #ffffff;
-
   border: 1px solid #e5eaee;
-
   border-radius: 14px;
-
   padding: 14px;
 
   box-sizing: border-box;
@@ -143,19 +427,24 @@
     0 3px 8px rgba(0, 0, 0, 0.05);
 
   z-index: 9999;
-
   animation: dropdownOpen 0.18s ease-out;
 }
 
-@keyframes dropdownOpen {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+  .admin-header {
+    height: 68px;
+
+    padding: 0 12px;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .admin-header .profile-dropdown {
+    width: 235px;
+
+    right: -4px;
   }
 }
 

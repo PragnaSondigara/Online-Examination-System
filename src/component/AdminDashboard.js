@@ -19,24 +19,16 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         // Total Students
-        const studentRes = await axios.get(
-          "http://localhost:5000/tbl_student"
-        );
+        const studentRes = await axios.get("http://localhost:5000/tbl_student");
 
         // Total Faculty
-        const facultyRes = await axios.get(
-          "http://localhost:5000/tbl_faculty"
-        );
+        const facultyRes = await axios.get("http://localhost:5000/tbl_faculty");
 
         // Total Subjects
-        const subjectRes = await axios.get(
-          "http://localhost:5000/tbl_subject"
-        );
+        const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
 
         // Total Exams
-        const examRes = await axios.get(
-          "http://localhost:5000/tbl_exam"
-        );
+        const examRes = await axios.get("http://localhost:5000/tbl_exam");
 
         setStats({
           students: studentRes.data.length,
@@ -62,6 +54,7 @@ export default function AdminDashboard() {
         <div className="page-top">
           <div>
             <h1>Admin Dashboard</h1>
+
             <p>
               Manage students, faculty, subjects, feedback, and examination
               reports.
@@ -71,7 +64,6 @@ export default function AdminDashboard() {
 
         {/* Stats Section */}
         <div className="student-stats">
-
           {/* Total Students */}
           <div className="stat-card purple">
             <div className="stat-icon">👨‍🎓</div>
@@ -111,7 +103,6 @@ export default function AdminDashboard() {
               <strong>{stats.exams}</strong>
             </div>
           </div>
-
         </div>
 
         {/* Management Modules Section */}
@@ -119,14 +110,12 @@ export default function AdminDashboard() {
           <div className="table-toolbar">
             <div>
               <h2>Management Modules</h2>
+
               <p>Quick access to all administration modules.</p>
             </div>
           </div>
 
-          <div
-            className="dashboard-cards"
-            style={{ padding: "20px" }}
-          >
+          <div className="dashboard-cards" style={{ padding: "20px" }}>
             {/* Manage Student */}
             <Link
               to="/ManageStudent"
@@ -134,14 +123,15 @@ export default function AdminDashboard() {
             >
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">👨‍🎓</div>
+
                 <div className="dashboard-card-arrow">→</div>
               </div>
 
               <h3>Manage Student</h3>
 
               <p>
-                Add, edit, view and delete student accounts and manage
-                student information.
+                Add, edit, view and delete student accounts and manage student
+                information.
               </p>
             </Link>
 
@@ -152,14 +142,14 @@ export default function AdminDashboard() {
             >
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">👨‍🏫</div>
+
                 <div className="dashboard-card-arrow">→</div>
               </div>
 
               <h3>Manage Faculty</h3>
 
               <p>
-                Manage faculty profiles, information and teaching
-                activities.
+                Manage faculty profiles, information and teaching activities.
               </p>
             </Link>
 
@@ -170,6 +160,7 @@ export default function AdminDashboard() {
             >
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">📚</div>
+
                 <div className="dashboard-card-arrow">→</div>
               </div>
 
@@ -183,11 +174,12 @@ export default function AdminDashboard() {
 
             {/* Feedback */}
             <Link
-              to="/Feedback"
+              to="/admin/ViewFeedback"
               className="dashboard-card dashboard-feedback"
             >
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">💬</div>
+
                 <div className="dashboard-card-arrow">→</div>
               </div>
 
@@ -200,12 +192,10 @@ export default function AdminDashboard() {
             </Link>
 
             {/* Reports */}
-            <Link
-              to="/report.php"
-              className="dashboard-card dashboard-report"
-            >
+            <Link to="/ViewReport" className="dashboard-card dashboard-report">
               <div className="dashboard-card-header">
                 <div className="dashboard-card-icon">📊</div>
+
                 <div className="dashboard-card-arrow">→</div>
               </div>
 

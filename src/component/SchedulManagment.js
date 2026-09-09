@@ -33,20 +33,29 @@ export default function ScheduleManagement() {
 
   const loadData = async () => {
     try {
-      const [examRes, facultyRes, subjectRes] = await Promise.all([
-        axios.get("http://localhost:5000/tbl_exam"),
-        axios.get("http://localhost:5000/tbl_faculty"),
-        axios.get("http://localhost:5000/tbl_subject"),
-      ]);
+      // Get Exam Data
+      const examRes = await axios.get("http://localhost:5000/tbl_exam");
 
       setSchedule(examRes.data);
+
+      // Get Faculty Data
+      const facultyRes = await axios.get("http://localhost:5000/tbl_faculty");
+
       setFacultyList(facultyRes.data);
+
+      // Get Subject Data
+      const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
+
       setSubjectList(subjectRes.data);
     } catch (error) {
       console.error("Error loading exam data:", error);
       alert("Failed to load schedule data.");
     }
   };
+
+  // =====================================================
+  // USE EFFECT
+  // =====================================================
 
   useEffect(() => {
     loadData();
@@ -57,9 +66,7 @@ export default function ScheduleManagement() {
   // =====================================================
 
   const getFacultyName = (facultyId) => {
-    const faculty = facultyList.find(
-      (f) => Number(f.faculty_id) === Number(facultyId),
-    );
+    const faculty = facultyList.find((f) => f.id === facultyId);
 
     return faculty ? faculty.faculty_name : "Unknown Faculty";
   };
@@ -69,9 +76,7 @@ export default function ScheduleManagement() {
   // =====================================================
 
   const getSubjectName = (subjectId) => {
-    const subject = subjectList.find(
-      (s) => Number(s.subject_id) === Number(subjectId),
-    );
+    const subject = subjectList.find((s) => s.id === subjectId);
 
     return subject ? subject.subject_name : "Unknown Subject";
   };
@@ -364,6 +369,7 @@ export default function ScheduleManagement() {
 
             <div>
               <span>Total Exams</span>
+
               <strong>{totalSchedule}</strong>
             </div>
           </div>
@@ -373,6 +379,7 @@ export default function ScheduleManagement() {
 
             <div>
               <span>Active</span>
+
               <strong>{activeCount}</strong>
             </div>
           </div>
@@ -382,6 +389,7 @@ export default function ScheduleManagement() {
 
             <div>
               <span>Duration</span>
+
               <strong>
                 {schedule.reduce(
                   (total, exam) => total + Number(exam.duration || 0),
@@ -397,6 +405,7 @@ export default function ScheduleManagement() {
 
             <div>
               <span>Inactive</span>
+
               <strong>{inactiveCount}</strong>
             </div>
           </div>
@@ -570,7 +579,9 @@ export default function ScheduleManagement() {
                         ) : (
                           <span className="time-text">
                             {exam.start_time || "--:--"}
+
                             {" - "}
+
                             {exam.end_time || "--:--"}
                           </span>
                         )}

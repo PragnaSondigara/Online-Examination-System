@@ -8,6 +8,7 @@
   background: #f5f8fa;
 }
 
+
 /* =========================================
    MAIN AREA
 ========================================= */
@@ -20,6 +21,7 @@
   overflow-x: hidden;
 }
 
+
 /* =========================================
    SETTINGS PAGE
 ========================================= */
@@ -28,6 +30,7 @@
   width: 100%;
   padding: 32px;
 }
+
 
 /* =========================================
    PAGE HEADER
@@ -50,6 +53,7 @@
   font-size: 13px;
 }
 
+
 /* =========================================
    SETTINGS CARD
 ========================================= */
@@ -63,6 +67,7 @@
   border-radius: 13px;
   box-shadow: 0 3px 12px rgba(16, 42, 67, 0.04);
 }
+
 
 /* =========================================
    CARD HEADER
@@ -89,19 +94,24 @@
   font-size: 12px;
 }
 
+
 /* =========================================
-   HEADER ICON
+   SETTINGS PAGE ICON
 ========================================= */
 
-.settings-icon {
+.settings-page-icon {
   width: 45px;
   height: 45px;
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 10px;
+
   background: #e5f7f8;
+
   font-size: 20px;
 }
 
@@ -109,17 +119,21 @@
   background: #eef0ff;
 }
 
+
 /* =========================================
    SETTINGS OPTION
 ========================================= */
 
 .settings-option {
   min-height: 82px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 20px;
   padding: 17px 4px;
+
   border-bottom: 1px solid #edf1f3;
 }
 
@@ -127,6 +141,7 @@
   border-bottom: none;
   padding-bottom: 5px;
 }
+
 
 /* =========================================
    OPTION LEFT
@@ -139,6 +154,7 @@
   min-width: 0;
 }
 
+
 /* =========================================
    OPTION ICON
 ========================================= */
@@ -146,14 +162,20 @@
 .option-icon {
   width: 40px;
   height: 40px;
+
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 9px;
+
   background: #f4f8fa;
+
   font-size: 18px;
 }
+
 
 /* =========================================
    OPTION TEXT
@@ -172,6 +194,7 @@
   font-size: 12px;
 }
 
+
 /* =========================================
    ACTION BUTTON
 ========================================= */
@@ -179,19 +202,28 @@
 .settings-action {
   min-width: 95px;
   height: 36px;
+
   padding: 0 13px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 8px;
+
   border: 1px solid #d7e2e7;
   border-radius: 7px;
+
   background: #ffffff;
+
   color: #087f95;
+
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
+
   cursor: pointer;
+
   transition: all 0.2s ease;
 }
 
@@ -206,11 +238,13 @@
   transform: translateX(2px);
 }
 
+
 /* =========================================
    TABLET
 ========================================= */
 
 @media (max-width: 1100px) {
+
   .settings-main {
     width: calc(100% - 280px);
     margin-left: 280px;
@@ -221,11 +255,13 @@
   }
 }
 
+
 /* =========================================
    MOBILE
 ========================================= */
 
 @media (max-width: 700px) {
+
   .settings-main {
     width: 100%;
     margin-left: 0;
@@ -253,11 +289,13 @@
   }
 }
 
+
 /* =========================================
    SMALL MOBILE
 ========================================= */
 
 @media (max-width: 450px) {
+
   .settings-card {
     padding: 17px;
   }

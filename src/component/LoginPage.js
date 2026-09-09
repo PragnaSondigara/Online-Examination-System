@@ -31,12 +31,12 @@ export default function LoginPage() {
           navigate("/AdminDashboard");
         } else if (role === "faculty") {
           localStorage.setItem("username", res.data[0].faculty_name);
-          localStorage.setItem("facultyId", res.data[0].faculty_id);
+          localStorage.setItem("facultyId", res.data[0].id);
           localStorage.setItem("role", "Faculty");
           navigate("/FacultyDashboard");
         } else if (role === "student") {
           localStorage.setItem("username", res.data[0].student_name);
-          localStorage.setItem("studentId", res.data[0].student_id);
+          localStorage.setItem("studentId", res.data[0].id);
           localStorage.setItem("role", "Student");
           navigate("/StudentDashboard");
         }
@@ -71,6 +71,7 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     name="userEmail"
                     placeholder="User Name"
+                    required
                   />
 
                   <label htmlFor="studentName">User Eamil</label>
@@ -85,6 +86,7 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     name="password"
                     placeholder="Password"
+                    required
                   />
 
                   <label htmlFor="studentId">Password</label>

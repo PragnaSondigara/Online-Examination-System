@@ -6,12 +6,17 @@ export default function GuestHome() {
   const navigate = useNavigate();
 
   const [showContact, setShowContact] = useState(false);
-
   const [contactData, setContactData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/tbl_admin")
-      .then((response) => response.json())
+    fetch("http://localhost:5000/tbl_admin")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch contact data");
+        }
+
+        return response.json();
+      })
       .then((data) => {
         setContactData(data);
       })
@@ -25,13 +30,23 @@ export default function GuestHome() {
       {/* ================= HEADER ================= */}
       <header className="header">
         <div className="nav-container">
-          {/* Logo */}
-          <Link to="/" className="logo">
-            <span>ExamHub</span>
-            <small>Play to Pass</small>
+          {/* ================= LOGO ================= */}
+          <Link to="/" className="brand-logo">
+            <div className="brand-icon">
+              <img
+                src="/image/R2.png"
+                alt="ExamHub Logo"
+                className="brand-logo-img"
+              />
+            </div>
+
+            <div className="brand-text">
+              <span className="brand-name">ExamHub</span>
+              <small>Play to Pass</small>
+            </div>
           </Link>
 
-          {/* Right Side */}
+          {/* ================= LOGIN ================= */}
           <div className="nav-buttons">
             {/* Contact Us */}
             <button
@@ -45,15 +60,26 @@ export default function GuestHome() {
             {/* Login Dropdown */}
             <div className="role-dropdown">
               <button type="button" className="account-btn">
-                Login As <span>▾</span>
+                <span className="login-text">Login As</span>
+
+                <span className="dropdown-arrow">▾</span>
               </button>
 
               <div className="role-menu">
-                <Link to="/LoginPage?role=admin">Admin</Link>
+                <Link to="/LoginPage?role=admin">
+                  <span className="menu-icon">⚙</span>
+                  Admin
+                </Link>
 
-                <Link to="/LoginPage?role=faculty">Faculty</Link>
+                <Link to="/LoginPage?role=faculty">
+                  <span className="menu-icon">👨‍🏫</span>
+                  Faculty
+                </Link>
 
-                <Link to="/LoginPage?role=student">Student</Link>
+                <Link to="/LoginPage?role=student">
+                  <span className="menu-icon">🎓</span>
+                  Student
+                </Link>
               </div>
             </div>
           </div>
@@ -63,7 +89,7 @@ export default function GuestHome() {
       {/* ================= HERO ================= */}
       <main className="home">
         <div className="home-container">
-          {/* Left Content */}
+          {/* LEFT CONTENT */}
           <div className="home-content">
             <div className="hero-badge">
               <span className="badge-dot"></span>
@@ -80,12 +106,13 @@ export default function GuestHome() {
               managing assessments and tracking student performance.
             </p>
 
+            {/* BUTTONS */}
             <div className="hero-actions">
               <button
                 className="get-started-btn"
                 onClick={() => navigate("/LoginPage?role=student")}
               >
-                <span className="play-circle">▶︎</span>
+                <span className="play-circle">▶</span>
                 Get Started
               </button>
 
@@ -94,10 +121,11 @@ export default function GuestHome() {
                 onClick={() => navigate("/LoginPage?role=student")}
               >
                 Start Exam
+                <span className="button-arrow">→</span>
               </button>
             </div>
 
-            {/* Stats */}
+            {/* STATS */}
             <div className="hero-stats">
               <div className="stat">
                 <strong>100+</strong>
@@ -124,8 +152,12 @@ export default function GuestHome() {
           <div className="home-image">
             <div className="image-bg"></div>
 
+            <div className="decor-circle circle-one"></div>
+            <div className="decor-circle circle-two"></div>
+
+            {/* FLOATING CARD 1 */}
             <div className="floating-card card-one">
-              <span>✓</span>
+              <span className="floating-icon check-icon">✓</span>
 
               <div>
                 <strong>Easy Exams</strong>
@@ -133,8 +165,9 @@ export default function GuestHome() {
               </div>
             </div>
 
+            {/* FLOATING CARD 2 */}
             <div className="floating-card card-two">
-              <span>★</span>
+              <span className="floating-icon star-icon">★</span>
 
               <div>
                 <strong>Track Progress</strong>
@@ -142,7 +175,12 @@ export default function GuestHome() {
               </div>
             </div>
 
-            <img src="/image/guest.svg" alt="Online examination" />
+            {/* MAIN IMAGE */}
+            <img
+              src="/image/guest.svg"
+              alt="Online examination"
+              className="hero-image"
+            />
           </div>
         </div>
       </main>
@@ -178,22 +216,28 @@ export default function GuestHome() {
               </div>
             </div>
 
-            {/* DATABASE CONTACT DATA */}
-            {contactData.map((contact) => (
-              <div className="contact-person" key={contact.id}>
-                <div className="person-avatar">
-                  {contact.admin_name ? contact.admin_name.charAt(0) : "A"}
+            {/* CONTACT DATA */}
+            {contactData.length > 0 ? (
+              contactData.map((contact, index) => (
+                <div className="contact-person" key={contact.id || index}>
+                  <div className="person-avatar">
+                    {contact.admin_name ? contact.admin_name.charAt(0) : "A"}
+                  </div>
+
+                  <div className="person-details">
+                    <h3>{contact.admin_name || "Administrator"}</h3>
+
+                    <p>✉ {contact.email || "Not Available"}</p>
+
+                    <p>☎ {contact.mobile_no || "Not Available"}</p>
+                  </div>
                 </div>
-
-                <div className="person-details">
-                  <h3>{contact.admin_name}</h3>
-
-                  <p>✉ {contact.email}</p>
-
-                  <p>☎ {contact.mobile_no || "Not Available"}</p>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="no-contact-data">
+                Contact information is not available.
+              </p>
+            )}
           </div>
         </div>
       )}

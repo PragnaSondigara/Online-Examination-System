@@ -36,14 +36,16 @@ export default function AdminSidebar() {
         </Link>
 
         <Link to="/Report" className="nav-item">
-          <span className="nav-icon">📊</span>
-          <span>Report</span>
+          <Link to="/ViewReport" className="nav-item">
+            <span className="nav-icon">📊</span>
+            <span>Report</span>
+          </Link>
         </Link>
       </nav>
 
       {/* Bottom */}
       <div className="sidebar-bottom">
-        <Link className="logout-item" to="/LoginPage">
+        <Link className="logout-item" to="/">
           <span className="nav-icon">↪</span>
           <span>Logout</span>
         </Link>
