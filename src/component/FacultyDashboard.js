@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function FacultyDashboard() {
   // Dynamic counts
@@ -13,48 +14,41 @@ export default function FacultyDashboard() {
   const [feedbackCount, setFeedbackCount] = useState(0);
 
   useEffect(() => {
-    // Get Scheduled Exams
-    fetch("http://localhost:5000/tbl_exam")
-      .then((response) => response.json())
-      .then((data) => {
-        // Only active exams
-        const activeExams = data.filter((exam) => exam.is_active === true);
+    const fetchData = async () => {
+      try {
+        // Get Scheduled Exams
+        const examRes = await axios.get("http://localhost:5000/tbl_exam");
+
+        const activeExams = examRes.data.filter(
+          (exam) => exam.is_active === true,
+        );
 
         setExamCount(activeExams.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching exams:", error);
-      });
 
-    // Get Total Questions
-    fetch("http://localhost:5000/tbl_question")
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestionCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching questions:", error);
-      });
+        // Get Total Questions
+        const questionRes = await axios.get(
+          "http://localhost:5000/tbl_question",
+        );
 
-    // Get Exam Results
-    fetch("http://localhost:5000/tbl_result")
-      .then((response) => response.json())
-      .then((data) => {
-        setResultCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching results:", error);
-      });
+        setQuestionCount(questionRes.data.length);
 
-    // Get Feedback
-    fetch("http://localhost:5000/tbl_feedback")
-      .then((response) => response.json())
-      .then((data) => {
-        setFeedbackCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching feedback:", error);
-      });
+        // Get Exam Results
+        const resultRes = await axios.get("http://localhost:5000/tbl_result");
+
+        setResultCount(resultRes.data.length);
+
+        // Get Feedback
+        const feedbackRes = await axios.get(
+          "http://localhost:5000/tbl_feedback",
+        );
+
+        setFeedbackCount(feedbackRes.data.length);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

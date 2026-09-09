@@ -4,54 +4,34 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function AdminDashboard() {
-  // Dynamic statistics
   const [studentCount, setStudentCount] = useState(0);
   const [facultyCount, setFacultyCount] = useState(0);
   const [subjectCount, setSubjectCount] = useState(0);
   const [examCount, setExamCount] = useState(0);
 
   useEffect(() => {
-    // Total Students
-    fetch("http://localhost:5000/tbl_student")
-      .then((response) => response.json())
-      .then((data) => {
-        setStudentCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching students:", error);
-      });
+    const fetchData = async () => {
+      try {
+        const studentRes = await axios.get("http://localhost:5000/tbl_student");
+        setStudentCount(studentRes.data.length);
 
-    // Total Faculty
-    fetch("http://localhost:5000/tbl_faculty")
-      .then((response) => response.json())
-      .then((data) => {
-        setFacultyCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching faculty:", error);
-      });
+        const facultyRes = await axios.get("http://localhost:5000/tbl_faculty");
+        setFacultyCount(facultyRes.data.length);
 
-    // Total Subjects
-    fetch("http://localhost:5000/tbl_subject")
-      .then((response) => response.json())
-      .then((data) => {
-        setSubjectCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching subjects:", error);
-      });
+        const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
+        setSubjectCount(subjectRes.data.length);
 
-    // Online Exams
-    fetch("http://localhost:5000/tbl_exam")
-      .then((response) => response.json())
-      .then((data) => {
-        setExamCount(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching exams:", error);
-      });
+        const examRes = await axios.get("http://localhost:5000/tbl_exam");
+        setExamCount(examRes.data.length);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

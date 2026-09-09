@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./AdminSidebar.css";
 
 export default function AdminSidebar() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+    localStorage.removeItem("facultyId");
+    localStorage.removeItem("studentId");
+
+    navigate("/");
+  };
   return (
     <aside className="admin-sidebar">
       {/* Logo */}
@@ -44,10 +54,10 @@ export default function AdminSidebar() {
 
       {/* Bottom */}
       <div className="sidebar-bottom">
-        <Link className="logout-item" to="/">
+        <button className="logout-item" onClick={handleLogout}>
           <span className="nav-icon">↪</span>
           <span>Logout</span>
-        </Link>
+        </button>
       </div>
     </aside>
   );

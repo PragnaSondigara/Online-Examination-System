@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./ViewResult.css";
 import StudentSider from "./StudentSider";
 import Header from "./Header";
@@ -29,7 +30,7 @@ export default function ViewResult() {
     localStorage.getItem("id");
 
   // =========================================================
-  // FETCH DATA
+  // FETCH DATA USING AXIOS
   // =========================================================
 
   const fetchData = async () => {
@@ -37,47 +38,18 @@ export default function ViewResult() {
       setLoading(true);
       setError("");
 
-      // -------------------------------------------------------
-      // FETCH EACH API SEPARATELY
-      // -------------------------------------------------------
+      const resultsResponse = await axios.get(`${API_URL}/tbl_result`);
 
-      const resultsResponse = await fetch(`${API_URL}/tbl_result`);
-      const examsResponse = await fetch(`${API_URL}/tbl_exam`);
-      const subjectsResponse = await fetch(`${API_URL}/tbl_subject`);
-      const studentsResponse = await fetch(`${API_URL}/tbl_student`);
+      const examsResponse = await axios.get(`${API_URL}/tbl_exam`);
 
-      // -------------------------------------------------------
-      // CHECK API RESPONSES
-      // -------------------------------------------------------
+      const subjectsResponse = await axios.get(`${API_URL}/tbl_subject`);
 
-      if (!resultsResponse.ok) {
-        throw new Error("Failed to fetch results");
-      }
+      const studentsResponse = await axios.get(`${API_URL}/tbl_student`);
 
-      if (!examsResponse.ok) {
-        throw new Error("Failed to fetch exams");
-      }
-
-      if (!subjectsResponse.ok) {
-        throw new Error("Failed to fetch subjects");
-      }
-
-      if (!studentsResponse.ok) {
-        throw new Error("Failed to fetch students");
-      }
-
-      // -------------------------------------------------------
-      // CONVERT TO JSON
-      // -------------------------------------------------------
-
-      const resultsData = await resultsResponse.json();
-      const examsData = await examsResponse.json();
-      const subjectsData = await subjectsResponse.json();
-      const studentsData = await studentsResponse.json();
-
-      // -------------------------------------------------------
-      // DEBUG
-      // -------------------------------------------------------
+      const resultsData = resultsResponse.data;
+      const examsData = examsResponse.data;
+      const subjectsData = subjectsResponse.data;
+      const studentsData = studentsResponse.data;
 
       console.log("=================================");
       console.log("Logged in student ID:", studentId);
@@ -86,10 +58,6 @@ export default function ViewResult() {
       console.log("Exams:", examsData);
       console.log("Subjects:", subjectsData);
       console.log("=================================");
-
-      // -------------------------------------------------------
-      // FIND LOGGED-IN STUDENT
-      // -------------------------------------------------------
 
       const currentStudent = studentsData.find(
         (student) =>
@@ -102,10 +70,6 @@ export default function ViewResult() {
 
       setStudent(currentStudent || null);
 
-      // -------------------------------------------------------
-      // GET ACTUAL STUDENT ID
-      // -------------------------------------------------------
-
       const actualStudentId =
         currentStudent?.student_id ??
         currentStudent?.studentId ??
@@ -113,10 +77,6 @@ export default function ViewResult() {
         studentId;
 
       console.log("Actual Student ID:", actualStudentId);
-
-      // -------------------------------------------------------
-      // GET ONLY LOGGED-IN STUDENT RESULTS
-      // -------------------------------------------------------
 
       const studentResults = resultsData.filter(
         (result) =>
@@ -126,10 +86,6 @@ export default function ViewResult() {
       );
 
       console.log("Student Results:", studentResults);
-
-      // -------------------------------------------------------
-      // SAVE DATA
-      // -------------------------------------------------------
 
       setResults(studentResults);
       setExams(examsData);

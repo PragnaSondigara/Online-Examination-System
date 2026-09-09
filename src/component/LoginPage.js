@@ -95,9 +95,6 @@ export default function LoginPage() {
                 <button type="submit" onClick={handleLogin}>
                   LOGIN
                 </button>
-                <p>
-                  Don't have an account?<a href="#">Sign up here</a>
-                </p>
               </form>
             </div>
           </div>

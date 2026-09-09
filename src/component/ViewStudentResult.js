@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./ViewStudentResult.css";
 
 import FacultySider from "./FacultySider";
@@ -29,7 +30,7 @@ export default function ViewStudentResult() {
   const facultyId = localStorage.getItem("facultyId");
 
   // =========================================================
-  // FETCH DATA
+  // FETCH DATA USING AXIOS
   // =========================================================
 
   const fetchData = async () => {
@@ -43,43 +44,32 @@ export default function ViewStudentResult() {
         return;
       }
 
-      // Fetch all required data
-      const [
-        resultsResponse,
-        studentsResponse,
-        examsResponse,
-        subjectsResponse,
-      ] = await Promise.all([
-        fetch(`${API_URL}/tbl_result`),
-        fetch(`${API_URL}/tbl_student`),
-        fetch(`${API_URL}/tbl_exam`),
-        fetch(`${API_URL}/tbl_subject`),
-      ]);
+      // =====================================================
+      // FETCH EACH API SEPARATELY
+      // NO Promise.all()
+      // =====================================================
 
-      // Check responses
-      if (!resultsResponse.ok) {
-        throw new Error("Failed to fetch results");
-      }
+      const resultsResponse = await axios.get(`${API_URL}/tbl_result`);
 
-      if (!studentsResponse.ok) {
-        throw new Error("Failed to fetch students");
-      }
+      const studentsResponse = await axios.get(`${API_URL}/tbl_student`);
 
-      if (!examsResponse.ok) {
-        throw new Error("Failed to fetch exams");
-      }
+      const examsResponse = await axios.get(`${API_URL}/tbl_exam`);
 
-      if (!subjectsResponse.ok) {
-        throw new Error("Failed to fetch subjects");
-      }
+      const subjectsResponse = await axios.get(`${API_URL}/tbl_subject`);
 
-      // Convert to JSON
-      const resultsData = await resultsResponse.json();
-      const studentsData = await studentsResponse.json();
-      const examsData = await examsResponse.json();
-      const subjectsData = await subjectsResponse.json();
+      // =====================================================
+      // AXIOS DATA
+      // =====================================================
 
-      // Debug
+      const resultsData = resultsResponse.data;
+      const studentsData = studentsResponse.data;
+      const examsData = examsResponse.data;
+      const subjectsData = subjectsResponse.data;
+
+      // =====================================================
+      // DEBUG
+      // =====================================================
+
       console.log("Faculty ID:", facultyId);
       console.log("Results:", resultsData);
       console.log("Students:", studentsData);
@@ -112,7 +102,7 @@ export default function ViewStudentResult() {
       setSubjects(subjectsData);
       setAssignedSubjects(facultySubjects);
     } catch (err) {
-      console.error("Fetch Error:", err);
+      console.error("Axios Error:", err);
 
       setError(
         "Unable to load student results. Please check whether JSON Server is running.",
@@ -133,8 +123,7 @@ export default function ViewStudentResult() {
   // =========================================================
   // GET STUDENT
   //
-  // IMPORTANT:
-  // tbl_student has "id", NOT "student_id"
+  // tbl_student has "id"
   // =========================================================
 
   const getStudent = (studentId) => {
@@ -159,9 +148,6 @@ export default function ViewStudentResult() {
   // tbl_exam.subject_id
   //        ↓
   // tbl_subject.id
-  //
-  // IMPORTANT:
-  // tbl_subject has "id", NOT "subject_id"
   // =========================================================
 
   const getSubject = (subjectId) => {
@@ -180,10 +166,6 @@ export default function ViewStudentResult() {
 
   // =========================================================
   // GET FACULTY EXAMS
-  //
-  // Exam must belong to:
-  // 1. Logged-in faculty
-  // 2. Faculty assigned subject
   // =========================================================
 
   const facultyExams = exams.filter((exam) => {
@@ -201,9 +183,6 @@ export default function ViewStudentResult() {
 
   // =========================================================
   // FILTER RESULTS
-  //
-  // Only show results whose exam belongs to
-  // logged-in faculty.
   // =========================================================
 
   const facultyResults = results.filter((result) => {
@@ -296,9 +275,7 @@ export default function ViewStudentResult() {
       <Header />
 
       <div className="student-result-page">
-        {/* ===================================================
-            PAGE HEADER
-        =================================================== */}
+        {/* PAGE HEADER */}
 
         <div className="result-page-header">
           <div>
@@ -312,9 +289,7 @@ export default function ViewStudentResult() {
           </div>
         </div>
 
-        {/* ===================================================
-            ERROR
-        =================================================== */}
+        {/* ERROR */}
 
         {error && (
           <div className="result-error">
@@ -326,9 +301,7 @@ export default function ViewStudentResult() {
           </div>
         )}
 
-        {/* ===================================================
-            STATISTICS
-        =================================================== */}
+        {/* STATISTICS */}
 
         <div className="result-stat-grid">
           <div className="result-stat-card">
@@ -372,13 +345,9 @@ export default function ViewStudentResult() {
           </div>
         </div>
 
-        {/* ===================================================
-            RESULT CARD
-        =================================================== */}
+        {/* RESULT CARD */}
 
         <div className="student-result-card">
-          {/* HEADER */}
-
           <div className="result-list-header">
             <div>
               <h2>Result List</h2>
@@ -389,13 +358,9 @@ export default function ViewStudentResult() {
             <div className="result-count">{filteredResults.length} Results</div>
           </div>
 
-          {/* =================================================
-              FILTERS
-          ================================================= */}
+          {/* FILTERS */}
 
           <div className="result-filters">
-            {/* SEARCH */}
-
             <div className="search-box">
               <span>⌕</span>
 
@@ -406,8 +371,6 @@ export default function ViewStudentResult() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-
-            {/* SUBJECT */}
 
             <select
               value={selectedSubject}
@@ -422,8 +385,6 @@ export default function ViewStudentResult() {
               ))}
             </select>
 
-            {/* STATUS */}
-
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
@@ -435,8 +396,6 @@ export default function ViewStudentResult() {
               <option value="Fail">Fail</option>
             </select>
 
-            {/* CLEAR */}
-
             <button
               type="button"
               className="clear-filter-btn"
@@ -446,9 +405,7 @@ export default function ViewStudentResult() {
             </button>
           </div>
 
-          {/* =================================================
-              LOADING
-          ================================================= */}
+          {/* LOADING */}
 
           {loading ? (
             <div className="result-loading">
@@ -457,10 +414,6 @@ export default function ViewStudentResult() {
               <p>Loading student results...</p>
             </div>
           ) : filteredResults.length === 0 ? (
-            /* =================================================
-               NO DATA
-            ================================================= */
-
             <div className="result-no-data">
               <div className="no-data-icon">📋</div>
 
@@ -471,10 +424,6 @@ export default function ViewStudentResult() {
               </p>
             </div>
           ) : (
-            /* =================================================
-               TABLE
-            ================================================= */
-
             <div className="result-table-wrapper">
               <table className="student-result-table">
                 <thead>
@@ -499,7 +448,7 @@ export default function ViewStudentResult() {
                     const subject = exam ? getSubject(exam.subject_id) : null;
 
                     return (
-                      <tr key={result.id}>
+                      <tr key={result.id || index}>
                         {/* NUMBER */}
 
                         <td>
@@ -609,9 +558,7 @@ export default function ViewStudentResult() {
             </div>
           )}
 
-          {/* =================================================
-              FOOTER
-          ================================================= */}
+          {/* FOOTER */}
 
           <div className="result-list-footer">
             <span>
