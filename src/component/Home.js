@@ -11,7 +11,7 @@ export default function GuestHome() {
         <div className="nav-container">
           {/* Logo */}
           <Link to="/" className="logo">
-            <span>exambly</span>
+            <span>ExamHub</span>
             <small>Play to Pass</small>
           </Link>
 
