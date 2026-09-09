@@ -9,25 +9,45 @@ export default function GuestHome() {
       {/* ================= HEADER ================= */}
       <header className="header">
         <div className="nav-container">
-          {/* Logo */}
-          <Link to="/" className="logo">
-            <span>exambly</span>
-            <small>Play to Pass</small>
+          {/* ================= LOGO ================= */}
+          <Link to="/" className="brand-logo">
+            <div className="brand-icon">
+              <img
+                src="/image/R2.png"
+                alt="Exambly Logo"
+                className="brand-logo-img"
+              />
+            </div>
+
+            <div className="brand-text">
+              <span className="brand-name">exambly</span>
+              <small>Play to Pass</small>
+            </div>
           </Link>
 
-          {/* Right Side */}
+          {/* ================= LOGIN ================= */}
           <div className="nav-buttons">
             <div className="role-dropdown">
               <button className="account-btn">
-                Login As <span>▾</span>
+                <span className="login-text">Login As</span>
+                <span className="dropdown-arrow">▾</span>
               </button>
 
               <div className="role-menu">
-                <Link to="/LoginPage?role=admin">Admin</Link>
+                <Link to="/LoginPage?role=admin">
+                  <span className="menu-icon">⚙</span>
+                  Admin
+                </Link>
 
-                <Link to="/LoginPage?role=faculty">Faculty</Link>
+                <Link to="/LoginPage?role=faculty">
+                  <span className="menu-icon">👨‍🏫</span>
+                  Faculty
+                </Link>
 
-                <Link to="/LoginPage?role=student">Student</Link>
+                <Link to="/LoginPage?role=student">
+                  <span className="menu-icon">🎓</span>
+                  Student
+                </Link>
               </div>
             </div>
           </div>
@@ -37,7 +57,7 @@ export default function GuestHome() {
       {/* ================= HERO ================= */}
       <main className="home">
         <div className="home-container">
-          {/* Left Content */}
+          {/* ================= LEFT CONTENT ================= */}
           <div className="home-content">
             <div className="hero-badge">
               <span className="badge-dot"></span>
@@ -54,12 +74,13 @@ export default function GuestHome() {
               managing assessments and tracking student performance.
             </p>
 
+            {/* ================= BUTTONS ================= */}
             <div className="hero-actions">
               <button
                 className="get-started-btn"
                 onClick={() => navigate("/LoginPage?role=student")}
               >
-                <span className="play-circle">▶︎</span>
+                <span className="play-circle">▶</span>
                 Get Started
               </button>
 
@@ -68,10 +89,11 @@ export default function GuestHome() {
                 onClick={() => navigate("/LoginPage?role=student")}
               >
                 Start Exam
+                <span className="button-arrow">→</span>
               </button>
             </div>
 
-            {/* Stats */}
+            {/* ================= STATS ================= */}
             <div className="hero-stats">
               <div className="stat">
                 <strong>100+</strong>
@@ -98,8 +120,13 @@ export default function GuestHome() {
           <div className="home-image">
             <div className="image-bg"></div>
 
+            {/* Decorative circles */}
+            <div className="decor-circle circle-one"></div>
+            <div className="decor-circle circle-two"></div>
+
+            {/* ================= FLOATING CARD 1 ================= */}
             <div className="floating-card card-one">
-              <span>✓</span>
+              <span className="floating-icon check-icon">✓</span>
 
               <div>
                 <strong>Easy Exams</strong>
@@ -107,8 +134,9 @@ export default function GuestHome() {
               </div>
             </div>
 
+            {/* ================= FLOATING CARD 2 ================= */}
             <div className="floating-card card-two">
-              <span>★</span>
+              <span className="floating-icon star-icon">★</span>
 
               <div>
                 <strong>Track Progress</strong>
@@ -116,7 +144,12 @@ export default function GuestHome() {
               </div>
             </div>
 
-            <img src="/image/guest.svg" alt="Online examination" />
+            {/* ================= MAIN IMAGE ================= */}
+            <img
+              src="/image/guest.svg"
+              alt="Online examination"
+              className="hero-image"
+            />
           </div>
         </div>
       </main>

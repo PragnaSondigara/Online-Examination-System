@@ -706,18 +706,6 @@
   color: white;
 }
 
-.icon-btn.view {
-  background: #eef8f5;
-
-  color: #25a984;
-}
-
-.icon-btn.view:hover {
-  background: #25a984;
-
-  color: white;
-}
-
 /* =========================================
    LARGE SCREEN
 ========================================= */

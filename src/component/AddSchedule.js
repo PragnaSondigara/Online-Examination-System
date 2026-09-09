@@ -7,10 +7,8 @@ import FacultySider from "./FacultySider";
 
 export function AddSchedule() {
   const navigate = useNavigate();
+
   const today = new Date().toISOString().split("T")[0];
-  // =====================================================
-  // FORM STATES
-  // =====================================================
 
   const [facultyId, setFacultyId] = useState("");
   const [facultyName, setFacultyName] = useState("");
@@ -19,61 +17,43 @@ export function AddSchedule() {
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+
   const [duration, setDuration] = useState("");
+
   const [passingMarks, setPassingMarks] = useState("");
   const [totalMarks, setTotalMarks] = useState("");
-  const [isActive, setIsActive] = useState(true);
 
-  // =====================================================
-  // DATABASE LISTS
-  // =====================================================
+  const [isActive, setIsActive] = useState(true);
 
   const [subjectList, setSubjectList] = useState([]);
 
-  // =====================================================
-  // LOAD LOGGED-IN FACULTY + ASSIGNED SUBJECTS
-  // =====================================================
+  // =========================================================
+  // LOAD LOGGED-IN FACULTY AND THEIR SUBJECTS
+  // =========================================================
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        // -----------------------------------------------
-        // GET LOGGED-IN FACULTY FROM LOCAL STORAGE
-        // -----------------------------------------------
-
         const loggedInFacultyId = localStorage.getItem("facultyId");
         const loggedInFacultyName = localStorage.getItem("username");
 
         console.log("Logged-in Faculty ID:", loggedInFacultyId);
         console.log("Logged-in Faculty Name:", loggedInFacultyName);
 
-        // -----------------------------------------------
-        // CHECK LOGIN
-        // -----------------------------------------------
-
+        // Check faculty login information
         if (!loggedInFacultyId || !loggedInFacultyName) {
           alert("Faculty login information not found.");
           navigate("/FacultyLogin");
           return;
         }
 
-        // -----------------------------------------------
-        // SET FACULTY AUTOMATICALLY
-        // -----------------------------------------------
-
         setFacultyId(loggedInFacultyId);
         setFacultyName(loggedInFacultyName);
 
-        // -----------------------------------------------
-        // GET ALL SUBJECTS
-        // -----------------------------------------------
-
+        // Get all subjects
         const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
 
-        // -----------------------------------------------
-        // ONLY ACTIVE SUBJECTS OF LOGGED-IN FACULTY
-        // -----------------------------------------------
-
+        // Only show active subjects assigned to logged-in faculty
         const assignedSubjects = subjectRes.data.filter(
           (subject) =>
             subject.is_active === true &&
@@ -84,14 +64,9 @@ export function AddSchedule() {
 
         setSubjectList(assignedSubjects);
 
-        // -----------------------------------------------
-        // OPTIONAL:
-        // IF ONLY ONE SUBJECT IS ASSIGNED,
-        // AUTOMATICALLY SELECT IT
-        // -----------------------------------------------
-
+        // If faculty has only one subject, automatically select it
         if (assignedSubjects.length === 1) {
-          setSubjectId(String(assignedSubjects[0].subject_id));
+          setSubjectId(String(assignedSubjects[0].id));
         }
       } catch (error) {
         console.error("Error loading subject data:", error);
@@ -102,26 +77,81 @@ export function AddSchedule() {
     loadData();
   }, [navigate]);
 
-  // =====================================================
+  // =========================================================
+  // CALCULATE DURATION FROM START TIME AND END TIME
+  // =========================================================
+
+  useEffect(() => {
+    if (!startTime || !endTime) {
+      setDuration("");
+      return;
+    }
+
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+    const [endHour, endMinute] = endTime.split(":").map(Number);
+
+    const startTotalMinutes = startHour * 60 + startMinute;
+    const endTotalMinutes = endHour * 60 + endMinute;
+
+    // Invalid time
+    if (endTotalMinutes <= startTotalMinutes) {
+      setDuration("");
+      return;
+    }
+
+    const differenceInMinutes = endTotalMinutes - startTotalMinutes;
+
+    // Convert minutes to hours
+    const durationInHours = differenceInMinutes / 60;
+
+    setDuration(durationInHours);
+  }, [startTime, endTime]);
+
+  // =========================================================
   // ADD EXAM SCHEDULE
-  // =====================================================
+  // =========================================================
 
   const addSchedule = async (e) => {
     e.preventDefault();
 
-    // ===================================================
-    // VALIDATION
-    // ===================================================
+    // ---------------------------------------------------------
+    // FACULTY VALIDATION
+    // ---------------------------------------------------------
 
     if (!facultyId) {
       alert("Faculty information is missing.");
       return;
     }
 
+    // ---------------------------------------------------------
+    // SUBJECT VALIDATION
+    // ---------------------------------------------------------
+
     if (!subjectId) {
       alert("Please select subject.");
       return;
     }
+
+    // IMPORTANT:
+    // Subject ID is stored in JSON Server's "id" field.
+    const selectedSubject = subjectList.find(
+      (subject) => String(subject.id) === String(subjectId),
+    );
+
+    if (!selectedSubject) {
+      alert("Invalid subject selected.");
+      return;
+    }
+
+    // Check that selected subject belongs to logged-in faculty
+    if (String(selectedSubject.faculty_id) !== String(facultyId)) {
+      alert("You can only create an exam for your assigned subject.");
+      return;
+    }
+
+    // ---------------------------------------------------------
+    // DATE VALIDATION
+    // ---------------------------------------------------------
 
     if (!date) {
       alert("Please select exam date.");
@@ -132,6 +162,10 @@ export function AddSchedule() {
       alert("You cannot select a previous date.");
       return;
     }
+
+    // ---------------------------------------------------------
+    // TIME VALIDATION
+    // ---------------------------------------------------------
 
     if (!startTime) {
       alert("Please select start time.");
@@ -148,10 +182,18 @@ export function AddSchedule() {
       return;
     }
 
+    // ---------------------------------------------------------
+    // DURATION VALIDATION
+    // ---------------------------------------------------------
+
     if (!duration || Number(duration) <= 0) {
-      alert("Please enter a valid duration.");
+      alert("Invalid exam duration.");
       return;
     }
+
+    // ---------------------------------------------------------
+    // MARKS VALIDATION
+    // ---------------------------------------------------------
 
     if (!totalMarks || Number(totalMarks) <= 0) {
       alert("Please enter valid total marks.");
@@ -168,61 +210,26 @@ export function AddSchedule() {
       return;
     }
 
-    // ===================================================
-    // CHECK THAT SUBJECT BELONGS TO LOGGED-IN FACULTY
-    // ===================================================
-
-    const selectedSubject = subjectList.find(
-      (subject) => String(subject.subject_id) === String(subjectId),
-    );
-
-    if (!selectedSubject) {
-      alert("Invalid subject selected.");
-      return;
-    }
-
-    if (String(selectedSubject.faculty_id) !== String(facultyId)) {
-      alert("You can only create an exam for your assigned subject.");
-      return;
-    }
-
-    // ===================================================
+    // ---------------------------------------------------------
     // CONFIRMATION
-    // ===================================================
+    // ---------------------------------------------------------
 
     if (!window.confirm("Do you want to add this exam schedule?")) {
       return;
     }
 
     try {
-      // =================================================
-      // CREATE EXAM OBJECT
-      // =================================================
-
-      const newExam = {
-        faculty_id: Number(facultyId),
-        subject_id: Number(subjectId),
-        duration: Number(duration),
-        date: date,
-        start_time: startTime,
-        end_time: endTime,
-        passing_marks: Number(passingMarks),
-        total_marks: Number(totalMarks),
-        is_active: isActive,
-      };
-
-      console.log("New Exam:", newExam);
-
-      // =================================================
-      // CHECK FOR DUPLICATE EXAM
-      // =================================================
+      // -------------------------------------------------------
+      // CHECK EXISTING EXAMS
+      // -------------------------------------------------------
 
       const existingExams = await axios.get("http://localhost:5000/tbl_exam");
 
+      // Check duplicate exam
       const duplicateExam = existingExams.data.find(
         (exam) =>
-          Number(exam.faculty_id) === Number(facultyId) &&
-          Number(exam.subject_id) === Number(subjectId) &&
+          String(exam.faculty_id) === String(facultyId) &&
+          String(exam.subject_id) === String(subjectId) &&
           exam.date === date &&
           exam.start_time === startTime,
       );
@@ -234,22 +241,42 @@ export function AddSchedule() {
         return;
       }
 
-      // =================================================
-      // ADD EXAM TO DATABASE
-      // =================================================
+      // -------------------------------------------------------
+      // CREATE NEW EXAM OBJECT
+      // -------------------------------------------------------
+
+      const newExam = {
+        faculty_id: facultyId,
+        subject_id: subjectId,
+
+        duration: Number(duration),
+
+        date: date,
+
+        start_time: startTime,
+        end_time: endTime,
+
+        passing_marks: Number(passingMarks),
+        total_marks: Number(totalMarks),
+
+        is_active: isActive,
+      };
+
+      console.log("New Exam:", newExam);
+
+      // -------------------------------------------------------
+      // INSERT EXAM
+      // -------------------------------------------------------
 
       await axios.post("http://localhost:5000/tbl_exam", newExam);
 
-      // =================================================
+      // -------------------------------------------------------
       // SUCCESS
-      // =================================================
+      // -------------------------------------------------------
 
       alert("Exam schedule added successfully!");
 
-      // =================================================
-      // RESET FORM
-      // =================================================
-
+      // Reset form
       setSubjectId("");
       setDate("");
       setStartTime("");
@@ -259,10 +286,7 @@ export function AddSchedule() {
       setTotalMarks("");
       setIsActive(true);
 
-      // =================================================
-      // GO TO SCHEDULE MANAGEMENT
-      // =================================================
-
+      // Go to schedule management
       navigate("/ScheduleManagement");
     } catch (error) {
       console.error("Error adding exam schedule:", error);
@@ -273,13 +297,14 @@ export function AddSchedule() {
     }
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+  // =========================================================
+  // JSX
+  // =========================================================
 
   return (
     <>
       <Header />
+
       <FacultySider />
 
       <div className="student-form-overlay">
@@ -296,6 +321,7 @@ export function AddSchedule() {
             </div>
 
             <button
+              type="button"
               className="student-form-close"
               onClick={() => navigate("/ScheduleManagement")}
             >
@@ -337,7 +363,7 @@ export function AddSchedule() {
                 <option value="">Select Subject</option>
 
                 {subjectList.map((subject) => (
-                  <option key={subject.subject_id} value={subject.subject_id}>
+                  <option key={subject.id} value={subject.id}>
                     {subject.subject_name}
                   </option>
                 ))}
@@ -345,7 +371,7 @@ export function AddSchedule() {
             </div>
 
             {/* =================================================
-                DATE
+                EXAM DATE
             ================================================= */}
 
             <div className="form-group">
@@ -396,11 +422,9 @@ export function AddSchedule() {
 
               <input
                 type="number"
-                min="1"
-                step="1"
-                placeholder="Enter duration"
                 value={duration}
-                onChange={(e) => setDuration(e.target.value)}
+                readOnly
+                placeholder="Automatically calculated"
               />
             </div>
 

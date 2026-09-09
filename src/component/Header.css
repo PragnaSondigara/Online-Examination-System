@@ -11,12 +11,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  justify-content: flex-end;
 
   padding: 0 24px;
   box-sizing: border-box;
 }
 
-.header-right {
+.admin-header .header-right {
   display: flex;
   align-items: center;
 }
@@ -55,9 +56,12 @@
 
 /* Profile circle */
 
-.profile-circle {
-  width: 42px;
-  height: 42px;
+.admin-header .dropdown-avatar {
+  width: 45px;
+  height: 45px;
+
+  min-width: 45px;
+  min-height: 45px;
 
   border-radius: 50%;
 

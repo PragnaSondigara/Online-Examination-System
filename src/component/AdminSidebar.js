@@ -35,7 +35,7 @@ export default function AdminSidebar() {
           <span>Feedback</span>
         </Link>
 
-        <Link to="/Report" className="nav-item">
+        <Link to="/ViewReport" className="nav-item">
           <span className="nav-icon">📊</span>
           <span>Report</span>
         </Link>
@@ -43,7 +43,7 @@ export default function AdminSidebar() {
 
       {/* Bottom */}
       <div className="sidebar-bottom">
-        <Link className="logout-item" to="/LoginPage">
+        <Link className="logout-item" to="/">
           <span className="nav-icon">↪</span>
           <span>Logout</span>
         </Link>

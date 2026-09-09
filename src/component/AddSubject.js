@@ -11,8 +11,8 @@ export default function AddSubject() {
   // =====================================================
 
   const [subject, setSubject] = useState({
-    subject_name: "",
     faculty_id: "",
+    subject_name: "",
     is_active: true,
   });
 
@@ -105,7 +105,6 @@ export default function AddSubject() {
       // =================================================
 
       const newSubject = {
-        subject_id: Date.now(),
         faculty_id: subject.faculty_id,
         subject_name: subject.subject_name.trim(),
         is_active: subject.is_active,
@@ -115,10 +114,7 @@ export default function AddSubject() {
       // SAVE TO JSON SERVER
       // =================================================
 
-      await axios.post(
-        "http://localhost:5000/tbl_subject",
-        newSubject,
-      );
+      await axios.post("http://localhost:5000/tbl_subject", newSubject);
 
       alert("Subject added successfully!");
 
@@ -151,7 +147,6 @@ export default function AddSubject() {
   return (
     <div className="student-form-overlay">
       <div className="student-form-modal">
-
         {/* =================================================
             HEADER
         ================================================= */}
@@ -160,9 +155,7 @@ export default function AddSubject() {
           <div>
             <h2>Add Subject</h2>
 
-            <p>
-              Add a new subject to the examination system.
-            </p>
+            <p>Add a new subject to the examination system.</p>
           </div>
 
           <button
@@ -179,19 +172,13 @@ export default function AddSubject() {
             FORM
         ================================================= */}
 
-        <form
-          className="student-form"
-          onSubmit={handleSubmit}
-        >
-
+        <form className="student-form" onSubmit={handleSubmit}>
           {/* =================================================
               SUBJECT NAME
           ================================================= */}
 
           <div className="form-group">
-            <label htmlFor="subject_name">
-              Subject Name
-            </label>
+            <label htmlFor="subject_name">Subject Name</label>
 
             <input
               id="subject_name"
@@ -209,9 +196,7 @@ export default function AddSubject() {
           ================================================= */}
 
           <div className="form-group">
-            <label htmlFor="faculty_id">
-              Faculty
-            </label>
+            <label htmlFor="faculty_id">Faculty</label>
 
             <select
               id="faculty_id"
@@ -219,15 +204,10 @@ export default function AddSubject() {
               value={subject.faculty_id}
               onChange={handleChange}
             >
-              <option value="">
-                Select Faculty
-              </option>
+              <option value="">Select Faculty</option>
 
               {faculty.map((f) => (
-                <option
-                  key={f.id || f.faculty_id}
-                  value={f.faculty_id || f.id}
-                >
+                <option key={f.id || f.faculty_id} value={f.faculty_id || f.id}>
                   {f.faculty_name ||
                     f.name ||
                     f.faculty_username ||
@@ -242,9 +222,7 @@ export default function AddSubject() {
           ================================================= */}
 
           <div className="form-group">
-            <label htmlFor="is_active">
-              Status
-            </label>
+            <label htmlFor="is_active">Status</label>
 
             <select
               id="is_active"
@@ -252,13 +230,9 @@ export default function AddSubject() {
               value={subject.is_active ? "true" : "false"}
               onChange={handleStatusChange}
             >
-              <option value="true">
-                Active
-              </option>
+              <option value="true">Active</option>
 
-              <option value="false">
-                Inactive
-              </option>
+              <option value="false">Inactive</option>
             </select>
           </div>
 
@@ -267,7 +241,6 @@ export default function AddSubject() {
           ================================================= */}
 
           <div className="student-form-buttons">
-
             {/* CANCEL */}
 
             <button
@@ -288,7 +261,6 @@ export default function AddSubject() {
             >
               {loading ? "Adding..." : "Add Subject"}
             </button>
-
           </div>
         </form>
       </div>

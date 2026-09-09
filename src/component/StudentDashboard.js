@@ -97,6 +97,22 @@ export default function StudentDashboard() {
               </p>
             </Link>
 
+            {/* Provide Feedback */}
+            <Link
+              to="/Feedback"
+              className="dashboard-card dashboard-feedback"
+            >
+              <div className="dashboard-card-header">
+                <div className="dashboard-card-icon">💬</div>
+                <div className="dashboard-card-arrow">→</div>
+              </div>
+
+              <h3>Provide Feedback</h3>
+
+              <p>
+                Share your thoughts and suggestions about the examination system.
+              </p>
+            </Link>
           </div>
         </section>
       </main>

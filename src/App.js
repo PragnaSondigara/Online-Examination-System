@@ -9,7 +9,6 @@ import { AddSchedule } from "./component/AddSchedule";
 import AdminDashboard from "./component/AdminDashboard";
 import { ViewFeedback } from "./component/ViewFeedback";
 import FacultyDashboard from "./component/FacultyDashboard";
-import StudentSider from "./component/StudentSider";
 import ChangePassword from "./component/ChangePassword";
 import ForgotPassword from "./component/ForgotPassword";
 import ScheduleManagement from "./component/SchedulManagment";
@@ -22,7 +21,9 @@ import ViewStudentResult from "./component/ViewStudentResult";
 import StudentDashboard from "./component/StudentDashboard";
 import ViewExamSchedule from "./component/ViewExamSchedule";
 import ViewResult from "./component/ViewResult";
-import Reports from "./component/Reports";
+import ViewReport from "./component/ViewReport";
+import StartExam from "./component/StartExam";
+import Feedback from "./component/Feedback";
 
 function App() {
   return (
@@ -36,14 +37,14 @@ function App() {
         <Route path="/AddSchedule" element={<AddSchedule />} />
         <Route path="/ManageSubject" element={<ManageSubject />} />
         <Route path="/AddSubject" element={<AddSubject />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/ViewReport" element={<ViewReport />} />
         <Route path="/admin/ViewFeedback" element={<ViewFeedback />} />
-        <Route path="Report" element={<Reports />} />
 
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
 
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/ManageFaculty" element={<ManageFaculty />} />
@@ -55,7 +56,8 @@ function App() {
         <Route path="/StudentDashboard" element={<StudentDashboard />} />
         <Route path="/ViewExamSchedule" element={<ViewExamSchedule />} />
         <Route path="/ViewResult" element={<ViewResult />} />
-
+        <Route path="/StartExam" element={<StartExam />} />
+        <Route path="/Feedback" element={<Feedback />} />
       </Routes>
     </div>
   );
