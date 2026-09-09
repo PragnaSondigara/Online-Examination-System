@@ -1031,3 +1031,35 @@ select.edit-input:focus {
 
   border-color: #e05a5a;
 }
+.student-table .course-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  width: fit-content;
+  max-width: 220px;
+
+  padding: 7px 12px;
+
+  box-sizing: border-box;
+
+  border-radius: 7px;
+
+  background: #f0efff;
+
+  color: #2aa982;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.student-table .course-badge:hover {
+  background: #e9e7ff;
+}

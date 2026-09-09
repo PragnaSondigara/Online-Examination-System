@@ -1,8 +1,24 @@
 import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function GuestHome() {
   const navigate = useNavigate();
+
+  const [showContact, setShowContact] = useState(false);
+
+  const [contactData, setContactData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/tbl_admin")
+      .then((response) => response.json())
+      .then((data) => {
+        setContactData(data);
+      })
+      .catch((error) => {
+        console.error("Contact data error:", error);
+      });
+  }, []);
 
   return (
     <div className="guest-page">
@@ -17,8 +33,18 @@ export default function GuestHome() {
 
           {/* Right Side */}
           <div className="nav-buttons">
+            {/* Contact Us */}
+            <button
+              type="button"
+              className="contact-btn"
+              onClick={() => setShowContact(true)}
+            >
+              Contact Us
+            </button>
+
+            {/* Login Dropdown */}
             <div className="role-dropdown">
-              <button className="account-btn">
+              <button type="button" className="account-btn">
                 Login As <span>▾</span>
               </button>
 
@@ -125,6 +151,52 @@ export default function GuestHome() {
       <footer className="gfooter">
         <p>© 2026 Online Examination System. All Rights Reserved.</p>
       </footer>
+
+      {/* ================= CONTACT US POPUP ================= */}
+      {showContact && (
+        <div className="contact-overlay" onClick={() => setShowContact(false)}>
+          <div
+            className="contact-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              className="contact-close"
+              onClick={() => setShowContact(false)}
+            >
+              ×
+            </button>
+
+            {/* Contact Header */}
+            <div className="contact-header">
+              <div className="contact-icon">☎</div>
+
+              <div>
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team</p>
+              </div>
+            </div>
+
+            {/* DATABASE CONTACT DATA */}
+            {contactData.map((contact) => (
+              <div className="contact-person" key={contact.id}>
+                <div className="person-avatar">
+                  {contact.admin_name ? contact.admin_name.charAt(0) : "A"}
+                </div>
+
+                <div className="person-details">
+                  <h3>{contact.admin_name}</h3>
+
+                  <p>✉ {contact.email}</p>
+
+                  <p>☎ {contact.mobile_no || "Not Available"}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

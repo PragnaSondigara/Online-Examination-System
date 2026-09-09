@@ -85,6 +85,23 @@
       "password": "Amit6",
       "is_active": false,
       "id": "PLyrDD8VXmE"
+    },
+    {
+      "faculty_name": "Dr. Bhuatika Patel",
+      "email": "dr..bhuatika.patel@examhub.com",
+      "mobile_no": "8989876767",
+      "subject": "React",
+      "password": "Dr.BhuatikaPatel@123",
+      "is_active": true,
+      "id": "JPPhp4L3zek"
+    },
+    {
+      "faculty_name": "Pankaj Mishra",
+      "email": "pankaj.mishra@examhub.com",
+      "mobile_no": "989898989",
+      "password": "PankajMishra@123",
+      "is_active": true,
+      "id": "nTJWE0Ym_8Y"
     }
   ],
   "tbl_student": [
@@ -167,6 +184,14 @@
       "password": "Riya8",
       "is_active": false,
       "id": "pBUacxrUJCg"
+    },
+    {
+      "student_name": "Pankaj Mishra",
+      "email": "pankaj.mishra@examhub.com",
+      "mobile_no": "9913398120",
+      "password": "PankajMishra@123",
+      "semester": 6,
+      "id": "K6zRJDtzIHE"
     }
   ],
   "tbl_subject": [
@@ -207,110 +232,165 @@
     },
     {
       "subject_id": 6,
-      "faculty_id": 6,
+      "faculty_id": "2",
       "subject_name": "Computer Networks",
       "is_active": true,
       "id": "IgktzMM937g"
+    },
+    {
+      "subject_id": 1788169463085,
+      "faculty_id": "JPPhp4L3zek",
+      "subject_name": "React",
+      "is_active": true,
+      "id": "NwpdOAN5_UU"
+    },
+    {
+      "subject_id": 1788169914576,
+      "faculty_id": "nTJWE0Ym_8Y",
+      "subject_name": "LOS",
+      "is_active": true,
+      "id": "Ss73m3BaPos"
+    },
+    {
+      "subject_id": 1788188097919,
+      "faculty_id": "1",
+      "subject_name": "wd",
+      "is_active": true,
+      "id": "WXheBRv8aDQ"
     }
   ],
-  "tbl_exam": [
-    {
-      "id": "1",
-      "faculty_id": 1,
-      "subject_id": 1,
-      "duration": 2,
-      "date": "2026-09-04",
-      "start_time": "07:30",
-      "end_time": "09:30",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": false
-    },
-    {
-      "id": "2",
-      "faculty_id": 2,
-      "subject_id": 2,
-      "duration": 2,
-      "date": "2026-09-06",
-      "start_time": "10:00",
-      "end_time": "12:00",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true
-    },
-    {
-      "id": "3",
-      "faculty_id": 3,
-      "subject_id": 3,
-      "duration": 2,
-      "date": "2026-09-08",
-      "start_time": "07:30",
-      "end_time": "09:30",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true
-    },
-    {
-      "id": "4",
-      "faculty_id": 4,
-      "subject_id": 4,
-      "duration": 2,
-      "date": "2026-09-10",
-      "start_time": "10:00",
-      "end_time": "12:00",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true
-    },
-    {
-      "id": "5",
-      "faculty_id": 5,
-      "subject_id": 5,
-      "duration": 2,
-      "date": "2026-09-12",
-      "start_time": "07:30",
-      "end_time": "09:30",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true
-    },
-    {
-      "id": "6",
-      "faculty_id": 6,
-      "subject_id": 6,
-      "duration": 2,
-      "date": "2026-09-15",
-      "start_time": "10:00",
-      "end_time": "12:00",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": false
-    },
-    {
-      "faculty_id": 5,
-      "subject_id": 5,
-      "duration": 2,
-      "date": "2026-08-25",
-      "start_time": "11:00",
-      "end_time": "13:00",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true,
-      "id": "hvqYPDc4Q3c"
-    },
-    {
-      "faculty_id": 5,
-      "subject_id": 3,
-      "duration": 2,
-      "date": "2026-07-13",
-      "start_time": "15:00",
-      "end_time": "17:00",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true,
-      "id": "tuI8QKlRyKM"
-    }
-  ],
+"tbl_exam": [
+  {
+    "id": "1",
+    "exam_title": "Java Programming Exam",
+    "faculty_id": 1,
+    "subject_id": 1,
+    "duration": 2,
+    "date": "2026-09-04",
+    "start_time": "07:30",
+    "end_time": "09:30",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": false
+  },
+  {
+    "id": "2",
+    "exam_title": "C++ Programming Exam",
+    "faculty_id": 2,
+    "subject_id": 2,
+    "duration": 2,
+    "date": "2026-09-06",
+    "start_time": "10:00",
+    "end_time": "12:00",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "3",
+    "exam_title": "Python Programming Exam",
+    "faculty_id": 3,
+    "subject_id": 3,
+    "duration": 2,
+    "date": "2026-09-08",
+    "start_time": "07:30",
+    "end_time": "09:30",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "4",
+    "exam_title": "Database Management Exam",
+    "faculty_id": 4,
+    "subject_id": 4,
+    "duration": 2,
+    "date": "2026-09-10",
+    "start_time": "10:00",
+    "end_time": "12:00",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "5",
+    "exam_title": "Web Development Exam",
+    "faculty_id": 5,
+    "subject_id": 5,
+    "duration": 2,
+    "date": "2026-09-12",
+    "start_time": "07:30",
+    "end_time": "09:30",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "6",
+    "exam_title": "Software Engineering Exam",
+    "faculty_id": 6,
+    "subject_id": 6,
+    "duration": 2,
+    "date": "2026-09-15",
+    "start_time": "10:00",
+    "end_time": "12:00",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": false
+  },
+  {
+    "id": "hvqYPDc4Q3c",
+    "exam_title": "Web Development Practice Exam",
+    "faculty_id": 5,
+    "subject_id": 5,
+    "duration": 2,
+    "date": "2026-08-25",
+    "start_time": "11:00",
+    "end_time": "13:00",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "tuI8QKlRyKM",
+    "exam_title": "Python Practice Exam",
+    "faculty_id": 5,
+    "subject_id": 3,
+    "duration": 2,
+    "date": "2026-07-13",
+    "start_time": "15:00",
+    "end_time": "17:00",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "oQglogfGgLQ",
+    "exam_title": "Web Development Test",
+    "faculty_id": 5,
+    "subject_id": 5,
+    "duration": 1,
+    "date": "2026-09-02",
+    "start_time": "20:53",
+    "end_time": "21:54",
+    "passing_marks": 40,
+    "total_marks": 100,
+    "is_active": true
+  },
+  {
+    "id": "m-ni6h12Jgc",
+    "exam_title": "Java Programming Test",
+    "faculty_id": 1,
+    "subject_id": 1,
+    "duration": 1,
+    "date": "2026-09-05",
+    "start_time": "14:06",
+    "end_time": "15:06",
+    "passing_marks": 8,
+    "total_marks": 25,
+    "is_active": true
+  }
+],
   "tbl_question": [
     {
       "question_id": 1,
@@ -376,6 +456,45 @@
       "marks": 4,
       "question_type": "MCQ",
       "id": "n_XB6Rb1XR4"
+    },
+    {
+      "question_id": 3,
+      "exam_id": 1,
+      "question": "which function is used to override the function?",
+      "option_a": "interface",
+      "option_b": "inheritances",
+      "option_c": "implement",
+      "option_d": "constructor",
+      "correct_answer": "A",
+      "marks": 1,
+      "question_type": "MCQ",
+      "id": "eybcN3NzRXc"
+    },
+    {
+      "question_id": 1,
+      "exam_id": 5,
+      "question": "HTML is which type of language?",
+      "option_a": "front end",
+      "option_b": "back end",
+      "option_c": "database",
+      "option_d": "none of this",
+      "correct_answer": "A",
+      "marks": 2,
+      "question_type": "MCQ",
+      "id": "S1DvmzELLIU"
+    },
+    {
+      "question_id": 6,
+      "exam_id": 5,
+      "question": "React is a java-script front end library. true or false?",
+      "option_a": "True",
+      "option_b": "False",
+      "option_c": "",
+      "option_d": "",
+      "correct_answer": "True",
+      "marks": 2,
+      "question_type": "True/False",
+      "id": "XqrDg0-LbOo"
     }
   ],
   "tbl_student_exam": [
@@ -419,29 +538,25 @@
     }
   ],
   "tbl_result": [
-    {
-      "result_id": 1,
-      "student_id": 1,
-      "exam_id": 1,
-      "total_marks": 100,
-      "obtained_marks": 90,
-      "passing_marks": 40,
-      "percentage": 90,
-      "status": "Pass",
-      "id": "YSxt8k32Wmg"
-    },
-    {
-      "result_id": 2,
-      "student_id": 2,
-      "exam_id": 1,
-      "total_marks": 100,
-      "obtained_marks": 75,
-      "passing_marks": 40,
-      "percentage": 75,
-      "status": "Pass",
-      "id": "8fI_q_bd-_c"
-    }
-  ],
+  {
+    "student_id": 1,
+    "exam_id": 1,
+    "total_marks": 100,
+    "obtained_marks": 90,
+    "passing_marks": 40,
+    "percentage": 90,
+    "status": "Pass"
+  },
+  {
+    "student_id": 2,
+    "exam_id": 5,
+    "total_marks": 100,
+    "obtained_marks": 75,
+    "passing_marks": 40,
+    "percentage": 75,
+    "status": "Pass"
+  }
+],
   "tbl_feedback": [
     {
       "id": "1",

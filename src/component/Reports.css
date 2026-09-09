@@ -1,0 +1,301 @@
+.reports-page {
+  width: calc(100% - 300px);
+  margin-left: 300px;
+  min-height: 100vh;
+  background: #f5f8fa;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.reports-header {
+  margin-bottom: 25px;
+}
+
+.reports-header h1 {
+  margin: 0;
+  font-size: 30px;
+  color: #1f2937;
+}
+
+.reports-header p {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* Selection Card */
+
+.report-selection-card,
+.top-students-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.report-card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.report-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #eee9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.report-card-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1f2937;
+}
+
+.report-card-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+/* Form */
+
+.report-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.report-input-group {
+  flex: 1;
+}
+
+.report-input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.report-input-group select {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  background: #ffffff;
+  outline: none;
+}
+
+.report-input-group select:focus {
+  border-color: #6d5dfc;
+}
+
+.view-report-btn {
+  height: 45px;
+  padding: 0 25px;
+  border: none;
+  border-radius: 8px;
+  background: #6d5dfc;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.view-report-btn:hover {
+  background: #5948e8;
+}
+
+.view-report-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Report Header */
+
+.top-students-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.top-students-header h2 {
+  margin: 0;
+  font-size: 21px;
+  color: #1f2937;
+}
+
+.top-students-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+.print-btn {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 9px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.print-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Table */
+
+.report-table-wrapper {
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th {
+  background: #f8fafc;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  padding: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.report-table td {
+  padding: 15px 14px;
+  border-bottom: 1px solid #eef0f2;
+  color: #374151;
+  font-size: 14px;
+}
+
+.report-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* Rank */
+
+.rank {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f1f5f9;
+  font-weight: 700;
+}
+
+.rank-1 {
+  background: #fff3c4;
+}
+
+.rank-2 {
+  background: #e5e7eb;
+}
+
+.rank-3 {
+  background: #f3d6b3;
+}
+
+/* Pass */
+
+.pass-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Summary */
+
+.report-summary {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.summary-box {
+  flex: 1;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #eef0f2;
+}
+
+.summary-box span {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.summary-box strong {
+  font-size: 22px;
+  color: #1f2937;
+}
+
+/* No Results */
+
+.no-results {
+  padding: 35px;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .reports-page {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .report-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-report-btn {
+    width: 100%;
+  }
+
+  .report-summary {
+    flex-direction: column;
+  }
+}
+
+/* Print */
+
+@media print {
+  .admin-header,
+  .admin-sidebar,
+  .report-selection-card,
+  .print-btn {
+    display: none !important;
+  }
+
+  .reports-page {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .top-students-card {
+    box-shadow: none;
+  }
+}

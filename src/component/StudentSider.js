@@ -12,17 +12,17 @@ export default function StudentSider() {
 
       {/* Navigation */}
       <nav className="sidebar-nav">
-        <Link to="/AdminDashboard" className="nav-item active">
+        <Link to="/StudentDashboard" className="nav-item active">
           <span className="nav-icon">⌂</span>
           <span>Dashboard</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/ViewExamSchedule" className="nav-item">
           <span className="nav-icon">📅</span>
-          <span>View Exam Schedul</span>
+          <span>View Exam Schedule</span>
         </Link>
 
-        <Link to="#" className="nav-item">
+        <Link to="/ViewResult" className="nav-item">
           <span className="nav-icon">📝</span>
           <span>View Result</span>
         </Link>
