@@ -28,6 +28,7 @@
       "id": "H59TVd1CCHU"
     }
   ],
+
   "tbl_faculty": [
     {
       "faculty_name": "Pruthvi Shah",
@@ -54,6 +55,7 @@
       "id": "pI04zXMYZRM"
     }
   ],
+
   "tbl_student": [
     {
       "student_name": "Pooja Variya",
@@ -110,6 +112,7 @@
       "id": "duSpnkFMNc4"
     }
   ],
+
   "tbl_subject": [
     {
       "faculty_id": "oIveipxloTU",
@@ -212,6 +215,7 @@
       "id": "xEZYeqNZxm4"
     }
   ],
+
   "tbl_student_exam": [
     {
       "student_id": "07_oxDWigzY",
@@ -222,6 +226,7 @@
       "id": "9gqjCVDCaTw"
     }
   ],
+
   "tbl_student_answer": [
     {
       "student_exam_id": "9gqjCVDCaTw",
@@ -248,6 +253,7 @@
       "id": "qJpK9ewVumw"
     }
   ],
+
   "tbl_result": [
     {
       "student_id": "07_oxDWigzY",
@@ -290,5 +296,6 @@
       "id": "V3aJuP2a5Pk"
     }
   ],
+
   "$schema": "./node_modules/json-server/schema.json"
 }

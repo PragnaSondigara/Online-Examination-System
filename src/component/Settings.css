@@ -103,15 +103,11 @@
   width: 45px;
   height: 45px;
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 10px;
-
   background: #e5f7f8;
-
   font-size: 20px;
 }
 
@@ -126,14 +122,11 @@
 
 .settings-option {
   min-height: 82px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
   padding: 17px 4px;
-
   border-bottom: 1px solid #edf1f3;
 }
 
@@ -162,17 +155,12 @@
 .option-icon {
   width: 40px;
   height: 40px;
-
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 9px;
-
   background: #f4f8fa;
-
   font-size: 18px;
 }
 
@@ -202,28 +190,19 @@
 .settings-action {
   min-width: 95px;
   height: 36px;
-
   padding: 0 13px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   border: 1px solid #d7e2e7;
   border-radius: 7px;
-
   background: #ffffff;
-
-  color: #087f95;
-
+  color: #35c79a;
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: all 0.2s ease;
 }
 
@@ -232,7 +211,7 @@
 }
 
 .settings-action:hover {
-  background: #087f95;
+  background: #35c79a;
   border-color: #087f95;
   color: #ffffff;
   transform: translateX(2px);

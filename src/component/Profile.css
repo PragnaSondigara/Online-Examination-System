@@ -15,29 +15,20 @@
 .profile-container {
   width: 100%;
   min-height: 100vh;
-
   display: flex;
-
   background: #f5f8fa;
 }
 
 
 /* =========================================
    MAIN CONTENT
-
-   Change 300px if your sidebar has
-   another width.
 ========================================= */
 
 .profile-main {
   width: calc(100% - 300px);
-
   margin-left: 300px;
-
   min-height: 100vh;
-
   background: #f5f8fa;
-
   overflow-x: hidden;
 }
 
@@ -48,9 +39,7 @@
 
 .profile-page {
   width: 100%;
-
   padding: 30px;
-
   background: #f5f8fa;
 }
 
@@ -61,28 +50,21 @@
 
 .profile-page-header {
   display: flex;
-
   align-items: center;
   justify-content: space-between;
-
   margin-bottom: 25px;
 }
 
 .profile-page-header h1 {
   margin: 0;
-
   color: #102a43;
-
   font-size: 26px;
-
   font-weight: 600;
 }
 
 .profile-page-header p {
   margin: 6px 0 0;
-
   color: #829ab1;
-
   font-size: 13px;
 }
 
@@ -93,13 +75,8 @@
 
 .profile-content {
   width: 100%;
-
   display: grid;
-
-  grid-template-columns:
-    260px
-    minmax(0, 1fr);
-
+  grid-template-columns: 260px minmax(0, 1fr);
   gap: 22px;
 }
 
@@ -110,9 +87,7 @@
 
 .profile-card {
   background: #ffffff;
-
   border: 1px solid #e4eaee;
-
   border-radius: 12px;
 
   box-shadow:
@@ -126,7 +101,6 @@
 
 .profile-summary {
   padding: 28px 22px;
-
   text-align: center;
 }
 
@@ -138,22 +112,17 @@
 .profile-avatar {
   width: 82px;
   height: 82px;
-
   margin: 0 auto 16px;
-
   border-radius: 50%;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   background: #e3f5f7;
-
-  color: #087f95;
+  color: #238653;
 
   font-size: 28px;
-
   font-weight: 600;
 }
 
@@ -164,13 +133,9 @@
 
 .profile-summary h2 {
   margin: 0;
-
   color: #102a43;
-
   font-size: 18px;
-
   font-weight: 600;
-
   word-break: break-word;
 }
 
@@ -181,9 +146,7 @@
 
 .profile-role {
   margin: 6px 0 14px;
-
   color: #829ab1;
-
   font-size: 12px;
 }
 
@@ -194,17 +157,13 @@
 
 .active-status {
   display: inline-flex;
-
   align-items: center;
-
   gap: 7px;
 
   padding: 5px 12px;
-
   border-radius: 20px;
 
   background: #eaf8f0;
-
   color: #238653;
 
   font-size: 11px;
@@ -215,7 +174,6 @@
   height: 7px;
 
   border-radius: 50%;
-
   background: #2eaa68;
 }
 
@@ -227,9 +185,7 @@
 .summary-line {
   width: 100%;
   height: 1px;
-
   margin: 24px 0 14px;
-
   background: #e6edf1;
 }
 
@@ -240,33 +196,25 @@
 
 .summary-row {
   display: flex;
-
   justify-content: space-between;
-
   gap: 15px;
 
   padding: 9px 0;
 
   font-size: 12px;
-
   text-align: left;
 }
 
 .summary-row span {
   color: #829ab1;
-
   flex-shrink: 0;
 }
 
 .summary-row strong {
   max-width: 150px;
-
   color: #334e68;
-
   font-weight: 500;
-
   text-align: right;
-
   word-break: break-word;
 }
 
@@ -277,7 +225,6 @@
 
 .personal-card {
   min-width: 0;
-
   padding: 27px 30px;
 }
 
@@ -288,27 +235,20 @@
 
 .card-title {
   padding-bottom: 18px;
-
   margin-bottom: 24px;
-
   border-bottom: 1px solid #e6edf1;
 }
 
 .card-title h2 {
   margin: 0;
-
   color: #102a43;
-
   font-size: 17px;
-
   font-weight: 600;
 }
 
 .card-title p {
   margin: 5px 0 0;
-
   color: #829ab1;
-
   font-size: 12px;
 }
 
@@ -319,7 +259,6 @@
 
 .input-grid {
   width: 100%;
-
   display: grid;
 
   grid-template-columns:
@@ -336,21 +275,16 @@
 
 .input-group {
   width: 100%;
-
   min-width: 0;
 
   display: flex;
-
   flex-direction: column;
-
   gap: 7px;
 }
 
 .input-group label {
   color: #243b53;
-
   font-size: 12px;
-
   font-weight: 500;
 }
 
@@ -361,23 +295,18 @@
 
 .input-group input {
   width: 100%;
-
   height: 42px;
-
   padding: 0 13px;
 
   border: 1px solid #d9e2ec;
-
   border-radius: 7px;
 
   outline: none;
 
   background: #ffffff;
-
   color: #243b53;
 
   font-family: inherit;
-
   font-size: 13px;
 
   transition: 0.2s ease;
@@ -396,9 +325,7 @@
 
 .input-group input:disabled {
   background: #f4f7f9;
-
   color: #829ab1;
-
   cursor: not-allowed;
 }
 
@@ -409,9 +336,7 @@
 
 .button-area {
   display: flex;
-
   justify-content: flex-end;
-
   margin-top: 25px;
 }
 
@@ -422,31 +347,25 @@
 
 .button-area button {
   height: 41px;
-
   padding: 0 21px;
 
   border: none;
-
   border-radius: 7px;
 
-  background: #087f95;
-
+  background: #35c79a;
+;
   color: #ffffff;
 
   font-family: inherit;
-
   font-size: 12px;
-
   font-weight: 600;
 
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
 .button-area button:hover {
   background: #076d80;
-
   transform: translateY(-1px);
 }
 
@@ -457,9 +376,7 @@
 
 .password-card {
   width: 100%;
-
   margin-top: 22px;
-
   padding: 27px 30px;
 }
 
@@ -470,7 +387,6 @@
 
 .password-grid {
   width: 100%;
-
   display: grid;
 
   grid-template-columns:
@@ -490,32 +406,27 @@
   min-height: 500px;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   color: #829ab1;
-
   font-size: 14px;
 }
 
 
 /* =========================================
-   TABLET
+   TABLET LARGE
 ========================================= */
 
 @media (max-width: 1100px) {
 
   .profile-main {
     width: calc(100% - 280px);
-
     margin-left: 280px;
   }
 
   .profile-content {
-    grid-template-columns:
-      220px
-      minmax(0, 1fr);
+    grid-template-columns: 220px minmax(0, 1fr);
   }
 
 }
@@ -539,13 +450,11 @@
     column-gap: 20px;
 
     text-align: left;
-
     align-items: center;
   }
 
   .profile-avatar {
     grid-row: span 3;
-
     margin: 0;
   }
 
@@ -572,7 +481,6 @@
 
   .profile-main {
     width: 100%;
-
     margin-left: 0;
   }
 
@@ -620,7 +528,6 @@
 
   .profile-summary {
     display: block;
-
     text-align: center;
   }
 
@@ -634,13 +541,11 @@
 
   .summary-row {
     flex-direction: column;
-
     gap: 3px;
   }
 
   .summary-row strong {
     max-width: 100%;
-
     text-align: left;
   }
 

@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "./ForgotPassword.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -96,36 +93,22 @@ function ForgotPassword() {
   return (
     <div className="forgot-password-page">
       <div className="forgot-password-container">
-
-        {/* =================================
-            LEFT IMAGE
-        ================================= */}
-
+        {/* Left Side Image */}
         <div className="forgot-password-left">
-
           <img
             src="/image/p2.png"
             alt="Forgot Password"
             className="forgot-password-image"
           />
-
         </div>
 
-        {/* =================================
-            RIGHT FORM
-        ================================= */}
-
+        {/* Right Side Form */}
         <div className="forgot-password-card">
-
           <h2>Reset Password</h2>
 
           <p className="forgot-description">
             Enter your email address below to reset your password.
           </p>
-
-          {/* =================================
-              EMAIL
-          ================================= */}
 
           {message && <p style={{ color: "green" }}>{message}</p>}
 
@@ -156,9 +139,7 @@ function ForgotPassword() {
             ← Back to Login
           </div>
         </div>
-
       </div>
-
     </div>
   );
 }

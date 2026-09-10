@@ -1,6 +1,3 @@
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "./ChangePassword.css";
 import { useState } from "react";
 import axios from "axios";
@@ -130,38 +127,23 @@ function ChangePassword() {
 
   return (
     <div className="change-password-page">
-
       <div className="change-password-container">
-
-        {/* =================================
-            LEFT IMAGE
-        ================================= */}
-
+        {/* Left Side Image */}
         <div className="change-password-left">
-
           <img
             src="/image/p3.png"
             alt="Change Password"
             className="change-password-image"
           />
-
         </div>
 
-        {/* =================================
-            RIGHT FORM
-        ================================= */}
-
+        {/* Right Side Form */}
         <div className="change-password-card">
-
           <h2>Change Password</h2>
 
           <p className="form-description">
             Enter your current password and create a new one.
           </p>
-
-          {/* =================================
-              CURRENT PASSWORD
-          ================================= */}
 
           {/* Success Message */}
           {message && (
@@ -248,9 +230,7 @@ function ChangePassword() {
             </button>
           </form>
         </div>
-
       </div>
-
     </div>
   );
 }

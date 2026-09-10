@@ -53,14 +53,13 @@ export default function AdminDashboard() {
 
         {/* Stats Section */}
         <div className="student-stats">
-
           {/* Total Students */}
           <div className="stat-card purple">
             <div className="stat-icon">👨‍🎓</div>
 
             <div>
               <span>Total Students</span>
-              <strong>{stats.students}</strong>
+              <strong>{studentCount}</strong>
             </div>
           </div>
 
@@ -70,7 +69,7 @@ export default function AdminDashboard() {
 
             <div>
               <span>Total Faculty</span>
-              <strong>{stats.faculty}</strong>
+              <strong>{facultyCount}</strong>
             </div>
           </div>
 
@@ -80,7 +79,7 @@ export default function AdminDashboard() {
 
             <div>
               <span>Total Subjects</span>
-              <strong>{stats.subjects}</strong>
+              <strong>{subjectCount}</strong>
             </div>
           </div>
 
@@ -90,10 +89,9 @@ export default function AdminDashboard() {
 
             <div>
               <span>Online Exams</span>
-              <strong>{stats.exams}</strong>
+              <strong>{examCount}</strong>
             </div>
           </div>
-
         </div>
 
         {/* Management Modules Section */}
@@ -105,10 +103,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div
-            className="dashboard-cards"
-            style={{ padding: "20px" }}
-          >
+          <div className="dashboard-cards" style={{ padding: "20px" }}>
             {/* Manage Student */}
             <Link
               to="/ManageStudent"
@@ -122,8 +117,8 @@ export default function AdminDashboard() {
               <h3>Manage Student</h3>
 
               <p>
-                Add, edit, view and delete student accounts and manage
-                student information.
+                Add, edit, view and delete student accounts and manage student
+                information.
               </p>
             </Link>
 
@@ -140,8 +135,7 @@ export default function AdminDashboard() {
               <h3>Manage Faculty</h3>
 
               <p>
-                Manage faculty profiles, information and teaching
-                activities.
+                Manage faculty profiles, information and teaching activities.
               </p>
             </Link>
 
