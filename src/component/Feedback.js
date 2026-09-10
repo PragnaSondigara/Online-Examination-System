@@ -107,8 +107,9 @@ export default function Feedback() {
     }
   };
 
-  const sortedFeedbacks = feedbacks
-    .filter((item) => String(item.student_id) === String(studentId));
+  const sortedFeedbacks = feedbacks.filter(
+    (item) => String(item.student_id) === String(studentId),
+  );
 
   return (
     <>
@@ -117,151 +118,148 @@ export default function Feedback() {
       <Header />
 
       <main className="main-content">
-        <section className="page-content">
-          {/* ================= PAGE TITLE ================= */}
-          <div className="page-title">
-            <h1>Provide Feedback</h1>
+        {/* ================= PAGE TITLE ================= */}
+        <div className="page-title">
+          <h1>Provide Feedback</h1>
 
-            <p>
-              Share your experience and help us improve the examination system.
-            </p>
-          </div>
+          <p>
+            Share your experience and help us improve the examination system.
+          </p>
+        </div>
 
-          {/* ================= FEEDBACK FORM ================= */}
-          <div className="feedback-card">
-            <div className="feedback-card-header">
-              <div className="header-content">
-                <span className="card-label">YOUR OPINION MATTERS</span>
+        {/* ================= FEEDBACK FORM ================= */}
+        <div className="feedback-card">
+          <div className="feedback-card-header">
+            <div className="header-content">
+              <span className="card-label">YOUR OPINION MATTERS</span>
 
-                <h2>Give Your Feedback</h2>
+              <h2>Give Your Feedback</h2>
 
-                <p>
-                  We value your opinion. Tell us about your experience with the
-                  examination system.
-                </p>
-              </div>
-
-              <div className="feedback-icon">💬</div>
+              <p>
+                We value your opinion. Tell us about your experience with the
+                examination system.
+              </p>
             </div>
 
-            <form className="feedback-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <div className="label-row">
-                  <label htmlFor="feedback">Your Feedback</label>
+            <div className="feedback-icon">💬</div>
+          </div>
 
-                  <span className="required-text">Required</span>
-                </div>
+          <form className="feedback-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <div className="label-row">
+                <label htmlFor="feedback">Your Feedback</label>
 
-                <textarea
-                  id="feedback"
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                  placeholder="Write your feedback here..."
-                  rows={6}
-                  maxLength={500}
-                  disabled={submitting}
-                />
-
-                <div className="textarea-footer">
-                  <span>Please share your honest experience.</span>
-
-                  <span className="character-count">{feedback.length}/500</span>
-                </div>
+                <span className="required-text">Required</span>
               </div>
 
-              {/* ================= SUBMIT BUTTON ================= */}
-              <button
-                type="submit"
-                className="submit-button"
+              <textarea
+                id="feedback"
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="Write your feedback here..."
+                rows={6}
+                maxLength={500}
                 disabled={submitting}
-              >
-                {submitting ? (
-                  <>
-                    <span className="spinner"></span>
-                    Submitting...
-                  </>
-                ) : (
-                  <>
-                    Submit Feedback
-                    <span className="button-arrow">→</span>
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
+              />
 
-          {/* ================= PREVIOUS FEEDBACK ================= */}
-          <div className="previous-card">
-            <div className="previous-header">
-              <div>
-                <span className="card-label">FEEDBACK HISTORY</span>
+              <div className="textarea-footer">
+                <span>Please share your honest experience.</span>
 
-                <h2>Your Previous Feedback</h2>
-
-                <p>Feedback you have submitted previously.</p>
-              </div>
-
-              <div className="result-count">
-                <strong>{feedbacks.length}</strong>
-
-                <span>{feedbacks.length === 1 ? "Feedback" : "Feedbacks"}</span>
+                <span className="character-count">{feedback.length}/500</span>
               </div>
             </div>
 
-            <div className="feedback-list">
-              {/* ================= LOADING ================= */}
-              {loading ? (
-                <div className="empty-state">
-                  <div className="loading-spinner"></div>
-
-                  <h3>Loading feedback...</h3>
-
-                  <p>Please wait while we load your feedback.</p>
-                </div>
-              ) : feedbacks.length === 0 ? (
-                /* ================= EMPTY ================= */
-                <div className="empty-state">
-                  <div className="empty-icon">💬</div>
-
-                  <h3>No feedback submitted yet</h3>
-
-                  <p>Your submitted feedback will appear here.</p>
-                </div>
+            {/* ================= SUBMIT BUTTON ================= */}
+            <button
+              type="submit"
+              className="submit-button"
+              disabled={submitting}
+            >
+              {submitting ? (
+                <>
+                  <span className="spinner"></span>
+                  Submitting...
+                </>
               ) : (
-                /* ================= FEEDBACK LIST ================= */
-                sortedFeedbacks.map((item) => (
-                  <div className="feedback-item" key={item.id}>
-                    <div className="feedback-avatar">
-                      {item.name?.charAt(0).toUpperCase()}
-                    </div>
+                <>
+                  Submit Feedback
+                  <span className="button-arrow">→</span>
+                </>
+              )}
+            </button>
+          </form>
+        </div>
 
-                    <div className="feedback-details">
-                      <div className="feedback-top">
-                        <div>
-                          <h3>{item.name}</h3>
+        {/* ================= PREVIOUS FEEDBACK ================= */}
+        <div className="previous-card">
+          <div className="previous-header">
+            <div>
+              <span className="card-label">FEEDBACK HISTORY</span>
 
-                          <span className="student-label">Student</span>
-                        </div>
+              <h2>Your Previous Feedback</h2>
 
-                        <span className="feedback-date">
-                          {new Date(item.date).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </span>
+              <p>Feedback you have submitted previously.</p>
+            </div>
+
+            <div className="result-count">
+              <strong>{feedbacks.length}</strong>
+
+              <span>{feedbacks.length === 1 ? "Feedback" : "Feedbacks"}</span>
+            </div>
+          </div>
+
+          <div className="feedback-list">
+            {/* ================= LOADING ================= */}
+            {loading ? (
+              <div className="empty-state">
+                <div className="loading-spinner"></div>
+
+                <h3>Loading feedback...</h3>
+
+                <p>Please wait while we load your feedback.</p>
+              </div>
+            ) : feedbacks.length === 0 ? (
+              /* ================= EMPTY ================= */
+              <div className="empty-state">
+                <div className="empty-icon">💬</div>
+
+                <h3>No feedback submitted yet</h3>
+
+                <p>Your submitted feedback will appear here.</p>
+              </div>
+            ) : (
+              /* ================= FEEDBACK LIST ================= */
+              sortedFeedbacks.map((item) => (
+                <div className="feedback-item" key={item.id}>
+                  <div className="feedback-avatar">
+                    {item.name?.charAt(0).toUpperCase()}
+                  </div>
+
+                  <div className="feedback-details">
+                    <div className="feedback-top">
+                      <div>
+                        <h3>{item.name}</h3>
+
+                        <span className="student-label">Student</span>
                       </div>
 
-                      <p>{item.feedback}</p>
+                      <span className="feedback-date">
+                        {new Date(item.date).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
                     </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </section>
-      </main>
 
+                    <p>{item.feedback}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </main>
       <Footer />
     </>
   );

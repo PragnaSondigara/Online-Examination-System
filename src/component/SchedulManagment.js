@@ -5,6 +5,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import FacultySider from "./FacultySider";
 
+const API_URL = "http://localhost:5000";
+
 export default function ScheduleManagement() {
   const [schedule, setSchedule] = useState([]);
   const [facultyList, setFacultyList] = useState([]);
@@ -27,63 +29,60 @@ export default function ScheduleManagement() {
     is_active: true,
   });
 
-  // =====================================================
-  // LOAD DATABASE DATA
-  // =====================================================
+  // ================================
+  // LOAD DATA
+  // ================================
 
   const loadData = async () => {
     try {
-      // Get Exam Data
-      const examRes = await axios.get("http://localhost:5000/tbl_exam");
+      const examRes = await axios.get(`${API_URL}/tbl_exam`);
+      const facultyRes = await axios.get(`${API_URL}/tbl_faculty`);
+      const subjectRes = await axios.get(`${API_URL}/tbl_subject`);
 
       setSchedule(examRes.data);
-
-      // Get Faculty Data
-      const facultyRes = await axios.get("http://localhost:5000/tbl_faculty");
-
       setFacultyList(facultyRes.data);
-
-      // Get Subject Data
-      const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
-
       setSubjectList(subjectRes.data);
+
+      console.log("Exam Data:", examRes.data);
+      console.log("Faculty Data:", facultyRes.data);
+      console.log("Subject Data:", subjectRes.data);
     } catch (error) {
-      console.error("Error loading exam data:", error);
+      console.error("Error loading data:", error);
       alert("Failed to load schedule data.");
     }
   };
-
-  // =====================================================
-  // USE EFFECT
-  // =====================================================
 
   useEffect(() => {
     loadData();
   }, []);
 
-  // =====================================================
+  // ================================
   // GET FACULTY NAME
-  // =====================================================
+  // ================================
 
   const getFacultyName = (facultyId) => {
-    const faculty = facultyList.find((f) => f.id === facultyId);
+    const faculty = facultyList.find(
+      (item) => String(item.id) === String(facultyId),
+    );
 
     return faculty ? faculty.faculty_name : "Unknown Faculty";
   };
 
-  // =====================================================
+  // ================================
   // GET SUBJECT NAME
-  // =====================================================
+  // ================================
 
   const getSubjectName = (subjectId) => {
-    const subject = subjectList.find((s) => s.id === subjectId);
+    const subject = subjectList.find(
+      (item) => String(item.id) === String(subjectId),
+    );
 
     return subject ? subject.subject_name : "Unknown Subject";
   };
 
-  // =====================================================
-  // START EDIT
-  // =====================================================
+  // ================================
+  // EDIT EXAM
+  // ================================
 
   const startEdit = (exam) => {
     setEditId(exam.id);
@@ -101,9 +100,9 @@ export default function ScheduleManagement() {
     });
   };
 
-  // =====================================================
-  // HANDLE EDIT INPUT
-  // =====================================================
+  // ================================
+  // HANDLE EDIT
+  // ================================
 
   const handleEditChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -114,9 +113,9 @@ export default function ScheduleManagement() {
     }));
   };
 
-  // =====================================================
+  // ================================
   // SAVE EDIT
-  // =====================================================
+  // ================================
 
   const saveEdit = async (id) => {
     try {
@@ -172,7 +171,9 @@ export default function ScheduleManagement() {
         return;
       }
 
-      const existingExam = schedule.find((exam) => exam.id === id);
+      const existingExam = schedule.find(
+        (exam) => String(exam.id) === String(id),
+      );
 
       if (!existingExam) {
         alert("Exam schedule not found.");
@@ -182,57 +183,38 @@ export default function ScheduleManagement() {
       const updatedExam = {
         ...existingExam,
 
-        faculty_id: Number(editSchedule.faculty_id),
-
-        subject_id: Number(editSchedule.subject_id),
+        // IMPORTANT:
+        // Keep these IDs as STRING because your DB uses string IDs
+        faculty_id: editSchedule.faculty_id,
+        subject_id: editSchedule.subject_id,
 
         date: editSchedule.date,
-
         start_time: editSchedule.start_time,
-
         end_time: editSchedule.end_time,
 
         duration: Number(editSchedule.duration),
-
         passing_marks: Number(editSchedule.passing_marks),
-
         total_marks: Number(editSchedule.total_marks),
 
         is_active: editSchedule.is_active,
       };
 
-      // =================================================
-      // UPDATE tbl_exam
-      // =================================================
+      await axios.put(`${API_URL}/tbl_exam/${id}`, updatedExam);
 
-      await axios.put(`http://localhost:5000/tbl_exam/${id}`, updatedExam);
+      alert("Exam schedule updated successfully.");
 
-      setEditId(null);
-
-      setEditSchedule({
-        faculty_id: "",
-        subject_id: "",
-        date: "",
-        start_time: "",
-        end_time: "",
-        duration: "",
-        passing_marks: "",
-        total_marks: "",
-        is_active: true,
-      });
+      cancelEdit();
 
       await loadData();
-
-      alert("Exam schedule updated successfully!");
     } catch (error) {
-      console.error("Error updating exam:", error);
+      console.error("Update error:", error);
       alert("Failed to update exam schedule.");
     }
   };
 
-  // =====================================================
+  // ================================
   // CANCEL EDIT
-  // =====================================================
+  // ================================
 
   const cancelEdit = () => {
     setEditId(null);
@@ -250,9 +232,9 @@ export default function ScheduleManagement() {
     });
   };
 
-  // =====================================================
-  // DELETE EXAM
-  // =====================================================
+  // ================================
+  // DELETE
+  // ================================
 
   const deleteSchedule = async (id) => {
     const confirmDelete = window.confirm(
@@ -264,20 +246,20 @@ export default function ScheduleManagement() {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/tbl_exam/${id}`);
+      await axios.delete(`${API_URL}/tbl_exam/${id}`);
+
+      alert("Exam schedule deleted successfully.");
 
       await loadData();
-
-      alert("Exam schedule deleted successfully!");
     } catch (error) {
-      console.error("Error deleting exam:", error);
+      console.error("Delete error:", error);
       alert("Failed to delete exam schedule.");
     }
   };
 
-  // =====================================================
-  // SCHEDULE STATS
-  // =====================================================
+  // ================================
+  // STATS
+  // ================================
 
   const totalSchedule = schedule.length;
 
@@ -287,22 +269,33 @@ export default function ScheduleManagement() {
     (exam) => exam.is_active === false,
   ).length;
 
-  // =====================================================
+  const totalDuration = schedule.reduce(
+    (total, exam) => total + Number(exam.duration || 0),
+    0,
+  );
+
+  // ================================
   // SEARCH + FILTER
-  // =====================================================
+  // ================================
 
   const filteredSchedules = schedule.filter((exam) => {
     const facultyName = getFacultyName(exam.faculty_id);
     const subjectName = getSubjectName(exam.subject_id);
 
-    const searchText = search.toLowerCase();
+    const searchText = search.toLowerCase().trim();
 
     const matchesSearch =
       facultyName.toLowerCase().includes(searchText) ||
       subjectName.toLowerCase().includes(searchText) ||
-      (exam.date || "").toLowerCase().includes(searchText) ||
-      (exam.start_time || "").toLowerCase().includes(searchText) ||
-      (exam.end_time || "").toLowerCase().includes(searchText);
+      String(exam.date || "")
+        .toLowerCase()
+        .includes(searchText) ||
+      String(exam.start_time || "")
+        .toLowerCase()
+        .includes(searchText) ||
+      String(exam.end_time || "")
+        .toLowerCase()
+        .includes(searchText);
 
     const examStatus = exam.is_active ? "Active" : "Inactive";
 
@@ -312,9 +305,9 @@ export default function ScheduleManagement() {
     return matchesSearch && matchesStatus;
   });
 
-  // =====================================================
+  // ================================
   // FORMAT DATE
-  // =====================================================
+  // ================================
 
   const formatDate = (date) => {
     if (!date) {
@@ -323,6 +316,10 @@ export default function ScheduleManagement() {
 
     const newDate = new Date(date);
 
+    if (Number.isNaN(newDate.getTime())) {
+      return date;
+    }
+
     return newDate.toLocaleDateString("en-IN", {
       day: "2-digit",
       month: "short",
@@ -330,9 +327,17 @@ export default function ScheduleManagement() {
     });
   };
 
-  // =====================================================
+  // ================================
+  // ADD EXAM
+  // ================================
+
+  const handleAddExam = () => {
+    window.location.href = "/AddSchedule";
+  };
+
+  // ================================
   // RENDER
-  // =====================================================
+  // ================================
 
   return (
     <>
@@ -341,7 +346,7 @@ export default function ScheduleManagement() {
       <Header />
 
       <main className="manage-schedule">
-        {/* PAGE TOP */}
+        {/* PAGE HEADER */}
 
         <div className="page-top">
           <div>
@@ -350,12 +355,7 @@ export default function ScheduleManagement() {
             <p>View, manage and monitor all examination schedules.</p>
           </div>
 
-          <button
-            className="add-schedule-btn"
-            onClick={() => {
-              window.location.href = "/AddSchedule";
-            }}
-          >
+          <button className="add-schedule-btn" onClick={handleAddExam}>
             <span>+</span>
             Add Exam
           </button>
@@ -390,13 +390,7 @@ export default function ScheduleManagement() {
             <div>
               <span>Duration</span>
 
-              <strong>
-                {schedule.reduce(
-                  (total, exam) => total + Number(exam.duration || 0),
-                  0,
-                )}
-                h
-              </strong>
+              <strong>{totalDuration}h</strong>
             </div>
           </div>
 
@@ -411,7 +405,7 @@ export default function ScheduleManagement() {
           </div>
         </div>
 
-        {/* TABLE CARD */}
+        {/* TABLE */}
 
         <section className="schedule-card">
           {/* TOOLBAR */}
@@ -424,8 +418,6 @@ export default function ScheduleManagement() {
             </div>
 
             <div className="toolbar-actions">
-              {/* SEARCH */}
-
               <div className="search-box">
                 <span>⌕</span>
 
@@ -436,8 +428,6 @@ export default function ScheduleManagement() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-
-              {/* STATUS */}
 
               <select
                 className="status-filter"
@@ -490,10 +480,7 @@ export default function ScheduleManagement() {
                             <option value="">Select Faculty</option>
 
                             {facultyList.map((faculty) => (
-                              <option
-                                key={faculty.faculty_id}
-                                value={faculty.faculty_id}
-                              >
+                              <option key={faculty.id} value={faculty.id}>
                                 {faculty.faculty_name}
                               </option>
                             ))}
@@ -524,10 +511,7 @@ export default function ScheduleManagement() {
                             <option value="">Select Subject</option>
 
                             {subjectList.map((subject) => (
-                              <option
-                                key={subject.subject_id}
-                                value={subject.subject_id}
-                              >
+                              <option key={subject.id} value={subject.id}>
                                 {subject.subject_name}
                               </option>
                             ))}
@@ -579,9 +563,7 @@ export default function ScheduleManagement() {
                         ) : (
                           <span className="time-text">
                             {exam.start_time || "--:--"}
-
                             {" - "}
-
                             {exam.end_time || "--:--"}
                           </span>
                         )}
@@ -608,13 +590,7 @@ export default function ScheduleManagement() {
 
                       <td>
                         {editId === exam.id ? (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                            }}
-                          >
+                          <div className="marks-edit">
                             <input
                               type="number"
                               name="total_marks"

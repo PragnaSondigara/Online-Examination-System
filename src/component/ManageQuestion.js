@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./ManageQuestion.css";
 
 import FacultySider from "./FacultySider";
@@ -59,15 +60,11 @@ export default function ManageQuestion() {
       // 1. GET FACULTY
       // -------------------------------------------------
 
-      const facultyResponse = await fetch(
+      const facultyResponse = await axios.get(
         `${API_URL}/tbl_faculty/${loggedFacultyId}`,
       );
 
-      if (!facultyResponse.ok) {
-        throw new Error("Faculty not found.");
-      }
-
-      const faculty = await facultyResponse.json();
+      const faculty = facultyResponse.data;
 
       if (faculty.is_active !== true) {
         throw new Error(
@@ -79,30 +76,9 @@ export default function ManageQuestion() {
       // 2. GET SUBJECTS
       // -------------------------------------------------
 
-      const subjectResponse = await fetch(`${API_URL}/tbl_subject`);
+      const subjectResponse = await axios.get(`${API_URL}/tbl_subject`);
 
-      if (!subjectResponse.ok) {
-        throw new Error("Unable to load subjects.");
-      }
-
-      const allSubjects = await subjectResponse.json();
-
-      /*
-        IMPORTANT:
-
-        Your database uses:
-
-        subject.id
-        subject.faculty_id
-
-        Example:
-
-        {
-          "faculty_id": "oIveipxloTU",
-          "subject_name": "Java",
-          "id": "PS7FhgzUvTA"
-        }
-      */
+      const allSubjects = subjectResponse.data;
 
       const facultySubjects = allSubjects.filter(
         (subject) =>
@@ -124,20 +100,9 @@ export default function ManageQuestion() {
       // 3. GET EXAMS
       // -------------------------------------------------
 
-      const examResponse = await fetch(`${API_URL}/tbl_exam`);
+      const examResponse = await axios.get(`${API_URL}/tbl_exam`);
 
-      if (!examResponse.ok) {
-        throw new Error("Unable to load exams.");
-      }
-
-      const allExams = await examResponse.json();
-
-      /*
-        Get only subjects assigned to this faculty.
-
-        Because your subject database uses "id",
-        we compare exam.subject_id with subject.id.
-      */
+      const allExams = examResponse.data;
 
       const facultySubjectIds = facultySubjects.map((subject) =>
         String(subject.id),
@@ -159,18 +124,12 @@ export default function ManageQuestion() {
       // 4. GET QUESTIONS
       // -------------------------------------------------
 
-      const questionResponse = await fetch(`${API_URL}/tbl_question`);
+      const questionResponse = await axios.get(`${API_URL}/tbl_question`);
 
-      if (!questionResponse.ok) {
-        throw new Error("Unable to load questions.");
-      }
+      const allQuestions = questionResponse.data;
 
-      const allQuestions = await questionResponse.json();
-
-      // Get exam IDs belonging to this faculty
       const facultyExamIds = facultyExams.map((exam) => String(exam.id));
 
-      // Only questions from faculty's exams
       const facultyQuestions = allQuestions.filter((question) =>
         facultyExamIds.includes(String(question.exam_id)),
       );
@@ -181,7 +140,16 @@ export default function ManageQuestion() {
     } catch (err) {
       console.error(err);
 
-      setError(err.message || "Unable to load data. Check JSON Server.");
+      // Axios error handling
+      if (err.response) {
+        setError(
+          err.response.data?.message || "Server error. Unable to load data.",
+        );
+      } else if (err.request) {
+        setError("JSON Server is not running. Please start JSON Server.");
+      } else {
+        setError(err.message || "Unable to load data. Check JSON Server.");
+      }
     } finally {
       setLoading(false);
     }
@@ -327,20 +295,13 @@ export default function ManageQuestion() {
           question_type: formData.question_type,
         };
 
-        const response = await fetch(
+        // Axios PUT
+        const response = await axios.put(
           `${API_URL}/tbl_question/${editingQuestion.id}`,
-          {
-            method: "PUT",
-
-            headers: {
-              "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify(updatedQuestion),
-          },
+          updatedQuestion,
         );
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Failed to update question.");
         }
 
@@ -379,17 +340,13 @@ export default function ManageQuestion() {
           question_type: formData.question_type,
         };
 
-        const response = await fetch(`${API_URL}/tbl_question`, {
-          method: "POST",
+        // Axios POST
+        const response = await axios.post(
+          `${API_URL}/tbl_question`,
+          newQuestion,
+        );
 
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(newQuestion),
-        });
-
-        if (!response.ok) {
+        if (response.status !== 201) {
           throw new Error("Failed to add question.");
         }
 
@@ -398,11 +355,18 @@ export default function ManageQuestion() {
 
       closeQuestionModal();
 
+      // Refresh data
       await fetchData(facultyId);
     } catch (err) {
       console.error(err);
 
-      setError(err.message || "Something went wrong.");
+      if (err.response) {
+        setError(err.response.data?.message || "Server error.");
+      } else if (err.request) {
+        setError("JSON Server is not running.");
+      } else {
+        setError(err.message || "Something went wrong.");
+      }
     } finally {
       setLoading(false);
     }
@@ -441,21 +405,27 @@ export default function ManageQuestion() {
     try {
       setLoading(true);
 
-      const response = await fetch(`${API_URL}/tbl_question/${id}`, {
-        method: "DELETE",
-      });
+      // Axios DELETE
+      const response = await axios.delete(`${API_URL}/tbl_question/${id}`);
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to delete question.");
       }
 
       setMessage("Question deleted successfully.");
 
+      // Refresh data
       await fetchData(facultyId);
     } catch (err) {
       console.error(err);
 
-      setError(err.message || "Unable to delete question.");
+      if (err.response) {
+        setError(err.response.data?.message || "Server error.");
+      } else if (err.request) {
+        setError("JSON Server is not running.");
+      } else {
+        setError(err.message || "Unable to delete question.");
+      }
     } finally {
       setLoading(false);
     }
@@ -494,9 +464,7 @@ export default function ManageQuestion() {
       <Header />
 
       <div className="manage-question">
-        {/* =============================================
-            PAGE HEADER
-        ============================================= */}
+        {/* PAGE HEADER */}
 
         <div className="page-header">
           <div>
@@ -527,9 +495,7 @@ export default function ManageQuestion() {
           </button>
         </div>
 
-        {/* =============================================
-            SUCCESS MESSAGE
-        ============================================= */}
+        {/* SUCCESS MESSAGE */}
 
         {message && (
           <div className="success-message">
@@ -541,9 +507,7 @@ export default function ManageQuestion() {
           </div>
         )}
 
-        {/* =============================================
-            ERROR MESSAGE
-        ============================================= */}
+        {/* ERROR MESSAGE */}
 
         {error && (
           <div className="error-message">
@@ -555,9 +519,7 @@ export default function ManageQuestion() {
           </div>
         )}
 
-        {/* =============================================
-            QUESTION LIST
-        ============================================= */}
+        {/* QUESTION LIST */}
 
         <div className="question-list-card">
           <div className="list-header">
@@ -598,9 +560,7 @@ export default function ManageQuestion() {
             </div>
           </div>
 
-          {/* =========================================
-              LOADING
-          ========================================= */}
+          {/* LOADING */}
 
           {loading && questions.length === 0 ? (
             <div className="loading">Loading questions...</div>
@@ -753,9 +713,7 @@ export default function ManageQuestion() {
         </div>
       </div>
 
-      {/* ===============================================
-          ADD / EDIT QUESTION MODAL
-      =============================================== */}
+      {/* ADD / EDIT QUESTION MODAL */}
 
       {showAddQuestion && (
         <AddQuestion

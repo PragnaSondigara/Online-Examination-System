@@ -2,138 +2,99 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ForgotPassword.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ForgotPassword() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
-  // =========================================
-  // LOGIN USER DATA
-  // =========================================
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
 
-  const username = localStorage.getItem("username") || "";
-  const role = localStorage.getItem("role") || "";
+    setMessage("");
+    setError("");
 
-  // =========================================
-  // STATES
-  // =========================================
-
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  // =========================================
-  // GET TABLE NAME
-  // =========================================
-
-  const getTableName = () => {
-    if (role === "Administrator") {
-      return "tbl_admin";
-    }
-
-    if (role === "Faculty") {
-      return "tbl_faculty";
-    }
-
-    if (role === "Student") {
-      return "tbl_student";
-    }
-
-    return "";
-  };
-
-  // =========================================
-  // GET NAME FIELD
-  // =========================================
-
-  const getNameField = () => {
-    if (role === "Administrator") {
-      return "admin_name";
-    }
-
-    if (role === "Faculty") {
-      return "faculty_name";
-    }
-
-    if (role === "Student") {
-      return "student_name";
-    }
-
-    return "";
-  };
-
-  // =========================================
-  // GET LOGGED-IN USER EMAIL
-  // =========================================
-
-  useEffect(() => {
-    const getLoggedInUserEmail = async () => {
-      if (!username || !role) {
-        alert("User is not logged in.");
-        navigate("/login");
-        return;
-      }
-
-      try {
-        const tableName = getTableName();
-        const nameField = getNameField();
-
-        if (!tableName || !nameField) {
-          alert("Invalid user role.");
-          setLoading(false);
-          return;
-        }
-
-        const response = await axios.get(
-          `http://localhost:5000/${tableName}?${nameField}=${encodeURIComponent(
-            username
-          )}`
-        );
-
-        console.log("Forgot Password User:", response.data);
-
-        if (response.data.length === 0) {
-          alert("User account not found.");
-          return;
-        }
-
-        const user = response.data[0];
-
-        // Logged-in user's email
-        setEmail(user.email || "");
-      } catch (error) {
-        console.error(
-          "Error fetching email:",
-          error
-        );
-
-        alert("Unable to load your email.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getLoggedInUserEmail();
-  }, [username, role, navigate]);
-
-  // =========================================
-  // RESET BUTTON
-  // =========================================
-
-  const handleReset = () => {
     if (!email) {
-      alert("Email address not found.");
+      setError("Please enter your email address.");
       return;
     }
 
-    navigate("/ChangePassword");
-  };
+    try {
+      let user = null;
+      let table = "";
 
-  // =========================================
-  // PAGE
-  // =========================================
+      // Check Student
+      const studentRes = await axios.get(
+        `http://localhost:5000/tbl_student?email=${email}`,
+      );
+
+      if (studentRes.data.length > 0) {
+        user = studentRes.data[0];
+        table = "tbl_student";
+      }
+
+      // Check Faculty
+      if (!user) {
+        const facultyRes = await axios.get(
+          `http://localhost:5000/tbl_faculty?email=${email}`,
+        );
+
+        if (facultyRes.data.length > 0) {
+          user = facultyRes.data[0];
+          table = "tbl_faculty";
+        }
+      }
+
+      // Check Admin
+      if (!user) {
+        const adminRes = await axios.get(
+          `http://localhost:5000/tbl_admin?email=${email}`,
+        );
+
+        if (adminRes.data.length > 0) {
+          user = adminRes.data[0];
+          table = "tbl_admin";
+        }
+      }
+
+      // Email not found
+      if (!user) {
+        setError("Email address is not registered.");
+        return;
+      }
+
+      // Generate temporary password
+      const newPassword = "Reset@" + Math.floor(1000 + Math.random() * 9000);
+
+      // Update password
+      const updateRes = await axios.patch(
+        `http://localhost:5000/${table}/${user.id}`,
+        {
+          password: newPassword,
+        },
+      );
+
+      if (updateRes.status === 200) {
+        alert(
+          `Password reset successfully!\n\nYour new password is: ${newPassword}`,
+        );
+
+        // Go to Login page
+        navigate("/ChangePassword");
+      }
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      setError("Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <div className="forgot-password-page">
-
       <div className="forgot-password-container">
 
         {/* =================================
@@ -159,60 +120,41 @@ function ForgotPassword() {
           <h2>Reset Password</h2>
 
           <p className="forgot-description">
-            Your registered email address is shown below.
+            Enter your email address below to reset your password.
           </p>
 
           {/* =================================
               EMAIL
           ================================= */}
 
-          <div className="forgot-form-group">
+          {message && <p style={{ color: "green" }}>{message}</p>}
 
-            <label>
-              Email Address
-            </label>
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
-            <div className="email-input">
+          <form onSubmit={handleForgotPassword}>
+            <div className="forgot-form-group">
+              <label>Email Address</label>
 
-              <span>✉</span>
+              <div className="email-input">
+                <span>✉</span>
 
-              <input
-                type="email"
-                placeholder="Enter your registered email"
-                value={email}
-                readOnly
-              />
-
+                <input
+                  type="email"
+                  placeholder="Enter your registered email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
             </div>
 
-          </div>
+            <button type="submit" className="send-reset-btn">
+              Send Reset Link
+            </button>
+          </form>
 
-          {/* =================================
-              RESET BUTTON
-          ================================= */}
-
-          <button
-            type="button"
-            className="send-reset-btn"
-            onClick={handleReset}
-            disabled={loading}
-          >
-            {loading
-              ? "Loading..."
-              : "Click to reset"}
-          </button>
-
-          {/* =================================
-              BACK TO LOGIN
-          ================================= */}
-
-          <div
-            className="back-login"
-            onClick={() => navigate("/login")}
-          >
+          <div className="back-login" onClick={() => navigate("/loginPage")}>
             ← Back to Login
           </div>
-
         </div>
 
       </div>

@@ -1,3 +1,7 @@
+/* =====================================================
+   REPORT PAGE
+===================================================== */
+
 .reports-page {
   width: calc(100% - 300px);
   margin-left: 310px;
@@ -6,6 +10,10 @@
   padding: 115px 38px 50px;
   box-sizing: border-box;
 }
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
 
 .reports-header {
   margin-bottom: 25px;
@@ -23,7 +31,23 @@
   font-size: 15px;
 }
 
-/* Selection Card */
+/* =====================================================
+   ERROR
+===================================================== */
+
+.report-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
 
 .report-selection-card,
 .top-students-card {
@@ -33,6 +57,10 @@
   margin-bottom: 25px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 }
+
+/* =====================================================
+   REPORT CARD HEADER
+===================================================== */
 
 .report-card-header {
   display: flex;
@@ -63,7 +91,9 @@
   color: #6b7280;
 }
 
-/* Form */
+/* =====================================================
+   EXAM FORM
+===================================================== */
 
 .report-form {
   display: flex;
@@ -89,15 +119,11 @@
   border-radius: 8px;
   padding: 0 14px;
   font-size: 14px;
-  background-color: #fff;
+  background: #ffffff;
   color: #1f2937;
   outline: none;
   cursor: pointer;
-}
-
-.report-input-group select option {
-  background-color: #fff;
-  color: #1f2937;
+  box-sizing: border-box;
 }
 
 .report-input-group select:focus {
@@ -105,6 +131,9 @@
   box-shadow: 0 0 0 2px rgba(53, 199, 154, 0.1);
 }
 
+/* =====================================================
+   VIEW REPORT BUTTON
+===================================================== */
 
 .view-report-btn {
   height: 45px;
@@ -112,7 +141,7 @@
   border: none;
   border-radius: 8px;
   background: linear-gradient(135deg, #35c79a, #5ed9b3);
-  color: white;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -120,16 +149,18 @@
 
 .view-report-btn:hover {
   transform: translateY(-2px);
-
   box-shadow: 0 10px 25px rgba(53, 199, 154, 0.3);
 }
 
 .view-report-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Report Header */
+/* =====================================================
+   TOP STUDENTS HEADER
+===================================================== */
 
 .top-students-header {
   display: flex;
@@ -147,11 +178,16 @@
 .top-students-header p {
   margin: 6px 0 0;
   color: #6b7280;
+  font-size: 14px;
 }
+
+/* =====================================================
+   PRINT BUTTON
+===================================================== */
 
 .print-btn {
   border: 1px solid #d1d5db;
-  background: white;
+  background: #ffffff;
   padding: 9px 16px;
   border-radius: 7px;
   cursor: pointer;
@@ -162,7 +198,9 @@
   background: #f3f4f6;
 }
 
-/* Table */
+/* =====================================================
+   REPORT TABLE
+===================================================== */
 
 .report-table-wrapper {
   overflow-x: auto;
@@ -194,7 +232,9 @@
   background: #fafafa;
 }
 
-/* Rank */
+/* =====================================================
+   RANK
+===================================================== */
 
 .rank {
   width: 32px;
@@ -219,7 +259,9 @@
   background: #f3d6b3;
 }
 
-/* Pass */
+/* =====================================================
+   RESULT BADGES
+===================================================== */
 
 .pass-badge {
   display: inline-block;
@@ -231,7 +273,19 @@
   font-weight: 600;
 }
 
-/* Summary */
+.fail-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   NEW SUMMARY
+===================================================== */
 
 .report-summary {
   display: flex;
@@ -241,10 +295,25 @@
 
 .summary-box {
   flex: 1;
-  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px;
   border-radius: 10px;
   background: #f8fafc;
   border: 1px solid #eef0f2;
+}
+
+.summary-icon {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #eee9ff;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
 .summary-box span {
@@ -255,19 +324,38 @@
 }
 
 .summary-box strong {
+  display: block;
   font-size: 22px;
   color: #1f2937;
 }
 
-/* No Results */
+/* =====================================================
+   NO RESULTS
+===================================================== */
 
 .no-results {
-  padding: 35px;
+  padding: 40px 20px;
   text-align: center;
   color: #6b7280;
 }
 
-/* Responsive */
+.no-results-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.no-results h3 {
+  margin: 5px 0;
+  color: #374151;
+}
+
+.no-results p {
+  margin: 5px 0;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media (max-width: 900px) {
   .reports-page {
@@ -288,9 +376,21 @@
   .report-summary {
     flex-direction: column;
   }
+
+  .top-students-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .print-btn {
+    width: 100%;
+  }
 }
 
-/* Print */
+/* =====================================================
+   PRINT
+===================================================== */
 
 @media print {
   .admin-header,
@@ -304,9 +404,15 @@
     width: 100%;
     margin: 0;
     padding: 20px;
+    background: #ffffff;
   }
 
   .top-students-card {
     box-shadow: none;
+    padding: 0;
+  }
+
+  .report-summary {
+    margin-top: 20px;
   }
 }

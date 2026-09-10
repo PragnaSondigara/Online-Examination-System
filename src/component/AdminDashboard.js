@@ -7,49 +7,31 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState({
-    students: 0,
-    faculty: 0,
-    subjects: 0,
-    exams: 0,
-  });
+  const [studentCount, setStudentCount] = useState(0);
+  const [facultyCount, setFacultyCount] = useState(0);
+  const [subjectCount, setSubjectCount] = useState(0);
+  const [examCount, setExamCount] = useState(0);
 
-  // Dynamic statistics
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchData = async () => {
       try {
-        // Total Students
-        const studentRes = await axios.get(
-          "http://localhost:5000/tbl_student"
-        );
+        const studentRes = await axios.get("http://localhost:5000/tbl_student");
+        setStudentCount(studentRes.data.length);
 
-        // Total Faculty
-        const facultyRes = await axios.get(
-          "http://localhost:5000/tbl_faculty"
-        );
+        const facultyRes = await axios.get("http://localhost:5000/tbl_faculty");
+        setFacultyCount(facultyRes.data.length);
 
-        // Total Subjects
-        const subjectRes = await axios.get(
-          "http://localhost:5000/tbl_subject"
-        );
+        const subjectRes = await axios.get("http://localhost:5000/tbl_subject");
+        setSubjectCount(subjectRes.data.length);
 
-        // Total Exams
-        const examRes = await axios.get(
-          "http://localhost:5000/tbl_exam"
-        );
-
-        setStats({
-          students: studentRes.data.length,
-          faculty: facultyRes.data.length,
-          subjects: subjectRes.data.length,
-          exams: examRes.data.length,
-        });
+        const examRes = await axios.get("http://localhost:5000/tbl_exam");
+        setExamCount(examRes.data.length);
       } catch (error) {
-        console.error("Error fetching dashboard statistics:", error);
+        console.error("Error fetching dashboard data:", error);
       }
     };
 
-    fetchStats();
+    fetchData();
   }, []);
 
   return (

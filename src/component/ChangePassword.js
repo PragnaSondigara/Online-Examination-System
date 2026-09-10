@@ -2,21 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ChangePassword.css";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ChangePassword() {
   const navigate = useNavigate();
-
-  // =========================================
-  // LOGIN USER DATA
-  // =========================================
-
-  const username = localStorage.getItem("username") || "";
-  const role = localStorage.getItem("role") || "";
-
-  // =========================================
-  // PASSWORD STATES
-  // =========================================
-
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,185 +16,117 @@ function ChangePassword() {
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  // =========================================
-  // GET TABLE NAME
-  // =========================================
-
-  const getTableName = () => {
-    if (role === "Administrator") {
-      return "tbl_admin";
-    }
-
-    if (role === "Faculty") {
-      return "tbl_faculty";
-    }
-
-    if (role === "Student") {
-      return "tbl_student";
-    }
-
-    return "";
-  };
-
-  // =========================================
-  // GET NAME FIELD
-  // =========================================
-
-  const getNameField = () => {
-    if (role === "Administrator") {
-      return "admin_name";
-    }
-
-    if (role === "Faculty") {
-      return "faculty_name";
-    }
-
-    if (role === "Student") {
-      return "student_name";
-    }
-
-    return "";
-  };
-
-  // =========================================
-  // CHANGE PASSWORD
-  // =========================================
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
 
-    // =========================================
-    // CHECK LOGIN
-    // =========================================
+    setMessage("");
+    setError("");
 
-    if (!username || !role) {
-      alert("User is not logged in.");
+    const role = localStorage.getItem("role");
+    const studentId = localStorage.getItem("studentId");
+    const facultyId = localStorage.getItem("facultyId");
+    const username = localStorage.getItem("username");
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setError("Please fill all fields.");
       return;
     }
-
-    // =========================================
-    // CHECK FIELDS
-    // =========================================
-
-    if (
-      !currentPassword ||
-      !newPassword ||
-      !confirmPassword
-    ) {
-      alert("Please fill all password fields.");
-      return;
-    }
-
-    // =========================================
-    // PASSWORD LENGTH
-    // =========================================
-
-    if (newPassword.length < 6) {
-      alert("New password must be at least 6 characters.");
-      return;
-    }
-
-    // =========================================
-    // CONFIRM PASSWORD
-    // =========================================
 
     if (newPassword !== confirmPassword) {
-      alert(
-        "New password and confirm password do not match."
-      );
+      setError("New password and confirm password do not match.");
       return;
     }
 
-    // =========================================
-    // SAME PASSWORD
-    // =========================================
-
-    if (currentPassword === newPassword) {
-      alert(
-        "New password must be different from current password."
-      );
+    if (newPassword === currentPassword) {
+      setError("New password must be different from current password.");
       return;
     }
 
     try {
-      const tableName = getTableName();
-      const nameField = getNameField();
+      let url = "";
+      let user = null;
 
-      // =========================================
-      // CHECK ROLE
-      // =========================================
+      // Student
+      if (role === "Student") {
+        const res = await axios.get(
+          `http://localhost:5000/tbl_student?id=${studentId}`,
+        );
 
-      if (!tableName || !nameField) {
-        alert("Invalid user role.");
-        return;
-      }
-
-      // =========================================
-      // FIND LOGGED-IN USER
-      // =========================================
-
-      const response = await axios.get(
-        `http://localhost:5000/${tableName}?${nameField}=${encodeURIComponent(
-          username
-        )}`
-      );
-
-      // =========================================
-      // USER NOT FOUND
-      // =========================================
-
-      if (response.data.length === 0) {
-        alert("User account not found.");
-        return;
-      }
-
-      const user = response.data[0];
-
-      // =========================================
-      // CHECK CURRENT PASSWORD
-      // =========================================
-
-      if (user.password !== currentPassword) {
-        alert("Current password is incorrect.");
-        return;
-      }
-
-      // =========================================
-      // UPDATE PASSWORD
-      // =========================================
-
-      await axios.patch(
-        `http://localhost:5000/${tableName}/${user.id}`,
-        {
-          password: newPassword,
+        if (res.data.length === 0) {
+          setError("Student not found.");
+          return;
         }
-      );
 
-      // =========================================
-      // SUCCESS
-      // =========================================
+        user = res.data[0];
+        url = `http://localhost:5000/tbl_student/${studentId}`;
+      }
 
-      alert("Password changed successfully!");
+      // Faculty
+      else if (role === "Faculty") {
+        const res = await axios.get(
+          `http://localhost:5000/tbl_faculty?id=${facultyId}`,
+        );
 
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+        if (res.data.length === 0) {
+          setError("Faculty not found.");
+          return;
+        }
 
-      navigate("/Settings");
+        user = res.data[0];
+        url = `http://localhost:5000/tbl_faculty/${facultyId}`;
+      }
 
+      // Admin
+      else if (role === "Administrator") {
+        const res = await axios.get(
+          `http://localhost:5000/tbl_admin?admin_name=${username}`,
+        );
+
+        if (res.data.length === 0) {
+          setError("Admin not found.");
+          return;
+        }
+
+        user = res.data[0];
+        url = `http://localhost:5000/tbl_admin/${user.id}`;
+      } else {
+        setError("Invalid user role.");
+        return;
+      }
+
+      // Check current password
+      if (user.password !== currentPassword) {
+        setError("Current password is incorrect.");
+        return;
+      }
+
+      // Update password
+      const updateRes = await axios.patch(url, {
+        password: newPassword,
+      });
+
+      // Successfully updated
+      if (updateRes.status === 200) {
+        alert("Password updated successfully. Please login again.");
+
+        // Logout current user
+        localStorage.removeItem("auth");
+        localStorage.removeItem("username");
+        localStorage.removeItem("role");
+        localStorage.removeItem("studentId");
+        localStorage.removeItem("facultyId");
+
+        // Go to Login Page
+        navigate("/");
+      }
     } catch (error) {
-      console.error(
-        "Change password error:",
-        error
-      );
-
-      alert("Unable to change password.");
+      console.error("Change password error:", error);
+      setError("Something went wrong. Please try again.");
     }
   };
-
-  // =========================================
-  // PAGE
-  // =========================================
 
   return (
     <div className="change-password-page">
@@ -240,140 +163,90 @@ function ChangePassword() {
               CURRENT PASSWORD
           ================================= */}
 
-          <div className="form-group">
+          {/* Success Message */}
+          {message && (
+            <p style={{ color: "green", marginBottom: "15px" }}>{message}</p>
+          )}
 
-            <label>
-              Current Password
-            </label>
+          {/* Error Message */}
+          {error && (
+            <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>
+          )}
 
-            <div className="password-input">
+          <form onSubmit={handleChangePassword}>
+            {/* Current Password */}
+            <div className="form-group">
+              <label>Current Password</label>
 
-              <span>🔒</span>
+              <div className="password-input">
+                <span>🔒</span>
 
-              <input
-                type={
-                  showCurrent
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Enter current password"
-                value={currentPassword}
-                onChange={(e) =>
-                  setCurrentPassword(e.target.value)
-                }
-              />
+                <input
+                  type={showCurrent ? "text" : "password"}
+                  placeholder="Enter current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
 
-              <span
-                onClick={() =>
-                  setShowCurrent(!showCurrent)
-                }
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                {showCurrent ? "🙈" : "👁"}
-              </span>
-
+                <span
+                  onClick={() => setShowCurrent(!showCurrent)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {showCurrent ? "🙈" : "👁"}
+                </span>
+              </div>
             </div>
 
-          </div>
+            {/* New Password */}
+            <div className="form-group">
+              <label>New Password</label>
 
-          {/* =================================
-              NEW PASSWORD
-          ================================= */}
+              <div className="password-input">
+                <span>🔒</span>
 
-          <div className="form-group">
+                <input
+                  type={showNew ? "text" : "password"}
+                  placeholder="Enter new password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
 
-            <label>
-              New Password
-            </label>
-
-            <div className="password-input">
-
-              <span>🔒</span>
-
-              <input
-                type={
-                  showNew
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Enter new password"
-                value={newPassword}
-                onChange={(e) =>
-                  setNewPassword(e.target.value)
-                }
-              />
-
-              <span
-                onClick={() =>
-                  setShowNew(!showNew)
-                }
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                {showNew ? "🙈" : "👁"}
-              </span>
-
+                <span
+                  onClick={() => setShowNew(!showNew)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {showNew ? "🙈" : "👁"}
+                </span>
+              </div>
             </div>
 
-          </div>
+            {/* Confirm Password */}
+            <div className="form-group">
+              <label>Confirm New Password</label>
 
-          {/* =================================
-              CONFIRM PASSWORD
-          ================================= */}
+              <div className="password-input">
+                <span>🔒</span>
 
-          <div className="form-group">
+                <input
+                  type={showConfirm ? "text" : "password"}
+                  placeholder="Confirm new password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
 
-            <label>
-              Confirm New Password
-            </label>
-
-            <div className="password-input">
-
-              <span>🔒</span>
-
-              <input
-                type={
-                  showConfirm
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Confirm new password"
-                value={confirmPassword}
-                onChange={(e) =>
-                  setConfirmPassword(e.target.value)
-                }
-              />
-
-              <span
-                onClick={() =>
-                  setShowConfirm(!showConfirm)
-                }
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                {showConfirm ? "🙈" : "👁"}
-              </span>
-
+                <span
+                  onClick={() => setShowConfirm(!showConfirm)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {showConfirm ? "🙈" : "👁"}
+                </span>
+              </div>
             </div>
 
-          </div>
-
-          {/* =================================
-              BUTTON
-          ================================= */}
-
-          <button
-            type="button"
-            className="update-password-btn"
-            onClick={handleChangePassword}
-          >
-            Update Password
-          </button>
-
+            <button type="submit" className="update-password-btn">
+              Update Password
+            </button>
+          </form>
         </div>
 
       </div>

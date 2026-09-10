@@ -158,7 +158,7 @@
       "end_time": "09:30",
       "passing_marks": 40,
       "total_marks": 100,
-      "is_active": false,
+      "is_active": true,
       "id": "4N13Az-kRhg"
     },
     {
@@ -220,30 +220,6 @@
       "submitted_at": "2026-09-07T06:20:29.859Z",
       "status": "Completed",
       "id": "9gqjCVDCaTw"
-    },
-    {
-      "student_id": "07_oxDWigzY",
-      "exam_id": "ui_2F3xzuAg",
-      "started_at": "2026-09-07T06:20:01.646Z",
-      "submitted_at": null,
-      "status": "Started",
-      "id": "ZXjq2-Omg9A"
-    },
-    {
-      "student_id": "-AnWpEM837k",
-      "exam_id": "ui_2F3xzuAg",
-      "started_at": "2026-09-09T16:34:40.911Z",
-      "submitted_at": null,
-      "status": "Started",
-      "id": "B15X_NbaqzY"
-    },
-    {
-      "student_id": "-AnWpEM837k",
-      "exam_id": "ui_2F3xzuAg",
-      "started_at": "2026-09-09T16:34:40.913Z",
-      "submitted_at": null,
-      "status": "Started",
-      "id": "eXHoHiK3xA0"
     }
   ],
   "tbl_student_answer": [
