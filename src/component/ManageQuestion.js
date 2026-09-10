@@ -27,8 +27,26 @@ export default function ManageQuestion() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedExam, setSelectedExam] = useState("all");
 
+  // Add question modal only
   const [showAddQuestion, setShowAddQuestion] = useState(false);
-  const [editingQuestion, setEditingQuestion] = useState(null);
+
+  // =====================================================
+  // INLINE EDIT STATE
+  // =====================================================
+
+  const [editingId, setEditingId] = useState(null);
+
+  const [editQuestion, setEditQuestion] = useState({
+    exam_id: "",
+    question: "",
+    option_a: "",
+    option_b: "",
+    option_c: "",
+    option_d: "",
+    correct_answer: "",
+    marks: 2,
+    question_type: "MCQ",
+  });
 
   // =====================================================
   // GET LOGGED-IN FACULTY ID
@@ -109,7 +127,8 @@ export default function ManageQuestion() {
       );
 
       const facultyExams = allExams.filter((exam) => {
-        const correctFaculty = String(exam.faculty_id) === String(faculty.id);
+        const correctFaculty =
+          String(exam.faculty_id) === String(faculty.id);
 
         const correctSubject = facultySubjectIds.includes(
           String(exam.subject_id),
@@ -124,11 +143,15 @@ export default function ManageQuestion() {
       // 4. GET QUESTIONS
       // -------------------------------------------------
 
-      const questionResponse = await axios.get(`${API_URL}/tbl_question`);
+      const questionResponse = await axios.get(
+        `${API_URL}/tbl_question`,
+      );
 
       const allQuestions = questionResponse.data;
 
-      const facultyExamIds = facultyExams.map((exam) => String(exam.id));
+      const facultyExamIds = facultyExams.map((exam) =>
+        String(exam.id),
+      );
 
       const facultyQuestions = allQuestions.filter((question) =>
         facultyExamIds.includes(String(question.exam_id)),
@@ -140,15 +163,20 @@ export default function ManageQuestion() {
     } catch (err) {
       console.error(err);
 
-      // Axios error handling
       if (err.response) {
         setError(
-          err.response.data?.message || "Server error. Unable to load data.",
+          err.response.data?.message ||
+            "Server error. Unable to load data.",
         );
       } else if (err.request) {
-        setError("JSON Server is not running. Please start JSON Server.");
+        setError(
+          "JSON Server is not running. Please start JSON Server.",
+        );
       } else {
-        setError(err.message || "Unable to load data. Check JSON Server.");
+        setError(
+          err.message ||
+            "Unable to load data. Check JSON Server.",
+        );
       }
     } finally {
       setLoading(false);
@@ -160,7 +188,9 @@ export default function ManageQuestion() {
   // =====================================================
 
   const getExam = (examId) => {
-    return exams.find((exam) => String(exam.id) === String(examId));
+    return exams.find(
+      (exam) => String(exam.id) === String(examId),
+    );
   };
 
   // =====================================================
@@ -168,7 +198,9 @@ export default function ManageQuestion() {
   // =====================================================
 
   const getSubject = (subjectId) => {
-    return subjects.find((subject) => String(subject.id) === String(subjectId));
+    return subjects.find(
+      (subject) => String(subject.id) === String(subjectId),
+    );
   };
 
   // =====================================================
@@ -182,14 +214,13 @@ export default function ManageQuestion() {
       return false;
     }
 
-    // Check faculty
     if (String(exam.faculty_id) !== String(facultyId)) {
       return false;
     }
 
-    // Check subject
     const subjectExists = subjects.some(
-      (subject) => String(subject.id) === String(exam.subject_id),
+      (subject) =>
+        String(subject.id) === String(exam.subject_id),
     );
 
     return subjectExists;
@@ -200,7 +231,6 @@ export default function ManageQuestion() {
   // =====================================================
 
   const handleAddQuestion = () => {
-    setEditingQuestion(null);
     setMessage("");
     setError("");
 
@@ -208,34 +238,290 @@ export default function ManageQuestion() {
   };
 
   // =====================================================
-  // EDIT QUESTION
+  // START INLINE EDIT
   // =====================================================
 
   const handleEdit = (question) => {
     setMessage("");
     setError("");
 
+    // Security check
     if (!isExamAllowed(question.exam_id)) {
-      setError("You can only edit questions from your assigned subjects.");
+      setError(
+        "You can only edit questions from your assigned subjects.",
+      );
 
       return;
     }
 
-    setEditingQuestion(question);
-    setShowAddQuestion(true);
+    setEditingId(question.id);
+
+    setEditQuestion({
+      exam_id: question.exam_id || "",
+      question: question.question || "",
+      option_a: question.option_a || "",
+      option_b: question.option_b || "",
+      option_c: question.option_c || "",
+      option_d: question.option_d || "",
+      correct_answer: question.correct_answer || "",
+      marks:
+        question.marks !== undefined
+          ? question.marks
+          : 2,
+      question_type:
+        question.question_type || "MCQ",
+    });
   };
 
   // =====================================================
-  // CLOSE MODAL
+  // HANDLE INLINE INPUT
   // =====================================================
 
-  const closeQuestionModal = () => {
-    setShowAddQuestion(false);
-    setEditingQuestion(null);
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+
+    // Question type changed
+    if (name === "question_type") {
+      setEditQuestion((prev) => ({
+        ...prev,
+        question_type: value,
+
+        // Clear MCQ values when changing type
+        option_a: "",
+        option_b: "",
+        option_c: "",
+        option_d: "",
+
+        correct_answer: "",
+      }));
+
+      setError("");
+
+      return;
+    }
+
+    setEditQuestion((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setError("");
   };
 
   // =====================================================
-  // SAVE QUESTION
+  // CANCEL INLINE EDIT
+  // =====================================================
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+
+    setEditQuestion({
+      exam_id: "",
+      question: "",
+      option_a: "",
+      option_b: "",
+      option_c: "",
+      option_d: "",
+      correct_answer: "",
+      marks: 2,
+      question_type: "MCQ",
+    });
+
+    setError("");
+  };
+
+  // =====================================================
+  // VALIDATE EDIT
+  // =====================================================
+
+  const validateEditQuestion = () => {
+    if (!editQuestion.exam_id) {
+      setError("Please select an exam.");
+      return false;
+    }
+
+    if (!editQuestion.question.trim()) {
+      setError("Please enter the question.");
+      return false;
+    }
+
+    if (
+      editQuestion.marks === "" ||
+      Number(editQuestion.marks) <= 0
+    ) {
+      setError("Marks must be greater than 0.");
+      return false;
+    }
+
+    // MCQ validation
+    if (editQuestion.question_type === "MCQ") {
+      if (!editQuestion.option_a.trim()) {
+        setError("Please enter Option A.");
+        return false;
+      }
+
+      if (!editQuestion.option_b.trim()) {
+        setError("Please enter Option B.");
+        return false;
+      }
+
+      if (!editQuestion.option_c.trim()) {
+        setError("Please enter Option C.");
+        return false;
+      }
+
+      if (!editQuestion.option_d.trim()) {
+        setError("Please enter Option D.");
+        return false;
+      }
+
+      if (
+        !["A", "B", "C", "D"].includes(
+          editQuestion.correct_answer,
+        )
+      ) {
+        setError("Please select the correct answer.");
+        return false;
+      }
+    }
+
+    // True / False validation
+    if (editQuestion.question_type === "True/False") {
+      if (
+        !["True", "False"].includes(
+          editQuestion.correct_answer,
+        )
+      ) {
+        setError("Please select True or False.");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  // =====================================================
+  // SAVE INLINE EDIT
+  // =====================================================
+
+  const handleSaveEdit = async (id) => {
+    setMessage("");
+    setError("");
+
+    if (!validateEditQuestion()) {
+      return;
+    }
+
+    // Security check
+    if (!isExamAllowed(editQuestion.exam_id)) {
+      setError(
+        "You can only update questions from your assigned subjects.",
+      );
+
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const oldQuestion = questions.find(
+        (item) => String(item.id) === String(id),
+      );
+
+      if (!oldQuestion) {
+        throw new Error("Question not found.");
+      }
+
+      // -------------------------------------------------
+      // CREATE UPDATED QUESTION
+      // -------------------------------------------------
+
+      const updatedQuestion = {
+        ...oldQuestion,
+
+        exam_id: editQuestion.exam_id,
+
+        question: editQuestion.question.trim(),
+
+        option_a:
+          editQuestion.question_type === "MCQ"
+            ? editQuestion.option_a.trim()
+            : "True",
+
+        option_b:
+          editQuestion.question_type === "MCQ"
+            ? editQuestion.option_b.trim()
+            : "False",
+
+        option_c:
+          editQuestion.question_type === "MCQ"
+            ? editQuestion.option_c.trim()
+            : "",
+
+        option_d:
+          editQuestion.question_type === "MCQ"
+            ? editQuestion.option_d.trim()
+            : "",
+
+        correct_answer: editQuestion.correct_answer,
+
+        marks: Number(editQuestion.marks),
+
+        question_type: editQuestion.question_type,
+      };
+
+      // -------------------------------------------------
+      // UPDATE JSON SERVER
+      // -------------------------------------------------
+
+      const response = await axios.put(
+        `${API_URL}/tbl_question/${id}`,
+        updatedQuestion,
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to update question.");
+      }
+
+      // -------------------------------------------------
+      // UPDATE TABLE DIRECTLY
+      // -------------------------------------------------
+
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          String(question.id) === String(id)
+            ? updatedQuestion
+            : question,
+        ),
+      );
+
+      setMessage("Question updated successfully.");
+
+      // Exit edit mode
+      handleCancelEdit();
+    } catch (err) {
+      console.error(err);
+
+      if (err.response) {
+        setError(
+          err.response.data?.message ||
+            "Server error. Unable to update question.",
+        );
+      } else if (err.request) {
+        setError("JSON Server is not running.");
+      } else {
+        setError(
+          err.message ||
+            "Unable to update question.",
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // =====================================================
+  // ADD QUESTION FROM MODAL
   // =====================================================
 
   const handleSaveQuestion = async (formData) => {
@@ -244,132 +530,89 @@ export default function ManageQuestion() {
       setError("");
       setMessage("");
 
-      // Check exam
       if (!formData.exam_id) {
         throw new Error("Please select an exam.");
       }
 
-      // Security check
       if (!isExamAllowed(formData.exam_id)) {
         throw new Error(
           "You can only add questions to your assigned subjects.",
         );
       }
 
-      // =================================================
-      // UPDATE
-      // =================================================
+      const newQuestion = {
+        exam_id: formData.exam_id,
 
-      if (editingQuestion) {
-        if (!isExamAllowed(editingQuestion.exam_id)) {
-          throw new Error("You are not allowed to edit this question.");
-        }
+        question: formData.question.trim(),
 
-        const updatedQuestion = {
-          ...editingQuestion,
+        option_a:
+          formData.question_type === "MCQ"
+            ? formData.option_a.trim()
+            : "True",
 
-          exam_id: formData.exam_id,
+        option_b:
+          formData.question_type === "MCQ"
+            ? formData.option_b.trim()
+            : "False",
 
-          question: formData.question.trim(),
+        option_c:
+          formData.question_type === "MCQ"
+            ? formData.option_c.trim()
+            : "",
 
-          option_a:
-            formData.question_type === "MCQ"
-              ? formData.option_a.trim()
-              : "True",
+        option_d:
+          formData.question_type === "MCQ"
+            ? formData.option_d.trim()
+            : "",
 
-          option_b:
-            formData.question_type === "MCQ"
-              ? formData.option_b.trim()
-              : "False",
+        correct_answer: formData.correct_answer,
 
-          option_c:
-            formData.question_type === "MCQ" ? formData.option_c.trim() : "",
+        marks: Number(formData.marks),
 
-          option_d:
-            formData.question_type === "MCQ" ? formData.option_d.trim() : "",
+        question_type: formData.question_type,
+      };
 
-          correct_answer: formData.correct_answer,
+      const response = await axios.post(
+        `${API_URL}/tbl_question`,
+        newQuestion,
+      );
 
-          marks: Number(formData.marks),
-
-          question_type: formData.question_type,
-        };
-
-        // Axios PUT
-        const response = await axios.put(
-          `${API_URL}/tbl_question/${editingQuestion.id}`,
-          updatedQuestion,
-        );
-
-        if (response.status !== 200) {
-          throw new Error("Failed to update question.");
-        }
-
-        setMessage("Question updated successfully.");
+      if (response.status !== 201) {
+        throw new Error("Failed to add question.");
       }
 
-      // =================================================
-      // ADD
-      // =================================================
-      else {
-        const newQuestion = {
-          exam_id: formData.exam_id,
+      setMessage("Question added successfully.");
 
-          question: formData.question.trim(),
+      setShowAddQuestion(false);
 
-          option_a:
-            formData.question_type === "MCQ"
-              ? formData.option_a.trim()
-              : "True",
-
-          option_b:
-            formData.question_type === "MCQ"
-              ? formData.option_b.trim()
-              : "False",
-
-          option_c:
-            formData.question_type === "MCQ" ? formData.option_c.trim() : "",
-
-          option_d:
-            formData.question_type === "MCQ" ? formData.option_d.trim() : "",
-
-          correct_answer: formData.correct_answer,
-
-          marks: Number(formData.marks),
-
-          question_type: formData.question_type,
-        };
-
-        // Axios POST
-        const response = await axios.post(
-          `${API_URL}/tbl_question`,
-          newQuestion,
-        );
-
-        if (response.status !== 201) {
-          throw new Error("Failed to add question.");
-        }
-
-        setMessage("Question added successfully.");
-      }
-
-      closeQuestionModal();
-
-      // Refresh data
       await fetchData(facultyId);
     } catch (err) {
       console.error(err);
 
       if (err.response) {
-        setError(err.response.data?.message || "Server error.");
+        setError(
+          err.response.data?.message ||
+            "Server error.",
+        );
       } else if (err.request) {
         setError("JSON Server is not running.");
       } else {
-        setError(err.message || "Something went wrong.");
+        setError(
+          err.message ||
+            "Something went wrong.",
+        );
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  // =====================================================
+  // CLOSE ADD MODAL
+  // =====================================================
+
+  const closeQuestionModal = () => {
+    setShowAddQuestion(false);
   };
 
   // =====================================================
@@ -380,16 +623,19 @@ export default function ManageQuestion() {
     setMessage("");
     setError("");
 
-    const question = questions.find((item) => String(item.id) === String(id));
+    const question = questions.find(
+      (item) => String(item.id) === String(id),
+    );
 
     if (!question) {
       setError("Question not found.");
       return;
     }
 
-    // Security check
     if (!isExamAllowed(question.exam_id)) {
-      setError("You can only delete questions from your assigned subjects.");
+      setError(
+        "You can only delete questions from your assigned subjects.",
+      );
 
       return;
     }
@@ -405,26 +651,36 @@ export default function ManageQuestion() {
     try {
       setLoading(true);
 
-      // Axios DELETE
-      const response = await axios.delete(`${API_URL}/tbl_question/${id}`);
+      const response = await axios.delete(
+        `${API_URL}/tbl_question/${id}`,
+      );
 
       if (response.status !== 200) {
         throw new Error("Failed to delete question.");
       }
 
-      setMessage("Question deleted successfully.");
+      setQuestions((prevQuestions) =>
+        prevQuestions.filter(
+          (item) => String(item.id) !== String(id),
+        ),
+      );
 
-      // Refresh data
-      await fetchData(facultyId);
+      setMessage("Question deleted successfully.");
     } catch (err) {
       console.error(err);
 
       if (err.response) {
-        setError(err.response.data?.message || "Server error.");
+        setError(
+          err.response.data?.message ||
+            "Server error.",
+        );
       } else if (err.request) {
         setError("JSON Server is not running.");
       } else {
-        setError(err.message || "Unable to delete question.");
+        setError(
+          err.message ||
+            "Unable to delete question.",
+        );
       }
     } finally {
       setLoading(false);
@@ -435,23 +691,38 @@ export default function ManageQuestion() {
   // SEARCH + FILTER
   // =====================================================
 
-  const filteredQuestions = questions.filter((question) => {
-    const search = searchTerm.toLowerCase().trim();
+  const filteredQuestions = questions.filter(
+    (question) => {
+      const search = searchTerm
+        .toLowerCase()
+        .trim();
 
-    const matchesSearch =
-      !search ||
-      question.question?.toLowerCase().includes(search) ||
-      question.option_a?.toLowerCase().includes(search) ||
-      question.option_b?.toLowerCase().includes(search) ||
-      question.option_c?.toLowerCase().includes(search) ||
-      question.option_d?.toLowerCase().includes(search);
+      const matchesSearch =
+        !search ||
+        question.question
+          ?.toLowerCase()
+          .includes(search) ||
+        question.option_a
+          ?.toLowerCase()
+          .includes(search) ||
+        question.option_b
+          ?.toLowerCase()
+          .includes(search) ||
+        question.option_c
+          ?.toLowerCase()
+          .includes(search) ||
+        question.option_d
+          ?.toLowerCase()
+          .includes(search);
 
-    const matchesExam =
-      selectedExam === "all" ||
-      String(question.exam_id) === String(selectedExam);
+      const matchesExam =
+        selectedExam === "all" ||
+        String(question.exam_id) ===
+          String(selectedExam);
 
-    return matchesSearch && matchesExam;
-  });
+      return matchesSearch && matchesExam;
+    },
+  );
 
   // =====================================================
   // JSX
@@ -464,262 +735,699 @@ export default function ManageQuestion() {
       <Header />
 
       <div className="manage-question">
-        {/* PAGE HEADER */}
+
+        {/* =================================================
+            PAGE HEADER
+        ================================================= */}
 
         <div className="page-header">
+
           <div>
+
             <h1>Manage Questions</h1>
 
-            <p>View, add, edit and manage your exam questions.</p>
-
-            {/* ASSIGNED SUBJECTS */}
+            <p>
+              View, add, edit and manage your exam questions.
+            </p>
 
             {subjects.length > 0 && (
               <div className="assigned-subject">
+
                 Assigned Subjects:
+
                 {subjects.map((subject) => (
-                  <strong key={subject.id}> {subject.subject_name}</strong>
+                  <strong key={subject.id}>
+                    {" "}
+                    {subject.subject_name}
+                  </strong>
                 ))}
+
               </div>
             )}
+
           </div>
 
           <button
             type="button"
             className="add-question-btn"
             onClick={handleAddQuestion}
-            disabled={loading || subjects.length === 0 || exams.length === 0}
+            disabled={
+              loading ||
+              subjects.length === 0 ||
+              exams.length === 0
+            }
           >
             <span className="plus-icon">+</span>
             Add Question
           </button>
+
         </div>
 
-        {/* SUCCESS MESSAGE */}
+        {/* =================================================
+            SUCCESS MESSAGE
+        ================================================= */}
 
         {message && (
           <div className="success-message">
+
             <span>{message}</span>
 
-            <button type="button" onClick={() => setMessage("")}>
+            <button
+              type="button"
+              onClick={() => setMessage("")}
+            >
               ×
             </button>
+
           </div>
         )}
 
-        {/* ERROR MESSAGE */}
+        {/* =================================================
+            ERROR MESSAGE
+        ================================================= */}
 
         {error && (
           <div className="error-message">
+
             <span>{error}</span>
 
-            <button type="button" onClick={() => setError("")}>
+            <button
+              type="button"
+              onClick={() => setError("")}
+            >
               ×
             </button>
+
           </div>
         )}
 
-        {/* QUESTION LIST */}
+        {/* =================================================
+            QUESTION LIST
+        ================================================= */}
 
         <div className="question-list-card">
+
           <div className="list-header">
+
             <div>
+
               <h2>Question List</h2>
 
               <span className="question-total">
                 {questions.length} questions found
               </span>
+
             </div>
 
             <div className="filters">
+
               <span>⌕</span>
 
               <input
                 type="text"
                 placeholder="Search questions..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) =>
+                  setSearchTerm(e.target.value)
+                }
               />
 
               <select
                 value={selectedExam}
-                onChange={(e) => setSelectedExam(e.target.value)}
+                onChange={(e) =>
+                  setSelectedExam(e.target.value)
+                }
               >
-                <option value="all">All Exams</option>
+
+                <option value="all">
+                  All Exams
+                </option>
 
                 {exams.map((exam) => {
-                  const subject = getSubject(exam.subject_id);
+
+                  const subject =
+                    getSubject(exam.subject_id);
 
                   return (
-                    <option key={exam.id} value={exam.id}>
-                      {subject?.subject_name || "Unknown Subject"} - {exam.date}
+                    <option
+                      key={exam.id}
+                      value={exam.id}
+                    >
+                      {subject?.subject_name ||
+                        "Unknown Subject"}{" "}
+                      - {exam.date}
                     </option>
                   );
+
                 })}
+
               </select>
+
             </div>
+
           </div>
 
-          {/* LOADING */}
+          {/* =================================================
+              LOADING
+          ================================================= */}
 
           {loading && questions.length === 0 ? (
-            <div className="loading">Loading questions...</div>
+
+            <div className="loading">
+              Loading questions...
+            </div>
+
           ) : filteredQuestions.length === 0 ? (
+
             <div className="no-data">
+
               {questions.length === 0
                 ? "No questions available for your assigned subjects."
                 : "No questions found."}
+
             </div>
+
           ) : (
+
             <div className="question-table-wrapper">
+
               <table className="question-table">
+
                 <thead>
+
                   <tr>
+
                     <th>#</th>
+
                     <th>Question</th>
+
                     <th>Options</th>
+
                     <th>Correct</th>
+
                     <th>Marks</th>
+
                     <th>Exam Details</th>
+
                     <th>Actions</th>
+
                   </tr>
+
                 </thead>
 
                 <tbody>
-                  {filteredQuestions.map((question, index) => {
-                    const exam = getExam(question.exam_id);
 
-                    const subject = exam ? getSubject(exam.subject_id) : null;
+                  {filteredQuestions.map(
+                    (question, index) => {
 
-                    const isTrueFalse = question.question_type === "True/False";
+                      const exam =
+                        getExam(question.exam_id);
 
-                    return (
-                      <tr key={question.id}>
-                        {/* NUMBER */}
+                      const subject = exam
+                        ? getSubject(exam.subject_id)
+                        : null;
 
-                        <td>{index + 1}</td>
+                      const isTrueFalse =
+                        question.question_type ===
+                        "True/False";
 
-                        {/* QUESTION */}
+                      const isEditing =
+                        String(editingId) ===
+                        String(question.id);
 
-                        <td>
-                          <div className="question-text">
-                            {question.question}
-                          </div>
+                      return (
 
-                          <span className="type-badge">
-                            {question.question_type || "MCQ"}
-                          </span>
-                        </td>
+                        <tr key={question.id}>
 
-                        {/* OPTIONS */}
+                          {/* NUMBER */}
 
-                        <td>
-                          <div className="options-list">
-                            <div>
-                              <strong>A.</strong> {question.option_a}
-                            </div>
+                          <td>
+                            {index + 1}
+                          </td>
 
-                            <div>
-                              <strong>B.</strong> {question.option_b}
-                            </div>
+                          {/* =================================================
+                              QUESTION
+                          ================================================= */}
 
-                            {!isTrueFalse && (
+                          <td>
+
+                            {isEditing ? (
+
+                              <div className="inline-edit-question">
+
+                                <textarea
+                                  name="question"
+                                  value={
+                                    editQuestion.question
+                                  }
+                                  onChange={
+                                    handleEditChange
+                                  }
+                                  rows="4"
+                                  className="inline-edit-textarea"
+                                />
+
+                                <select
+                                  name="question_type"
+                                  value={
+                                    editQuestion.question_type
+                                  }
+                                  onChange={
+                                    handleEditChange
+                                  }
+                                  className="inline-edit-select"
+                                >
+
+                                  <option value="MCQ">
+                                    MCQ
+                                  </option>
+
+                                  <option value="True/False">
+                                    True / False
+                                  </option>
+
+                                </select>
+
+                              </div>
+
+                            ) : (
+
                               <>
-                                <div>
-                                  <strong>C.</strong> {question.option_c}
+
+                                <div className="question-text">
+                                  {question.question}
                                 </div>
 
-                                <div>
-                                  <strong>D.</strong> {question.option_d}
-                                </div>
+                                <span className="type-badge">
+                                  {question.question_type ||
+                                    "MCQ"}
+                                </span>
+
                               </>
+
                             )}
-                          </div>
-                        </td>
 
-                        {/* CORRECT */}
+                          </td>
 
-                        <td>
-                          <span className="correct-badge">
-                            {question.correct_answer}
-                          </span>
-                        </td>
+                          {/* =================================================
+                              OPTIONS
+                          ================================================= */}
 
-                        {/* MARKS */}
+                          <td>
 
-                        <td>
-                          <span className="marks-badge">{question.marks}</span>
-                        </td>
+                            {isEditing ? (
 
-                        {/* EXAM */}
+                              editQuestion.question_type ===
+                              "MCQ" ? (
 
-                        <td>
-                          {exam ? (
-                            <div className="exam-info">
-                              <strong>
-                                {subject?.subject_name || "Unknown Subject"}
-                              </strong>
+                                <div className="inline-options">
 
-                              <span>Date: {exam.date}</span>
+                                  <input
+                                    type="text"
+                                    name="option_a"
+                                    value={
+                                      editQuestion.option_a
+                                    }
+                                    onChange={
+                                      handleEditChange
+                                    }
+                                    placeholder="Option A"
+                                    className="inline-edit-input"
+                                  />
 
-                              <span>
-                                Time: {exam.start_time} - {exam.end_time}
+                                  <input
+                                    type="text"
+                                    name="option_b"
+                                    value={
+                                      editQuestion.option_b
+                                    }
+                                    onChange={
+                                      handleEditChange
+                                    }
+                                    placeholder="Option B"
+                                    className="inline-edit-input"
+                                  />
+
+                                  <input
+                                    type="text"
+                                    name="option_c"
+                                    value={
+                                      editQuestion.option_c
+                                    }
+                                    onChange={
+                                      handleEditChange
+                                    }
+                                    placeholder="Option C"
+                                    className="inline-edit-input"
+                                  />
+
+                                  <input
+                                    type="text"
+                                    name="option_d"
+                                    value={
+                                      editQuestion.option_d
+                                    }
+                                    onChange={
+                                      handleEditChange
+                                    }
+                                    placeholder="Option D"
+                                    className="inline-edit-input"
+                                  />
+
+                                </div>
+
+                              ) : (
+
+                                <div className="inline-tf-options">
+
+                                  <input
+                                    type="text"
+                                    value="True"
+                                    disabled
+                                    className="inline-edit-input"
+                                  />
+
+                                  <input
+                                    type="text"
+                                    value="False"
+                                    disabled
+                                    className="inline-edit-input"
+                                  />
+
+                                </div>
+
+                              )
+
+                            ) : (
+
+                              <div className="options-list">
+
+                                <div>
+                                  <strong>A.</strong>{" "}
+                                  {question.option_a}
+                                </div>
+
+                                <div>
+                                  <strong>B.</strong>{" "}
+                                  {question.option_b}
+                                </div>
+
+                                {!isTrueFalse && (
+                                  <>
+
+                                    <div>
+                                      <strong>C.</strong>{" "}
+                                      {question.option_c}
+                                    </div>
+
+                                    <div>
+                                      <strong>D.</strong>{" "}
+                                      {question.option_d}
+                                    </div>
+
+                                  </>
+                                )}
+
+                              </div>
+
+                            )}
+
+                          </td>
+
+                          {/* =================================================
+                              CORRECT ANSWER
+                          ================================================= */}
+
+                          <td>
+
+                            {isEditing ? (
+
+                              <select
+                                name="correct_answer"
+                                value={
+                                  editQuestion.correct_answer
+                                }
+                                onChange={
+                                  handleEditChange
+                                }
+                                className="inline-edit-select"
+                              >
+
+                                {editQuestion.question_type ===
+                                "MCQ" ? (
+
+                                  <>
+                                    <option value="">
+                                      Select
+                                    </option>
+
+                                    <option value="A">
+                                      A
+                                    </option>
+
+                                    <option value="B">
+                                      B
+                                    </option>
+
+                                    <option value="C">
+                                      C
+                                    </option>
+
+                                    <option value="D">
+                                      D
+                                    </option>
+                                  </>
+
+                                ) : (
+
+                                  <>
+                                    <option value="">
+                                      Select
+                                    </option>
+
+                                    <option value="True">
+                                      True
+                                    </option>
+
+                                    <option value="False">
+                                      False
+                                    </option>
+                                  </>
+
+                                )}
+
+                              </select>
+
+                            ) : (
+
+                              <span className="correct-badge">
+                                {question.correct_answer}
                               </span>
 
-                              <span>Total Marks: {exam.total_marks}</span>
+                            )}
+
+                          </td>
+
+                          {/* =================================================
+                              MARKS
+                          ================================================= */}
+
+                          <td>
+
+                            {isEditing ? (
+
+                              <input
+                                type="number"
+                                name="marks"
+                                min="1"
+                                value={
+                                  editQuestion.marks
+                                }
+                                onChange={
+                                  handleEditChange
+                                }
+                                className="inline-marks-input"
+                              />
+
+                            ) : (
+
+                              <span className="marks-badge">
+                                {question.marks}
+                              </span>
+
+                            )}
+
+                          </td>
+
+                          {/* =================================================
+                              EXAM DETAILS
+                          ================================================= */}
+
+                          <td>
+
+                            {exam ? (
+
+                              <div className="exam-info">
+
+                                <strong>
+                                  {subject?.subject_name ||
+                                    "Unknown Subject"}
+                                </strong>
+
+                                <span>
+                                  Date: {exam.date}
+                                </span>
+
+                                <span>
+                                  Time:{" "}
+                                  {exam.start_time} -{" "}
+                                  {exam.end_time}
+                                </span>
+
+                                <span>
+                                  Total Marks:{" "}
+                                  {exam.total_marks}
+                                </span>
+
+                              </div>
+
+                            ) : (
+
+                              <span>
+                                Exam not found
+                              </span>
+
+                            )}
+
+                          </td>
+
+                          {/* =================================================
+                              ACTIONS
+                          ================================================= */}
+
+                          <td>
+
+                            <div className="action-buttons">
+
+                              {isEditing ? (
+
+                                <>
+
+                                  <button
+                                    type="button"
+                                    className="save-btn"
+                                    onClick={() =>
+                                      handleSaveEdit(
+                                        question.id,
+                                      )
+                                    }
+                                    disabled={loading}
+                                  >
+                                    {loading
+                                      ? "Saving..."
+                                      : "Save"}
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    className="cancel-edit-btn"
+                                    onClick={
+                                      handleCancelEdit
+                                    }
+                                    disabled={loading}
+                                  >
+                                    Cancel
+                                  </button>
+
+                                </>
+
+                              ) : (
+
+                                <>
+
+                                  <button
+                                    type="button"
+                                    className="edit-btn"
+                                    onClick={() =>
+                                      handleEdit(
+                                        question,
+                                      )
+                                    }
+                                    disabled={loading}
+                                  >
+                                    Edit
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    className="delete-btn"
+                                    onClick={() =>
+                                      handleDelete(
+                                        question.id,
+                                      )
+                                    }
+                                    disabled={loading}
+                                  >
+                                    Delete
+                                  </button>
+
+                                </>
+
+                              )}
+
                             </div>
-                          ) : (
-                            <span>Exam not found</span>
-                          )}
-                        </td>
 
-                        {/* ACTIONS */}
+                          </td>
 
-                        <td>
-                          <div className="action-buttons">
-                            <button
-                              type="button"
-                              className="edit-btn"
-                              onClick={() => handleEdit(question)}
-                              disabled={loading}
-                            >
-                              Edit
-                            </button>
+                        </tr>
 
-                            <button
-                              type="button"
-                              className="delete-btn"
-                              onClick={() => handleDelete(question.id)}
-                              disabled={loading}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                      );
+                    },
+                  )}
+
                 </tbody>
+
               </table>
+
             </div>
+
           )}
 
-          {/* SUMMARY */}
+          {/* =================================================
+              SUMMARY
+          ================================================= */}
 
           <div className="result-summary">
-            Showing <strong>{filteredQuestions.length}</strong> of{" "}
-            <strong>{questions.length}</strong> questions
+
+            Showing{" "}
+            <strong>
+              {filteredQuestions.length}
+            </strong>{" "}
+            of{" "}
+            <strong>
+              {questions.length}
+            </strong>{" "}
+            questions
+
           </div>
+
         </div>
+
       </div>
 
-      {/* ADD / EDIT QUESTION MODAL */}
+      {/* =================================================
+          ADD QUESTION MODAL
+          
+          IMPORTANT:
+          This is ONLY for ADD.
+          EDIT NO LONGER OPENS THIS.
+      ================================================= */}
 
       {showAddQuestion && (
         <AddQuestion
           exams={exams}
           subjects={subjects}
-          editingQuestion={editingQuestion}
+          editingQuestion={null}
           onClose={closeQuestionModal}
           onSubmit={handleSaveQuestion}
           loading={loading}
