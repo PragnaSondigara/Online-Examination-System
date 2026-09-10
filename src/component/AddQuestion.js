@@ -505,7 +505,7 @@ export default function AddQuestion({
                   <input
                     type="radio"
                     name="correct_answer"
-                      value="True"
+                    value="True"
                     checked={formData.correct_answer === "True"}
                     onChange={handleChange}
                     disabled={loading}
