@@ -9,31 +9,26 @@ const initialForm = {
   option_c: "",
   option_d: "",
   correct_answer: "",
-  marks: 2,
+  marks: 1,
   question_type: "MCQ",
 };
 
 export default function AddQuestion({
   exams = [],
   subjects = [],
-  assignedSubject,
-  editingQuestion,
+  editingQuestion = null,
   onClose,
   onSubmit,
-  loading,
+  loading = false,
 }) {
   const [formData, setFormData] = useState(initialForm);
-  const [error, setError] = useState("");
 
   // =========================================================
-  // LOAD DATA FOR ADD / EDIT
+  // LOAD DATA
   // =========================================================
 
   useEffect(() => {
     if (editingQuestion) {
-      // Edit mode
-      // Existing question data automatically comes into input fields
-
       setFormData({
         exam_id: editingQuestion.exam_id || "",
         question: editingQuestion.question || "",
@@ -46,30 +41,16 @@ export default function AddQuestion({
         question_type: editingQuestion.question_type || "MCQ",
       });
     } else {
-      // Add mode
       setFormData(initialForm);
     }
-
-    setError("");
   }, [editingQuestion]);
 
   // =========================================================
   // GET SUBJECT
   // =========================================================
-  // IMPORTANT:
-  // Your database has subject.id
-  // It does NOT have subject.subject_id
 
   const getSubject = (subjectId) => {
     return subjects.find((subject) => String(subject.id) === String(subjectId));
-  };
-
-  // =========================================================
-  // GET EXAM
-  // =========================================================
-
-  const getExam = (examId) => {
-    return exams.find((exam) => String(exam.id) === String(examId));
   };
 
   // =========================================================
@@ -79,24 +60,16 @@ export default function AddQuestion({
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // If question type changes
     if (name === "question_type") {
       setFormData((prev) => ({
         ...prev,
-
         question_type: value,
-
-        // Clear options when type changes
         option_a: "",
         option_b: "",
         option_c: "",
         option_d: "",
-
-        // Clear correct answer
         correct_answer: "",
       }));
-
-      setError("");
 
       return;
     }
@@ -105,8 +78,6 @@ export default function AddQuestion({
       ...prev,
       [name]: value,
     }));
-
-    setError("");
   };
 
   // =========================================================
@@ -116,60 +87,60 @@ export default function AddQuestion({
   const validateForm = () => {
     // Exam
     if (!formData.exam_id) {
-      setError("Please select an exam.");
+      alert("Please select an exam.");
       return false;
     }
 
     // Question
     if (!formData.question.trim()) {
-      setError("Please enter the question.");
+      alert("Please enter the question.");
       return false;
     }
 
     // Marks
     if (formData.marks === "" || Number(formData.marks) <= 0) {
-      setError("Marks must be greater than 0.");
+      alert("Marks must be greater than 0.");
       return false;
     }
 
     // =======================================================
-    // MCQ
+    // MCQ VALIDATION
     // =======================================================
 
     if (formData.question_type === "MCQ") {
       if (!formData.option_a.trim()) {
-        setError("Please enter Option A.");
+        alert("Please enter Option A.");
         return false;
       }
 
       if (!formData.option_b.trim()) {
-        setError("Please enter Option B.");
+        alert("Please enter Option B.");
         return false;
       }
 
       if (!formData.option_c.trim()) {
-        setError("Please enter Option C.");
+        alert("Please enter Option C.");
         return false;
       }
 
       if (!formData.option_d.trim()) {
-        setError("Please enter Option D.");
+        alert("Please enter Option D.");
         return false;
       }
 
       if (!["A", "B", "C", "D"].includes(formData.correct_answer)) {
-        setError("Please select the correct answer.");
+        alert("Please select the correct answer.");
         return false;
       }
     }
 
     // =======================================================
-    // TRUE / FALSE
+    // TRUE / FALSE VALIDATION
     // =======================================================
 
     if (formData.question_type === "True/False") {
       if (!["True", "False"].includes(formData.correct_answer)) {
-        setError("Please select True or False.");
+        alert("Please select True or False.");
         return false;
       }
     }
@@ -184,21 +155,25 @@ export default function AddQuestion({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setError("");
-
-    const isValid = validateForm();
-
-    if (!isValid) {
+    if (!validateForm()) {
       return;
     }
 
-    // Send form data to parent component
-    onSubmit({
+    const questionData = {
       ...formData,
-
-      // Convert marks to number
+      question: formData.question.trim(),
+      option_a:
+        formData.question_type === "MCQ" ? formData.option_a.trim() : "True",
+      option_b:
+        formData.question_type === "MCQ" ? formData.option_b.trim() : "False",
+      option_c:
+        formData.question_type === "MCQ" ? formData.option_c.trim() : "",
+      option_d:
+        formData.question_type === "MCQ" ? formData.option_d.trim() : "",
       marks: Number(formData.marks),
-    });
+    };
+
+    onSubmit(questionData);
   };
 
   // =========================================================
@@ -207,8 +182,6 @@ export default function AddQuestion({
 
   const handleReset = () => {
     if (editingQuestion) {
-      // Reset to original edit data
-
       setFormData({
         exam_id: editingQuestion.exam_id || "",
         question: editingQuestion.question || "",
@@ -221,12 +194,18 @@ export default function AddQuestion({
         question_type: editingQuestion.question_type || "MCQ",
       });
     } else {
-      // Reset add form
-
       setFormData(initialForm);
     }
+  };
 
-    setError("");
+  // =========================================================
+  // CLOSE
+  // =========================================================
+
+  const handleClose = () => {
+    if (!loading) {
+      onClose();
+    }
   };
 
   // =========================================================
@@ -238,7 +217,7 @@ export default function AddQuestion({
       className="question-modal-overlay"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) {
-          onClose();
+          handleClose();
         }
       }}
     >
@@ -261,7 +240,7 @@ export default function AddQuestion({
           <button
             type="button"
             className="modal-close-btn"
-            onClick={onClose}
+            onClick={handleClose}
             disabled={loading}
           >
             ×
@@ -273,12 +252,6 @@ export default function AddQuestion({
         ================================================= */}
 
         <form className="question-modal-form" onSubmit={handleSubmit}>
-          {/* =================================================
-              ERROR
-          ================================================= */}
-
-          {error && <div className="modal-error">{error}</div>}
-
           {/* =================================================
               EXAM
           ================================================= */}
@@ -297,7 +270,6 @@ export default function AddQuestion({
               <option value="">Select Exam</option>
 
               {exams.map((exam) => {
-                // exam.subject_id points to subject.id
                 const subject = getSubject(exam.subject_id);
 
                 return (
@@ -310,9 +282,7 @@ export default function AddQuestion({
             </select>
 
             {exams.length === 0 && (
-              <small className="form-help">
-                No exams available for your assigned subject.
-              </small>
+              <small className="form-help">No exams available.</small>
             )}
           </div>
 
@@ -321,8 +291,6 @@ export default function AddQuestion({
           ================================================= */}
 
           <div className="modal-form-row">
-            {/* QUESTION TYPE */}
-
             <div className="form-group">
               <label>Question Type</label>
 
@@ -337,8 +305,6 @@ export default function AddQuestion({
                 <option value="True/False">True / False</option>
               </select>
             </div>
-
-            {/* MARKS */}
 
             <div className="form-group">
               <label>
@@ -368,7 +334,7 @@ export default function AddQuestion({
 
             <textarea
               name="question"
-              rows="3"
+              rows="4"
               placeholder="Enter question..."
               value={formData.question}
               onChange={handleChange}
@@ -377,10 +343,10 @@ export default function AddQuestion({
           </div>
 
           {/* =================================================
-              MCQ
+              MCQ OPTIONS
           ================================================= */}
 
-          {formData.question_type === "MCQ" ? (
+          {formData.question_type === "MCQ" && (
             <>
               <div className="modal-options-grid">
                 {/* OPTION A */}
@@ -484,19 +450,19 @@ export default function AddQuestion({
                 </div>
               </div>
             </>
-          ) : (
-            /* =================================================
-               TRUE / FALSE
-            ================================================= */
+          )}
 
+          {/* =================================================
+              TRUE / FALSE
+          ================================================= */}
+
+          {formData.question_type === "True/False" && (
             <div className="modal-tf-box">
               <label>
                 Correct Answer <span>*</span>
               </label>
 
               <div className="modal-tf-options">
-                {/* TRUE */}
-
                 <label
                   className={`modal-answer-option ${
                     formData.correct_answer === "True" ? "selected" : ""
@@ -511,10 +477,8 @@ export default function AddQuestion({
                     disabled={loading}
                   />
 
-                  <span>✓ True</span>
+                  <span>True</span>
                 </label>
-
-                {/* FALSE */}
 
                 <label
                   className={`modal-answer-option ${
@@ -530,7 +494,7 @@ export default function AddQuestion({
                     disabled={loading}
                   />
 
-                  <span>✕ False</span>
+                  <span>False</span>
                 </label>
               </div>
             </div>
@@ -541,18 +505,14 @@ export default function AddQuestion({
           ================================================= */}
 
           <div className="question-modal-footer">
-            {/* CANCEL */}
-
             <button
               type="button"
               className="modal-cancel-btn"
-              onClick={onClose}
+              onClick={handleClose}
               disabled={loading}
             >
               Cancel
             </button>
-
-            {/* RESET */}
 
             <button
               type="button"
@@ -563,12 +523,10 @@ export default function AddQuestion({
               Reset
             </button>
 
-            {/* ADD / UPDATE */}
-
             <button
               type="submit"
               className="modal-submit-btn"
-              disabled={loading || !assignedSubject || exams.length === 0}
+              disabled={loading || exams.length === 0}
             >
               {loading
                 ? "Saving..."

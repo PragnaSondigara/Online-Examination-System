@@ -52,6 +52,14 @@
       "password": "PoojaSolanki@123",
       "is_active": true,
       "id": "pI04zXMYZRM"
+    },
+    {
+      "faculty_name": "Nidhi Gupta",
+      "email": "nidhi.gupta@examhub.com",
+      "mobile_no": "8782256878",
+      "password": "NidhiGupta@123",
+      "is_active": true,
+      "id": "TwMgs4wTroQ"
     }
   ],
   "tbl_student": [
@@ -59,7 +67,7 @@
       "student_name": "Pooja Variya",
       "email": "pooja.variya@examhub.com",
       "mobile_no": "7069457822",
-      "semester": "2",
+      "semester": "1",
       "password": "PoojaVariya@123",
       "is_active": true,
       "id": "-AnWpEM837k"
@@ -68,7 +76,7 @@
       "student_name": "Pragna Sondigara",
       "email": "pragna.sondigara@examhub.com",
       "mobile_no": "7284547811",
-      "semester": 3,
+      "semester": "2",
       "password": "PragnaSondigara@123",
       "is_active": true,
       "id": "07_oxDWigzY"
@@ -77,7 +85,7 @@
       "student_name": "Pruthvi Variya",
       "email": "pruthvi.variya@examhub.com",
       "mobile_no": "9725765847",
-      "semester": 4,
+      "semester": "3",
       "password": "PruthviVariya@123",
       "is_active": true,
       "id": "IZ-F15CQfhU"
@@ -86,7 +94,7 @@
       "student_name": "krishna patel",
       "email": "krishna.patel@examhub.com",
       "mobile_no": "8765278798",
-      "semester": 5,
+      "semester": "4",
       "password": "krishnapatel@123",
       "is_active": true,
       "id": "huuGQYY6dEc"
@@ -95,7 +103,7 @@
       "student_name": "Nisha Modi",
       "email": "nisha.modi@examhub.com",
       "mobile_no": "7879745877",
-      "semester": 6,
+      "semester": "5",
       "password": "NishaModi@123",
       "is_active": true,
       "id": "cAsMBisMzrw"
@@ -104,10 +112,28 @@
       "student_name": "Aarav Gupta",
       "email": "aarav.gupta@examhub.com",
       "mobile_no": "7858964587",
-      "semester": 1,
+      "semester": "6",
       "password": "AaravGupta@123",
       "is_active": true,
       "id": "duSpnkFMNc4"
+    },
+    {
+      "student_name": "Devangi Rathod",
+      "email": "devangi.rathod@examhub.com",
+      "mobile_no": "9758465258",
+      "semester": "1",
+      "password": "DevangiRathod@123",
+      "is_active": false,
+      "id": "Iomw5XWzqrQ"
+    },
+    {
+      "student_name": "kishna",
+      "email": "kishna@examhub.com",
+      "mobile_no": "8754695874",
+      "semester": 4,
+      "password": "kishna@123",
+      "is_active": true,
+      "id": "ocr-Fw56Oz0"
     }
   ],
   "tbl_subject": [
@@ -146,6 +172,18 @@
       "subject_name": "ASP.NET",
       "is_active": true,
       "id": "XkE4AcoCMvE"
+    },
+    {
+      "faculty_id": "TwMgs4wTroQ",
+      "subject_name": "NT",
+      "is_active": true,
+      "id": "NgHp_0T-jhI"
+    },
+    {
+      "faculty_id": "TwMgs4wTroQ",
+      "subject_name": "Linux",
+      "is_active": true,
+      "id": "RShYMrQPq4Q"
     }
   ],
   "tbl_exam": [
@@ -172,6 +210,30 @@
       "total_marks": 50,
       "is_active": true,
       "id": "ui_2F3xzuAg"
+    },
+    {
+      "faculty_id": "TwMgs4wTroQ",
+      "subject_id": "NgHp_0T-jhI",
+      "duration": 0.5,
+      "date": "2026-09-11",
+      "start_time": "11:15",
+      "end_time": "11:45",
+      "passing_marks": 8,
+      "total_marks": 20,
+      "is_active": true,
+      "id": "g9JrRMyqvWA"
+    },
+    {
+      "faculty_id": "TwMgs4wTroQ",
+      "subject_id": "RShYMrQPq4Q",
+      "duration": 0.5,
+      "date": "2026-09-10",
+      "start_time": "22:10",
+      "end_time": "22:40",
+      "passing_marks": 12,
+      "total_marks": 30,
+      "is_active": true,
+      "id": "GiaggMn0D88"
     }
   ],
   "tbl_question": [
@@ -210,6 +272,30 @@
       "marks": 2,
       "question_type": "MCQ",
       "id": "xEZYeqNZxm4"
+    },
+    {
+      "exam_id": "g9JrRMyqvWA",
+      "question": "What is a computer connected to a network called?",
+      "option_a": "Server",
+      "option_b": "Hub",
+      "option_c": "Node",
+      "option_d": "Gateway",
+      "correct_answer": "C",
+      "marks": 5,
+      "question_type": "MCQ",
+      "id": "LYZFBDlLto0"
+    },
+    {
+      "exam_id": "g9JrRMyqvWA",
+      "question": "Which device regenerates and amplifies input signals in a network?",
+      "option_a": "Router",
+      "option_b": "Switch",
+      "option_c": "Repeater",
+      "option_d": "Hub",
+      "correct_answer": "C",
+      "marks": 5,
+      "question_type": "MCQ",
+      "id": "BxIHrRxx9qw"
     }
   ],
   "tbl_student_exam": [
@@ -285,7 +371,7 @@
     {
       "student_id": "07_oxDWigzY",
       "name": "Pragna Sondigara",
-      "feedback": "this is good",
+      "feedback": "this system is good",
       "date": "2026-09-06",
       "id": "V3aJuP2a5Pk"
     }
