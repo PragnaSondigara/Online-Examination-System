@@ -133,12 +133,12 @@ export function ViewFeedback() {
                   <div className="feedback-card-footer">
                     <div className="feedback-date">📅 {item.date}</div>
 
-                    <button
+                    {/* <button
                       className="view-btn"
                       onClick={() => viewFeedback(item)}
                     >
                       👁 View
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))

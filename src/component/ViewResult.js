@@ -25,8 +25,8 @@ export default function ViewResult() {
   // =========================================================
 
   const studentId =
-    localStorage.getItem("studentId") ||
-    localStorage.getItem("student_id") ||
+    //localStorage.getItem("studentId") ||
+   // localStorage.getItem("student_id") ||
     localStorage.getItem("id");
 
   // =========================================================
