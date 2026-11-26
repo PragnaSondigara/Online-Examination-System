@@ -255,13 +255,7 @@ export default function ManageStudent() {
             <p>View, manage and monitor all registered students.</p>
           </div>
 
-          <button
-            className="add-student-btn"
-            onClick={() => navigate("/AddStudent")}
-          >
-            <span>+</span>
-            Add Student
-          </button>
+         
         </div>
 
         {/* =====================================================

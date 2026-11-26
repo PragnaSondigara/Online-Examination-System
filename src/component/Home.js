@@ -67,6 +67,40 @@ export default function GuestHome() {
             >
               Contact Us
             </button>
+            {/*Registration*/}
+             <div className="role-dropdown">
+
+              <button
+                type="button"
+                className="account-btn"
+              >
+                <span className="login-text">
+                  Registration
+                </span>
+
+                <span className="dropdown-arrow">
+                  ▾
+                </span>
+              </button>
+
+              <div className="role-menu">
+
+                <Link to="/FacultyRegister">
+                  <span className="menu-icon">
+                    👨‍🏫
+                  </span>
+                  Faculty
+                </Link>
+
+                <Link to="/StudentRegister">
+                  <span className="menu-icon">
+                    🎓
+                  </span>
+                  Student
+                </Link>
+
+              </div>
+            </div>
 
             {/* LOGIN DROPDOWN */}
             <div className="role-dropdown">

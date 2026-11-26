@@ -1,0 +1,304 @@
+
+/* =====================================
+   FACULTY REGISTRATION PAGE
+===================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+.faculty-register-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: "Poppins", Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* TOP LOGIN LINK */
+
+.register-top-link {
+    position: absolute;
+    top: 30px;
+    right: 45px;
+}
+
+.register-top-link a {
+    color: #36c5a0;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register-top-link a:hover {
+    color: #239e80;
+}
+
+/* MAIN SECTION */
+
+.faculty-register-main {
+    width: 100%;
+    max-width: 1250px;
+    min-height: 650px;
+    margin: auto;
+    padding: 35px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+/* LEFT IMAGE */
+
+.faculty-register-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.faculty-register-image img {
+    width: 100%;
+    max-width: 530px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* RIGHT FORM SECTION */
+
+.faculty-register-form-section {
+    width: 42%;
+    max-width: 430px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* HEADING */
+
+.faculty-register-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.faculty-register-heading h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #183d55;
+    margin: 0 0 10px;
+}
+
+.faculty-register-heading p {
+    font-size: 14px;
+    color: #888888;
+    margin: 0;
+}
+
+/* INPUT GROUP */
+
+.faculty-input-group {
+    width: 100%;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-bottom: 1px solid #d8d8d8;
+    margin-bottom: 13px;
+    transition: border-color 0.3s ease;
+}
+
+.faculty-input-group:focus-within {
+    border-bottom: 2px solid #36c5a0;
+}
+
+.faculty-input-group > i {
+    color: #36c5a0;
+    font-size: 16px;
+    width: 20px;
+}
+
+.faculty-input-group input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-family: "Poppins", Arial, sans-serif;
+    color: #333333;
+}
+
+.faculty-input-group input::placeholder {
+    color: #888888;
+}
+
+.faculty-input-group input:focus {
+    outline: none;
+}
+
+/* READ ONLY INPUT */
+
+.faculty-input-group input[readonly] {
+    cursor: default;
+}
+
+/* PASSWORD EYE BUTTON */
+
+.faculty-password-toggle {
+    border: none;
+    background: transparent;
+    color: #888888;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 8px;
+}
+
+.faculty-password-toggle:hover {
+    color: #36c5a0;
+}
+
+/* PASSWORD MATCH */
+
+.faculty-password-match {
+    display: block;
+    color: #20a779;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 8px;
+}
+
+.faculty-password-error {
+    display: block;
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 8px;
+}
+
+/* REGISTER BUTTON */
+
+.faculty-submit-btn {
+    width: 100%;
+    height: 50px;
+    margin-top: 22px;
+    border: none;
+    border-radius: 30px;
+    background: #36c5a0;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Poppins", Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.faculty-submit-btn:hover {
+    background: #25ad8a;
+    box-shadow: 0 5px 15px rgba(54, 197, 160, 0.25);
+}
+
+.faculty-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* FOOTER */
+
+.faculty-register-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #777777;
+    font-size: 13px;
+}
+
+.faculty-register-footer a {
+    color: #36c5a0;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.faculty-register-footer a:hover {
+    text-decoration: underline;
+}
+
+/* =====================================
+   TABLET RESPONSIVE
+===================================== */
+
+@media (max-width: 900px) {
+
+    .faculty-register-main {
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .faculty-register-image {
+        width: 45%;
+    }
+
+    .faculty-register-form-section {
+        width: 50%;
+    }
+
+    .faculty-register-heading h1 {
+        font-size: 30px;
+    }
+}
+
+/* =====================================
+   MOBILE RESPONSIVE
+===================================== */
+
+@media (max-width: 650px) {
+
+    .faculty-register-page {
+        min-height: 100vh;
+        padding: 75px 20px 30px;
+    }
+
+    .register-top-link {
+        top: 20px;
+        right: 25px;
+    }
+
+    .faculty-register-main {
+        min-height: auto;
+        padding: 10px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .faculty-register-image {
+        width: 100%;
+    }
+
+    .faculty-register-image img {
+        max-width: 230px;
+        max-height: 190px;
+    }
+
+    .faculty-register-form-section {
+        width: 100%;
+        max-width: 430px;
+    }
+
+    .faculty-register-heading {
+        margin-bottom: 20px;
+    }
+
+    .faculty-register-heading h1 {
+        font-size: 27px;
+    }
+
+    .faculty-input-group {
+        height: 50px;
+    }
+
+    .faculty-submit-btn {
+        height: 48px;
+    }
+}

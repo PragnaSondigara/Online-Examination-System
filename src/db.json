@@ -1,10 +1,11 @@
+
 {
   "tbl_admin": [
     {
       "admin_id": 1,
       "admin_name": "Pragna Sondigara",
       "email": "pragna@examhub.com",
-      "password": "Pragna1",
+      "password": "pragna1",
       "mobile_no": "9876543210",
       "is_active": true,
       "id": "Zosp1ZE08ug"
@@ -30,369 +31,333 @@
   ],
   "tbl_faculty": [
     {
-      "faculty_name": "Pruthvi Shah",
-      "email": "pruthvi.shah@examhub.com",
-      "mobile_no": "9876543210",
-      "password": "PruthviShah@123",
+      "faculty_name": "Dhanji Variya",
+      "email": "dhanjivariya445@gmail.com",
+      "mobile_no": "9879341450",
+      "password": "dhanji445",
       "is_active": true,
-      "id": "oIveipxloTU"
+      "id": "EI71rgGxzWs"
     },
     {
-      "faculty_name": "Pragna Vora",
-      "email": "pragna.vora@examhub.com",
-      "mobile_no": "7895648755",
-      "password": "PragnaVora@123",
+      "faculty_name": "Amit Patel",
+      "email": "amit.faculty@example.com",
+      "mobile_no": "9876543215",
+      "password": "amit123",
       "is_active": true,
-      "id": "4mp3fB0pYqs"
+      "id": "faculty2"
     },
     {
-      "faculty_name": "Pooja Solanki",
-      "email": "pooja.solanki@examhub.com",
-      "mobile_no": "7958648577",
-      "password": "PoojaSolanki@123",
-      "is_active": true,
-      "id": "pI04zXMYZRM"
+      "faculty_name": "Neha Shah",
+      "email": "neha.faculty@example.com",
+      "mobile_no": "9876543216",
+      "password": "neha123",
+      "is_active": false,
+      "id": "faculty3"
     }
   ],
   "tbl_student": [
     {
-      "student_name": "Pooja Variya",
-      "email": "pooja.variya@examhub.com",
-      "mobile_no": "7069457822",
-      "semester": "2",
-      "password": "PoojaVariya@123",
+      "student_name": "Pruthvi",
+      "email": "variya.pruthviben.h2024@tmtbcasurat.org",
+      "mobile_no": "9878787878",
+      "semester": 2,
+      "password": "pruthvi168",
       "is_active": true,
-      "id": "-AnWpEM837k"
+      "id": "tmcgqwa9Xdw"
     },
     {
-      "student_name": "Pragna Sondigara",
-      "email": "pragna.sondigara@examhub.com",
-      "mobile_no": "7284547811",
+      "student_name": "Rahul",
+      "email": "rahul@example.com",
+      "mobile_no": "9876543211",
+      "semester": 2,
+      "password": "demo123",
+      "is_active": true,
+      "id": "student2"
+    },
+    {
+      "student_name": "Priya",
+      "email": "priya@example.com",
+      "mobile_no": "9876543212",
       "semester": 3,
-      "password": "PragnaSondigara@123",
-      "is_active": true,
-      "id": "07_oxDWigzY"
+      "password": "demo123",
+      "is_active": false,
+      "id": "student3"
     },
     {
-      "student_name": "Pruthvi Variya",
-      "email": "pruthvi.variya@examhub.com",
-      "mobile_no": "9725765847",
+      "student_name": "Neha",
+      "email": "neha@example.com",
+      "mobile_no": "9876543213",
       "semester": 4,
-      "password": "PruthviVariya@123",
+      "password": "demo123",
       "is_active": true,
-      "id": "IZ-F15CQfhU"
+      "id": "student4"
     },
     {
-      "student_name": "krishna patel",
-      "email": "krishna.patel@examhub.com",
-      "mobile_no": "8765278798",
-      "semester": 5,
-      "password": "krishnapatel@123",
-      "is_active": true,
-      "id": "huuGQYY6dEc"
-    },
-    {
-      "student_name": "Nisha Modi",
-      "email": "nisha.modi@examhub.com",
-      "mobile_no": "7879745877",
-      "semester": 6,
-      "password": "NishaModi@123",
-      "is_active": true,
-      "id": "cAsMBisMzrw"
-    },
-    {
-      "student_name": "Aarav Gupta",
-      "email": "aarav.gupta@examhub.com",
-      "mobile_no": "7858964587",
-      "semester": 1,
-      "password": "AaravGupta@123",
-      "is_active": true,
-      "id": "duSpnkFMNc4"
+      "student_name": "Amit",
+      "email": "amit@example.com",
+      "mobile_no": "9876543214",
+      "semester": 4,
+      "password": "demo123",
+      "is_active": false,
+      "id": "student5"
     }
   ],
   "tbl_subject": [
     {
-      "faculty_id": "oIveipxloTU",
-      "subject_name": "Java",
-      "is_active": true,
-      "id": "PS7FhgzUvTA"
+      "subject_name": "Web Development",
+      "id": "subject1"
     },
     {
-      "faculty_id": "4mp3fB0pYqs",
-      "subject_name": "WD",
-      "is_active": true,
-      "id": "RWnb2q2x1Yc"
+      "subject_name": "Database Management",
+      "id": "subject2"
     },
     {
-      "faculty_id": "pI04zXMYZRM",
-      "subject_name": "OOPs",
-      "is_active": true,
-      "id": "mM0cyoB8QCc"
-    },
-    {
-      "faculty_id": "oIveipxloTU",
-      "subject_name": "PHP",
-      "is_active": true,
-      "id": "DV7vtHGrJnU"
-    },
-    {
-      "faculty_id": "4mp3fB0pYqs",
-      "subject_name": "AWD",
-      "is_active": true,
-      "id": "nmA1GDbJiUE"
-    },
-    {
-      "faculty_id": "pI04zXMYZRM",
-      "subject_name": "ASP.NET",
-      "is_active": true,
-      "id": "XkE4AcoCMvE"
+      "subject_name": "Java Programming",
+      "id": "subject3"
     }
   ],
   "tbl_exam": [
     {
-      "faculty_id": "oIveipxloTU",
-      "subject_id": "PS7FhgzUvTA",
-      "duration": 2,
-      "date": "2026-09-04",
-      "start_time": "07:30",
-      "end_time": "09:30",
-      "passing_marks": 40,
-      "total_marks": 100,
-      "is_active": true,
-      "id": "4N13Az-kRhg"
+      "exam_name": "HTML and CSS Test",
+      "subject_id": "subject1",
+      "id": "exam1"
     },
     {
-      "faculty_id": "4mp3fB0pYqs",
-      "subject_id": "RWnb2q2x1Yc",
-      "duration": 1,
-      "date": "2026-09-18",
-      "start_time": "11:05",
-      "end_time": "12:05",
-      "passing_marks": 20,
-      "total_marks": 50,
-      "is_active": true,
-      "id": "ui_2F3xzuAg"
+      "exam_name": "JavaScript Test",
+      "subject_id": "subject1",
+      "id": "exam2"
     },
     {
-      "faculty_id": "pI04zXMYZRM",
-      "subject_id": "mM0cyoB8QCc",
-      "duration": 0.05,
-      "date": "2026-09-10",
-      "start_time": "18:38",
-      "end_time": "18:42",
-      "passing_marks": 2,
-      "total_marks": 5,
-      "is_active": true,
-      "id": "jqtnUCKqCyI"
+      "exam_name": "SQL Test",
+      "subject_id": "subject2",
+      "id": "exam3"
+    },
+    {
+      "exam_name": "Java Basics Test",
+      "subject_id": "subject3",
+      "id": "exam4"
     }
   ],
   "tbl_question": [
     {
-      "exam_id": "ui_2F3xzuAg",
+      "exam_id": "exam1",
+      "question": "What does HTML stand for?",
+      "option_a": "Hyper Text Markup Language",
+      "option_b": "High Text Machine Language",
+      "option_c": "Hyper Tool Multi Language",
+      "option_d": "Home Text Markup Language",
+      "correct_answer": "A",
+      "marks": 5,
+      "id": "question1"
+    },
+    {
+      "exam_id": "exam1",
+      "question": "Which language is used for styling web pages?",
+      "option_a": "HTML",
+      "option_b": "CSS",
+      "option_c": "SQL",
+      "option_d": "Java",
+      "correct_answer": "B",
+      "marks": 5,
+      "id": "question2"
+    },
+    {
+      "exam_id": "exam2",
+      "question": "Which keyword declares a JavaScript variable?",
+      "option_a": "int",
+      "option_b": "string",
+      "option_c": "let",
+      "option_d": "float",
+      "correct_answer": "C",
+      "marks": 5,
+      "id": "question3"
+    },
+    {
+      "exam_id": "exam3",
+      "question": "Which SQL command retrieves records?",
+      "option_a": "INSERT",
+      "option_b": "UPDATE",
+      "option_c": "DELETE",
+      "option_d": "SELECT",
+      "correct_answer": "D",
+      "marks": 5,
+      "id": "question4"
+    },
+    {
+      "exam_id": "exam4",
       "question": "Which keyword is used to create a class in Java?",
       "option_a": "class",
-      "option_b": "struct",
+      "option_b": "function",
       "option_c": "define",
-      "option_d": "object",
+      "option_d": "struct",
       "correct_answer": "A",
-      "marks": 1,
-      "question_type": "MCQ",
-      "id": "DC9HVvcaPoM"
-    },
-    {
-      "exam_id": "ui_2F3xzuAg",
-      "question": "true or false",
-      "option_a": "True",
-      "option_b": "False",
-      "option_c": "",
-      "option_d": "",
-      "correct_answer": "True",
-      "marks": 1,
-      "question_type": "True/False",
-      "id": "p-m-l8p8Jaw"
-    },
-    {
-      "exam_id": "ui_2F3xzuAg",
-      "question": "mca choose correct answer",
-      "option_a": "a",
-      "option_b": "back end",
-      "option_c": "c",
-      "option_d": "s",
-      "correct_answer": "B",
-      "marks": 2,
-      "question_type": "MCQ",
-      "id": "xEZYeqNZxm4"
-    },
-    {
-      "exam_id": "jqtnUCKqCyI",
-      "question": "What is OOP?",
-      "option_a": "Object-Oriented Programming",
-      "option_b": "Object-Oriented Process",
-      "option_c": "Online Object Program",
-      "option_d": "Object Operating Program",
-      "correct_answer": "A",
-      "marks": 2,
-      "question_type": "MCQ",
-      "id": "NEW_ID"
-    },
-    {
-      "exam_id": "jqtnUCKqCyI",
-      "question": "What is OOP?",
-      "option_a": "Object-Oriented Programming",
-      "option_b": "Object-Oriented Process",
-      "option_c": "Online Object Program",
-      "option_d": "Object Operating Program",
-      "correct_answer": "A",
-      "marks": 2,
-      "question_type": "MCQ",
-      "id": "NEW_ID_1"
-    },
-    {
-      "exam_id": "jqtnUCKqCyI",
-      "question": "Which concept allows a class to inherit properties from another class?",
-      "option_a": "Encapsulation",
-      "option_b": "Inheritance",
-      "option_c": "Polymorphism",
-      "option_d": "Abstraction",
-      "correct_answer": "B",
-      "marks": 1,
-      "question_type": "MCQ",
-      "id": "NEW_ID_2"
+      "marks": 5,
+      "id": "question5"
     }
   ],
   "tbl_student_exam": [
     {
-      "student_id": "07_oxDWigzY",
-      "exam_id": "ui_2F3xzuAg",
-      "started_at": "2026-09-07T06:20:01.643Z",
-      "submitted_at": "2026-09-07T06:20:29.859Z",
+      "student_id": "tmcgqwa9Xdw",
+      "exam_id": "exam1",
+      "started_at": "2026-11-20T10:00:00",
+      "submitted_at": "2026-11-20T10:30:00",
       "status": "Completed",
-      "id": "9gqjCVDCaTw"
+      "id": "attempt1"
     },
     {
-      "student_id": "cAsMBisMzrw",
-      "exam_id": "jqtnUCKqCyI",
-      "started_at": "2026-09-10T13:08:11.071Z",
-      "submitted_at": "2026-09-10T13:11:11.893Z",
+      "student_id": "student2",
+      "exam_id": "exam1",
+      "started_at": "2026-11-20T11:00:00",
+      "submitted_at": "2026-11-20T11:30:00",
       "status": "Completed",
-      "id": "3vQuVRPEJ9w"
+      "id": "attempt2"
     },
     {
-      "student_id": "cAsMBisMzrw",
-      "exam_id": "jqtnUCKqCyI",
-      "started_at": "2026-09-10T13:08:11.076Z",
-      "submitted_at": null,
-      "status": "Started",
-      "id": "XbaSaySUOrE"
+      "student_id": "student3",
+      "exam_id": "exam2",
+      "started_at": "2026-11-21T10:00:00",
+      "submitted_at": "2026-11-21T10:30:00",
+      "status": "Completed",
+      "id": "attempt3"
+    },
+    {
+      "student_id": "student4",
+      "exam_id": "exam3",
+      "started_at": "2026-11-21T11:00:00",
+      "submitted_at": "2026-11-21T11:30:00",
+      "status": "Completed",
+      "id": "attempt4"
+    },
+    {
+      "student_id": "student5",
+      "exam_id": "exam4",
+      "started_at": "2026-11-22T10:00:00",
+      "submitted_at": "2026-11-22T10:30:00",
+      "status": "Completed",
+      "id": "attempt5"
     }
   ],
   "tbl_student_answer": [
     {
-      "student_exam_id": "9gqjCVDCaTw",
-      "question_id": "DC9HVvcaPoM",
-      "student_answer": "A",
-      "is_correct": true,
-      "marks_obtained": 2,
-      "id": "z8ZSrAgUdYY"
+      "student_exam_id": "attempt1",
+      "question_id": "question1",
+      "answer": "A",
+      "marks_obtained": 5,
+      "id": "answer1"
     },
     {
-      "student_exam_id": "9gqjCVDCaTw",
-      "question_id": "p-m-l8p8Jaw",
-      "student_answer": "True",
-      "is_correct": true,
-      "marks_obtained": 1,
-      "id": "5E5JkxWlmVE"
+      "student_exam_id": "attempt1",
+      "question_id": "question2",
+      "answer": "B",
+      "marks_obtained": 5,
+      "id": "answer2"
     },
     {
-      "student_exam_id": "9gqjCVDCaTw",
-      "question_id": "xEZYeqNZxm4",
-      "student_answer": "B",
-      "is_correct": true,
-      "marks_obtained": 2,
-      "id": "qJpK9ewVumw"
-    },
-    {
-      "student_exam_id": "3vQuVRPEJ9w",
-      "question_id": "NEW_ID",
-      "student_answer": "",
-      "is_correct": false,
+      "student_exam_id": "attempt2",
+      "question_id": "question1",
+      "answer": "B",
       "marks_obtained": 0,
-      "id": "dR6jY-_ZYho"
+      "id": "answer3"
     },
     {
-      "student_exam_id": "3vQuVRPEJ9w",
-      "question_id": "NEW_ID_1",
-      "student_answer": "",
-      "is_correct": false,
+      "student_exam_id": "attempt2",
+      "question_id": "question2",
+      "answer": "A",
       "marks_obtained": 0,
-      "id": "54LxaB7isNM"
+      "id": "answer4"
     },
     {
-      "student_exam_id": "3vQuVRPEJ9w",
-      "question_id": "NEW_ID_2",
-      "student_answer": "",
-      "is_correct": false,
+      "student_exam_id": "attempt3",
+      "question_id": "question3",
+      "answer": "C",
+      "marks_obtained": 5,
+      "id": "answer5"
+    },
+    {
+      "student_exam_id": "attempt4",
+      "question_id": "question4",
+      "answer": "A",
       "marks_obtained": 0,
-      "id": "6YVauOVivF4"
+      "id": "answer6"
+    },
+    {
+      "student_exam_id": "attempt5",
+      "question_id": "question5",
+      "answer": "A",
+      "marks_obtained": 5,
+      "id": "answer7"
     }
   ],
   "tbl_result": [
     {
-      "student_id": "07_oxDWigzY",
-      "exam_id": "ui_2F3xzuAg",
-      "total_marks": 50,
-      "obtained_marks": 5,
-      "passing_marks": 20,
-      "percentage": 10,
-      "status": "Fail",
-      "id": "wSSpX3PZtLw"
+      "student_id": "tmcgqwa9Xdw",
+      "exam_id": "exam1",
+      "total_marks": 100,
+      "obtained_marks": 85,
+      "passing_marks": 35,
+      "percentage": 85,
+      "status": "Pass",
+      "id": "result1"
     },
     {
-      "student_id": "cAsMBisMzrw",
-      "exam_id": "jqtnUCKqCyI",
-      "total_marks": 5,
-      "obtained_marks": 0,
-      "passing_marks": 2,
-      "percentage": 0,
+      "student_id": "student2",
+      "exam_id": "exam1",
+      "total_marks": 100,
+      "obtained_marks": 28,
+      "passing_marks": 35,
+      "percentage": 28,
       "status": "Fail",
-      "id": "cl7D6TPSNcA"
+      "id": "result2"
+    },
+    {
+      "student_id": "student3",
+      "exam_id": "exam2",
+      "total_marks": 100,
+      "obtained_marks": 75,
+      "passing_marks": 35,
+      "percentage": 75,
+      "status": "Pass",
+      "id": "result3"
+    },
+    {
+      "student_id": "student4",
+      "exam_id": "exam3",
+      "total_marks": 100,
+      "obtained_marks": 32,
+      "passing_marks": 35,
+      "percentage": 32,
+      "status": "Fail",
+      "id": "result4"
+    },
+    {
+      "student_id": "student5",
+      "exam_id": "exam4",
+      "total_marks": 100,
+      "obtained_marks": 90,
+      "passing_marks": 35,
+      "percentage": 90,
+      "status": "Pass",
+      "id": "result5"
     }
   ],
   "tbl_feedback": [
     {
-      "student_id": "-AnWpEM837k",
-      "name": "Pooja",
-      "feedback": "The online examination system is very easy to use.",
-      "date": "2026-08-28",
-      "id": "viKfaKFuUEo"
+      "student_id": "tmcgqwa9Xdw",
+      "feedback": "The examination system is easy to use.",
+      "rating": 5,
+      "id": "feedback1"
     },
     {
-      "student_id": "07_oxDWigzY",
-      "name": "Pragna Sondigara",
-      "feedback": "This Sytem Very Usefull.",
-      "date": "2026-09-06",
-      "id": "2QHOobUAUQ8"
+      "student_id": "student2",
+      "feedback": "The questions were good.",
+      "rating": 4,
+      "id": "feedback2"
     },
     {
-      "student_id": "07_oxDWigzY",
-      "name": "Pragna Sondigara",
-      "feedback": "This System is very good",
-      "date": "2026-09-06",
-      "id": "hhXrE0ukWk8"
-    },
-    {
-      "student_id": "07_oxDWigzY",
-      "name": "Pragna Sondigara",
-      "feedback": "this is good",
-      "date": "2026-09-06",
-      "id": "V3aJuP2a5Pk"
-    },
-    {
-      "student_id": "huuGQYY6dEc",
-      "name": "krishna patel",
-      "feedback": "The Online Examination is Use Full...",
-      "date": "2026-09-10",
-      "id": "2pAz3NKmHn0"
+      "student_id": "student3",
+      "feedback": "Please improve the exam interface.",
+      "rating": 3,
+      "id": "feedback3"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

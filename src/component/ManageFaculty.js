@@ -239,13 +239,7 @@ export default function ManageFaculty() {
             <p>View, manage and monitor all registered faculty members.</p>
           </div>
 
-          <button
-            className="add-student-btn"
-            onClick={() => navigate("/AddFaculty")}
-          >
-            <span>+</span>
-            Add Faculty
-          </button>
+          
         </div>
 
         {/* =====================================================

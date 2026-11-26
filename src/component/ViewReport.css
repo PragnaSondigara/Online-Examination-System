@@ -416,3 +416,87 @@
     margin-top: 20px;
   }
 }
+/* FAILED STUDENTS SECTION */
+
+.failed-students-section {
+  margin-top: 25px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #f0dada;
+}
+
+.failed-students-header {
+  margin-bottom: 18px;
+}
+
+.failed-students-header h2 {
+  color: #dc3545;
+  margin-bottom: 6px;
+}
+
+.failed-students-header p {
+  color: #777;
+  font-size: 14px;
+}
+
+.no-failed-students {
+  margin-top: 20px;
+  padding: 16px;
+  text-align: center;
+  background: #f0faf4;
+  border-radius: 12px;
+  color: #198754;
+  font-weight: 600;
+}
+
+/* TWO REPORT BUTTONS */
+
+.report-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* FAILED STUDENTS BUTTON */
+
+.view-failed-btn {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #fce8e8;
+  color: #dc3545;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.view-failed-btn:hover {
+  background: #dc3545;
+  color: white;
+}
+
+.view-failed-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* RESPONSIVE BUTTONS */
+
+@media (max-width: 900px) {
+  .report-buttons {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .report-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .report-buttons button {
+    width: 100%;
+  }
+}

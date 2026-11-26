@@ -3,8 +3,6 @@ import LoginPage from "./component/LoginPage";
 import Home from "./component/Home";
 import ManageStudent from "./component/ManageStudent";
 import ManageFaculty from "./component/ManageFaculty";
-import { AddStudent } from "./component/AddStudent";
-import { AddFaculty } from "./component/AddFaculty";
 import { AddSchedule } from "./component/AddSchedule";
 import AdminDashboard from "./component/AdminDashboard";
 import { ViewFeedback } from "./component/ViewFeedback";
@@ -25,6 +23,8 @@ import Profile from "./component/Profile";
 import Settings from "./component/Settings";
 import StartExam from "./component/StartExam";
 import Feedback from "./component/Feedback";
+import FacultyRegister from "./component/FacultyRegister";
+import StudentRegister from "./component/StudentRegister";
 
 function App() {
   return (
@@ -33,8 +33,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/ManageStudent" element={<ManageStudent />} />
-        <Route path="/AddStudent" element={<AddStudent />} />
-        <Route path="/AddFaculty" element={<AddFaculty />} />
+       \
         <Route path="/AddSchedule" element={<AddSchedule />} />
         <Route path="/ManageSubject" element={<ManageSubject />} />
         <Route path="/AddSubject" element={<AddSubject />} />
@@ -46,6 +45,8 @@ function App() {
         <Route path="/ChangePassword" element={<ChangePassword />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/FacultyRegister" element={<FacultyRegister />} />
+        <Route path="/StudentRegister" element={<StudentRegister />} />
 
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/ManageFaculty" element={<ManageFaculty />} />

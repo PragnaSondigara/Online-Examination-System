@@ -1,0 +1,302 @@
+
+/* =====================================
+   STUDENT REGISTRATION PAGE
+===================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+.student-register-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: "Poppins", Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* TOP LOGIN LINK */
+
+.student-register-top {
+    position: absolute;
+    top: 30px;
+    right: 45px;
+}
+
+.student-register-top a {
+    color: #36c5a0;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.student-register-top a:hover {
+    color: #239e80;
+}
+
+/* MAIN SECTION */
+
+.student-register-main {
+    width: 100%;
+    max-width: 1250px;
+    min-height: 650px;
+    margin: auto;
+    padding: 35px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+/* LEFT IMAGE */
+
+.student-register-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-register-image img {
+    width: 100%;
+    max-width: 530px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* RIGHT FORM */
+
+.student-register-form-section {
+    width: 42%;
+    max-width: 430px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* HEADING */
+
+.student-register-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.student-register-heading h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #183d55;
+    margin: 0 0 10px;
+}
+
+.student-register-heading p {
+    font-size: 14px;
+    color: #888888;
+    margin: 0;
+}
+
+/* INPUT FIELDS */
+
+.student-register-input {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-bottom: 1px solid #d8d8d8;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.student-register-input:focus-within {
+    border-bottom: 2px solid #36c5a0;
+}
+
+.student-register-input > i {
+    color: #36c5a0;
+    font-size: 16px;
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.student-register-input input,
+.student-register-input select {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-family: "Poppins", Arial, sans-serif;
+    color: #333333;
+}
+
+.student-register-input input::placeholder {
+    color: #888888;
+}
+
+.student-register-input select {
+    cursor: pointer;
+}
+
+.student-register-input select:invalid {
+    color: #888888;
+}
+
+/* PASSWORD TOGGLE */
+
+.student-password-toggle {
+    border: none;
+    background: transparent;
+    color: #888888;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 8px;
+}
+
+.student-password-toggle:hover {
+    color: #36c5a0;
+}
+
+/* PASSWORD MATCH */
+
+.student-password-match {
+    display: block;
+    color: #20a779;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.student-password-error {
+    display: block;
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* REGISTER BUTTON */
+
+.student-register-submit {
+    width: 100%;
+    height: 50px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 30px;
+    background: #36c5a0;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Poppins", Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.student-register-submit:hover {
+    background: #25ad8a;
+    box-shadow: 0 5px 15px rgba(54, 197, 160, 0.25);
+}
+
+.student-register-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* FOOTER */
+
+.student-register-footer {
+    text-align: center;
+    margin-top: 22px;
+    color: #777777;
+    font-size: 13px;
+}
+
+.student-register-footer a {
+    color: #36c5a0;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.student-register-footer a:hover {
+    text-decoration: underline;
+}
+
+/* =====================================
+   TABLET RESPONSIVE
+===================================== */
+
+@media (max-width: 900px) {
+
+    .student-register-main {
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .student-register-image {
+        width: 45%;
+    }
+
+    .student-register-form-section {
+        width: 50%;
+    }
+
+    .student-register-heading h1 {
+        font-size: 30px;
+    }
+}
+
+/* =====================================
+   MOBILE RESPONSIVE
+===================================== */
+
+@media (max-width: 650px) {
+
+    .student-register-page {
+        min-height: 100vh;
+        padding: 75px 20px 30px;
+    }
+
+    .student-register-top {
+        top: 20px;
+        right: 25px;
+    }
+
+    .student-register-main {
+        min-height: auto;
+        padding: 10px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .student-register-image {
+        width: 100%;
+    }
+
+    .student-register-image img {
+        max-width: 220px;
+        max-height: 170px;
+    }
+
+    .student-register-form-section {
+        width: 100%;
+        max-width: 430px;
+    }
+
+    .student-register-heading {
+        margin-bottom: 20px;
+    }
+
+    .student-register-heading h1 {
+        font-size: 27px;
+    }
+
+    .student-register-input {
+        height: 48px;
+    }
+
+    .student-register-submit {
+        height: 48px;
+    }
+}
